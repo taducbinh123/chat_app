@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/widgets/bottom_nav_bar.dart';
 import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
 import 'package:hello_world_flutter/view/call_screen.dart';
+import 'package:hello_world_flutter/view/contact_view.dart';
 
 import 'contact_screen.dart';
 import 'chat_screen.dart';
@@ -15,7 +16,7 @@ class Dashboard extends StatelessWidget {
           body: SafeArea(
             child: IndexedStack(
               index: navBarController.selectedIndex,
-              children: [ChatScreen(),CallScreen(),ContactScreen()],
+              children: [ChatScreen(),CallScreen(),ContactView()],
             ),
           ),
           bottomNavigationBar: SuperFaBottomNavigationBar(),
