@@ -28,7 +28,6 @@ class ContactScreen extends StatelessWidget {
                 chat: chatsData[index],
                 press: () => {
                   Get.toNamed(contact),
-                  print("hviuhse")
                 },
               ),
             ),

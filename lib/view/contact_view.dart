@@ -40,7 +40,7 @@ class ContactView extends StatelessWidget {
                 chat: chatsData[index],
                 press: () => {
                   Get.toNamed(contactView),
-                  print("hviuhse")
+
                 },
               ),
               indexedHeight: (i) {

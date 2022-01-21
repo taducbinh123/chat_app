@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/widgets/bottom_nav_bar.dart';
 import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
-import 'package:hello_world_flutter/view/call_screen.dart';
+import 'package:hello_world_flutter/view/Call/call_screen.dart';
 
-import 'contact_screen.dart';
+import 'Contact/contact_screen.dart';
 import 'chat_screen.dart';
 
 class Dashboard extends StatelessWidget {

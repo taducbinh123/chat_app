@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/common/widgets/bottom_nav_bar.dart';
+import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
 import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
-import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
 
-import 'chat_screen.dart';
 
 class CallScreen extends StatelessWidget {
   @override
@@ -21,6 +18,15 @@ class CallScreen extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: CommonButton(
+          icon: IconButton(
+        icon: Icon(
+          Icons.dialpad,
+          color: Colors.white,
+          size: 25,
+        ),
+        onPressed: () {},
+      )),
     );
   }
 }

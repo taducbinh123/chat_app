@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar.dart';
+import 'package:hello_world_flutter/common/widgets/chat_app_bar.dart';
+import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
 import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
+import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 
 import 'package:hello_world_flutter/model/chat_card.dart';
 
@@ -14,9 +17,25 @@ class ChatScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            color: kContentColorDarkTheme,
-            child: TextAppBar(
-              title: "Chats",
+            color: kPrimaryColor,
+            child: ChatAppBar(
+              title: UserCircle(),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -24,11 +43,24 @@ class ChatScreen extends StatelessWidget {
               itemCount: chatsData.length,
               itemBuilder: (context, index) => CustomAvatar(
                 chat: chatsData[index],
-                press: () => Get.toNamed(contact),
+                press: () => Get.toNamed(messagescreen,
+                    arguments: {"data": chatsData[index]}),
               ),
             ),
           ),
         ],
+      ),
+      floatingActionButton: CommonButton(
+        icon: IconButton(
+          icon: Icon(
+            Icons.message,
+            color: Colors.white,
+            size: 25,
+          ),
+         onPressed:() {
+
+         },
+        ),
       ),
     );
   }
