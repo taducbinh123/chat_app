@@ -12,7 +12,7 @@ import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
 import 'package:hello_world_flutter/view/contact/add_contact_screen.dart';
 import 'package:hello_world_flutter/view/pm_screen.dart';
-import 'package:hello_world_flutter/view/search/text_field_search.dart';
+import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class ContactView extends GetView<ContactScreenController> {
@@ -35,7 +35,7 @@ class ContactView extends GetView<ContactScreenController> {
           Expanded(
             child: Obx(
               () => GroupedListView<Chat, String>(
-                elements: contactController.contactList.value ,
+                elements: contactController.contactList.value,
                 groupBy: (element) => element.name[0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
                 itemComparator: (item1, item2) =>
