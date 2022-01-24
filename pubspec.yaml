@@ -32,7 +32,9 @@ dependencies:
   get_storage: ^2.0.3
   alphabet_list_scroll_view: ^2.0.0
   grouped_list: ^4.1.0
-
+  new_gradient_app_bar: ^0.2.0
+  material_floating_search_bar: ^0.3.6
+  search_app_bar_page: ^2.1.2
 
 dev_dependencies:
   flutter_test:

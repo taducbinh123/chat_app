@@ -1,5 +1,4 @@
 
-
 class Chat{
   final String name, lastMessage, image, time;
   final bool isActive;
