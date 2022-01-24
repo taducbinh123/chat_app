@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact.dart';
+import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
 import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
 
 import 'package:hello_world_flutter/model/chat_card.dart';
+import 'package:hello_world_flutter/view/contact/add_contact_screen.dart';
 
 class ContactView extends StatelessWidget {
   @override
@@ -45,6 +50,17 @@ class ContactView extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: CommonButton(
+          icon: IconButton(
+            icon: Icon(
+              Icons.group_add,
+              color: Colors.white,
+              size: 25,
+            ),
+            onPressed: () {
+              Get.to(() => AddContactScreen());
+            },
+          )),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/chat_input_field.dart';
+import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 
 class MessagesScreen extends StatelessWidget {
   @override
@@ -21,9 +22,7 @@ class MessagesScreen extends StatelessWidget {
       title: Row(
         children: [
           BackButton(),
-          CircleAvatar(
-            backgroundImage: AssetImage(Get.arguments['data'].image),
-          ),
+          UserCircle(),
           SizedBox(width: kDefaultPadding * 0.75),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +32,9 @@ class MessagesScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               Text(
-                Get.arguments['data'].isActive ? "Online now": "Last active "+ Get.arguments['data'].time,
+                Get.arguments['data'].isActive
+                    ? "Online now"
+                    : "Last active " + Get.arguments['data'].time,
                 style: TextStyle(fontSize: 12),
               )
             ],

@@ -30,7 +30,7 @@ class ContactScreen extends StatelessWidget {
           size: 25,
         ),
         onPressed: () {
-          Get.to(AddContactScreen());
+          Get.to(() => AddContactScreen());
         },
       )),
     );
