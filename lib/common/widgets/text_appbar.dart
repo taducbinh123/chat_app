@@ -12,7 +12,7 @@ class TextAppBar extends StatelessWidget {
       backgroundColor: Colors.white,
       title: Text(
         title.toString(),
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
     );

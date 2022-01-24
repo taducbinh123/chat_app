@@ -7,3 +7,4 @@ const callscreen = '/call_screen';
 
 
 const contactView = '/Contact_View';
+const messagescreen = '/message_screen';
