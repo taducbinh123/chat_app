@@ -17,7 +17,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   static const String title = 'Chat Messenger';
-
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
