@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hello_world_flutter/common/constant/ulti.dart';
+import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
 import 'package:hello_world_flutter/features/features.dart';
 import 'package:hello_world_flutter/model/user.dart';
 
@@ -12,14 +14,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
       body: SafeArea(
-        minimum: const EdgeInsets.all(16),
         child: Center(
           child: Column(
             children: <Widget>[
+              Container(
+                  color: kContentColorDarkTheme,
+                  child: TextAppBar(
+                    title: "Home Page",
+                  )),
               Text(
                 'Welcome, ${user.name}',
                 style: TextStyle(fontSize: 24),

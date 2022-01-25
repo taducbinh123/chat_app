@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/chat_input_field.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
+import 'package:hello_world_flutter/model/ChatMessage.dart';
+
+import 'message/message.dart';
 
 class MessagesScreen extends StatelessWidget {
   @override
@@ -10,7 +13,19 @@ class MessagesScreen extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(),
       body: Column(
-        children: [Expanded(child: Container()), ChatInputField()],
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              child: ListView.builder(
+                itemCount: demeChatMessages.length,
+                itemBuilder: (context, index) =>
+                    Message(message: demeChatMessages[index]),
+              ),
+            ),
+          ),
+          ChatInputField(),
+        ],
       ),
     );
   }
