@@ -13,40 +13,35 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => BottomNavigationBar(
-          backgroundColor: kPrimaryColor,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.message,
-                color: kPrimaryColor,
               ),
               title: Text('Chats'),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.phone,
-                color: kPrimaryColor,
               ),
               title: Text('Calls'),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.contacts,
-                color: kPrimaryColor,
               ),
               title: Text('Contacts'),
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
-                color: kPrimaryColor,
               ),
               title: Text('Home'),
             ),
           ],
           currentIndex: navBarController.selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          unselectedItemColor: lightBlueColor,
+          selectedItemColor: kPrimaryColor,
+          unselectedItemColor: kPrimaryColor,
           onTap: (index) => navBarController.onItemTapped(index),
           /* currentIndex: Get.find<ProfileController>().selectedIndex,
         selectedItemColor: Colors.amber[800],
