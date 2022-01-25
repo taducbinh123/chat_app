@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact.dart';
 import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
@@ -56,6 +57,7 @@ class ContactView extends GetView<ContactScreenController> {
                   chat: element,
                   press: () => {
                     print("contact with ${element.name}"),
+                    Get.toNamed(messagescreen,arguments: {"data": element}),
                     // Get.to(() => MessagesScreen()),
                   },
                 ),
