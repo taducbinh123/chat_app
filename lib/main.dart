@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:hello_world_flutter/features/authentication/authentication.dart';
+import 'package:hello_world_flutter/features/features.dart';
 import 'package:hello_world_flutter/view/Call/call_screen.dart';
 import 'package:hello_world_flutter/view/Contact/contact_screen.dart';
 import 'package:hello_world_flutter/view/Dashboard.dart';
@@ -12,10 +14,16 @@ import 'common/constant/path.dart';
 
 void main() async {
   await GetStorage.init();
+  initialize();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+
+void initialize() {
+  Get.lazyPut(() => AuthenticationController(Get.put(FakeAuthenticationService())),);
+}
+
+class MyApp extends GetWidget<AuthenticationController> {
   static const String title = 'Chat Messenger';
   const MyApp({Key? key}) : super(key: key);
   @override
@@ -24,8 +32,17 @@ class MyApp extends StatelessWidget {
       title: title,
       debugShowCheckedModeBanner: false,
       // initialRoute: contactView,
+      home: Obx(() {
+        if (controller.state is UnAuthenticated) {
+          return LoginPage();
+        }
 
-      initialRoute: dashboard,
+        if (controller.state is Authenticated) {
+          return Dashboard();
+        }
+        return SplashScreen();
+      }),
+      // initialRoute: dashboard,
       getPages: [
         GetPage(name: contactView, page: () => ContactView()),
         GetPage(name: chatscreen, page: () => ChatScreen()),

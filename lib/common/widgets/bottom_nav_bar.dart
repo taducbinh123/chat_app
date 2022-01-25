@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
 
 class SuperFaBottomNavigationBar extends StatelessWidget {
@@ -12,6 +13,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => BottomNavigationBar(
+      backgroundColor: kPrimaryColor,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.message),
@@ -24,6 +26,10 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Icon(Icons.contacts),
               title: Text('Contacts'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Home'),
             ),
           ],
           currentIndex: navBarController.selectedIndex,
