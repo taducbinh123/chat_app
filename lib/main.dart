@@ -4,10 +4,9 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/features/authentication/authentication.dart';
 import 'package:hello_world_flutter/features/features.dart';
 import 'package:hello_world_flutter/view/Call/call_screen.dart';
-import 'package:hello_world_flutter/view/Contact/contact_screen.dart';
 import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:hello_world_flutter/view/chat_screen.dart';
-import 'package:hello_world_flutter/view/contact_view.dart';
+import 'package:hello_world_flutter/view/contact/contact_view.dart';
 import 'package:hello_world_flutter/view/pm_screen.dart';
 
 import 'common/constant/path.dart';
@@ -46,7 +45,7 @@ class MyApp extends GetWidget<AuthenticationController> {
       getPages: [
         GetPage(name: contactView, page: () => ContactView()),
         GetPage(name: chatscreen, page: () => ChatScreen()),
-        GetPage(name: contact, page: () => ContactScreen()),
+        // GetPage(name: contact, page: () => ContactScreen()),
         GetPage(name: dashboard, page: () => Dashboard()),
         GetPage(name: callscreen, page: () => CallScreen()),
         GetPage(name: messagescreen, page: () => MessagesScreen()),
