@@ -23,6 +23,9 @@ class HomePage extends StatelessWidget {
                   child: TextAppBar(
                     title: "Home Page",
                   )),
+              SizedBox(
+                height: 20,
+              ),
               Text(
                 'Welcome, ${user.name}',
                 style: TextStyle(fontSize: 24),

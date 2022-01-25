@@ -7,6 +7,7 @@ class ContactScreenController extends GetxController {
 
   TextEditingController searchController = TextEditingController();
   var contactList = chatsData.obs;
+  List<bool> state = List.filled(chatsData.length,false).obs;
   // var contactTempList = chatsData.obs;
 
   contactNameSearch(String name) {

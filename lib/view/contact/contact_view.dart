@@ -57,9 +57,11 @@ class ContactView extends GetView<ContactScreenController> {
                   chat: element,
                   press: () => {
                     print("contact with ${element.name}"),
-                    Get.toNamed(messagescreen,arguments: {"data": element}),
+                    Get.toNamed(messagescreen, arguments: {"data": element}),
                     // Get.to(() => MessagesScreen()),
                   },
+                  check: false,
+                  index: 0,
                 ),
               ),
             ),

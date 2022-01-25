@@ -12,6 +12,7 @@ const lightBlueColor = Color(0xff0077d7);
 const gradientColorStart = Color(0xff00b6f3);
 const gradientColorEnd = Color(0xff0184dc);
 const separatorColor = Color(0xff272c35);
+const colorCard= Color(-328966);
 const kDefaultPadding = 20.0;
 const Gradient fabGradient = LinearGradient(
     colors: [gradientColorStart, gradientColorEnd],

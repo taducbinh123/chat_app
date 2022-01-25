@@ -1,25 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
+import 'package:hello_world_flutter/common/widgets/avatar_contact.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
+import 'package:hello_world_flutter/model/chat_card.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
-class AddContactScreen extends StatelessWidget {
+class AddContactScreen extends GetView<ContactScreenController> {
   @override
   Widget build(BuildContext context) {
-    final ContactScreenController contactController =
-        Get.put(ContactScreenController());
+    ContactScreenController contactController = Get.find();
+
     return Scaffold(
       appBar: searchAppBar(context),
       body: Column(
-        children: [],
+        children: [
+          Expanded(
+            child: Obx(
+              () => GroupedListView<Chat, String>(
+                elements: contactController.contactList.value,
+                groupBy: (element) => element.name[0].toString().toUpperCase(),
+                groupComparator: (value1, value2) => value2.compareTo(value1),
+                itemComparator: (item1, item2) =>
+                    item1.name.toString().compareTo(item2.name.toString()),
+                order: GroupedListOrder.DESC,
+                useStickyGroupSeparators: true,
+                groupSeparatorBuilder: (String value) => Padding(
+                  padding: const EdgeInsets.fromLTRB(25.0, 8.0, 8.0, 8.0),
+                  child: Text(
+                    value,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                // showPreview: true,
+                indexedItemBuilder: (context, element,index) => CustomAvatarContact(
+                  chat: element,
+                  press: () => {
+                    print("contact with ${element.name}"),
+                    contactController.state[index] = !contactController.state[index],
+                    print(contactController.state[index]),
+                    // Get.to(() => MessagesScreen()),
+                  },
+                  check: true,
+                  index: index,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   searchAppBar(BuildContext context) {
     TextEditingController searchController = TextEditingController();
+    ContactScreenController contactController = Get.find();
     return NewGradientAppBar(
       gradient: LinearGradient(
         colors: [
@@ -39,6 +77,7 @@ class AddContactScreen extends StatelessWidget {
           padding: EdgeInsets.only(left: 20),
           child: TextField(
             controller: searchController,
+            onChanged: (value) => contactController.contactNameSearch(value),
             cursorColor: blackColor,
             autofocus: true,
             style: TextStyle(
@@ -52,6 +91,7 @@ class AddContactScreen extends StatelessWidget {
                 onPressed: () {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
+                  contactController.contactList.value = chatsData;
                 },
               ),
               border: InputBorder.none,
