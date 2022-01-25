@@ -17,7 +17,12 @@ class Dashboard extends StatelessWidget {
           body: SafeArea(
             child: IndexedStack(
               index: navBarController.selectedIndex,
-              children: [ChatScreen(),CallScreen(),ContactView(),HomePage(user: (controller.state as Authenticated).user)],
+              children: [
+                ChatScreen(),
+                CallScreen(),
+                ContactView(),
+                HomePage(user: (controller.state as Authenticated).user)
+              ],
             ),
           ),
           bottomNavigationBar: SuperFaBottomNavigationBar(),

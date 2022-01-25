@@ -45,10 +45,10 @@ class MyApp extends GetWidget<AuthenticationController> {
       getPages: [
         GetPage(name: contactView, page: () => ContactView()),
         GetPage(name: chatscreen, page: () => ChatScreen()),
-        // GetPage(name: contact, page: () => ContactScreen()),
         GetPage(name: dashboard, page: () => Dashboard()),
         GetPage(name: callscreen, page: () => CallScreen()),
         GetPage(name: messagescreen, page: () => MessagesScreen()),
+
       ],
     );
   }
