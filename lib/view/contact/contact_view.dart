@@ -58,10 +58,7 @@ class ContactView extends GetView<ContactScreenController> {
                   press: () => {
                     print("contact with ${element.name}"),
                     Get.toNamed(messagescreen, arguments: {"data": element}),
-                    // Get.to(() => MessagesScreen()),
                   },
-                  check: false,
-                  index: 0,
                 ),
               ),
             ),
@@ -77,6 +74,9 @@ class ContactView extends GetView<ContactScreenController> {
         ),
         onPressed: () {
           Get.to(() => AddContactScreen());
+          contactController.listNameChoose.value = "";
+          contactController.listContactChoose.value = [];
+          contactController.resetState();
         },
       )),
     );

@@ -9,26 +9,17 @@ class CustomAvatarContact extends StatelessWidget {
   const CustomAvatarContact({
     Key? key,
     required this.chat,
-    required this.press,
-    required this.check,
-    required this.index
+    required this.press
   }) : super(key: key);
 
   final Chat chat;
   final VoidCallback press;
-  final bool check;
-  final int index;
   @override
   Widget build(BuildContext context) {
     ContactScreenController contactController = Get.find<ContactScreenController>();
     // TODO: implement build
     return Container(
-      child: Obx(()=>Card(
-        color:  check ? (contactController.state[index] ? Colors.green : colorCard) : colorCard,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: InkWell(
+      child:  InkWell(
           onTap: press,
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -91,8 +82,6 @@ class CustomAvatarContact extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    )
 
 
     );
