@@ -5,6 +5,7 @@ import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar.dart';
 import 'package:hello_world_flutter/common/widgets/chat_app_bar.dart';
 import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
+import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
@@ -17,6 +18,7 @@ class ChatScreen extends GetView<ContactScreenController> {
   Widget build(BuildContext context) {
     final contactController = Get.put(ContactScreenController());
     final chatController = Get.put(ChatScreenController());
+    bool check = false;
     return Scaffold(
       body: Column(
         children: [
@@ -30,7 +32,10 @@ class ChatScreen extends GetView<ContactScreenController> {
                     Icons.search,
                     color: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    check = !check;
+                    chatController.onPress(check);
+                  },
                 ),
                 IconButton(
                   icon: Icon(
@@ -42,14 +47,22 @@ class ChatScreen extends GetView<ContactScreenController> {
               ],
             ),
           ),
+          Obx(
+                () => Visibility(
+                visible: chatController.state.value,
+                child: TextFieldSearch(
+                    textEditingController: chatController.searchController,
+                    isPrefixIconVisible: true,
+                    onChanged: chatController.chatNameSearch)),
+          ),
           Expanded(
             child: Obx(
               () => ListView.builder(
-                itemCount: chatController.chats.length,
+                itemCount: chatController.chatTempList.length,
                 itemBuilder: (context, index) => CustomAvatar(
-                  chat: chatController.chats.value[index],
+                  chat: chatController.chatTempList.value[index],
                   press: () => Get.toNamed(messagescreen,
-                      arguments: {"data": chatController.chats.value[index]}),
+                      arguments: {"data": chatController.chatTempList.value[index]}),
                 ),
               ),
             ),

@@ -39,8 +39,9 @@ class AddContactScreen extends GetView<ContactScreenController> {
                         )),
                       ),
                       ElevatedButton(child: Text("Tạo mới"), onPressed: () {
-                        chatsData.add(new Chat(name: contactController.listNameChoose.value,lastMessage: "",time: DateTime.now().toString(),isActive: true,image: ""));
-                        chatController.updateChats();
+                        chatController.addChat(Chat(name: contactController.listNameChoose.value,lastMessage: "",time: DateTime.now().toString(),isActive: true,image: ""));
+
+                        // chatController.updateChats();
                         Get.back();
                         // Get.toNamed(chatscreen);
                       }),
