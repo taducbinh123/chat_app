@@ -34,27 +34,31 @@ class MessagesScreen extends StatelessWidget {
     return AppBar(
       backgroundColor: kPrimaryColor,
       automaticallyImplyLeading: false,
-      title: Row(
-        children: [
-          BackButton(),
-          UserCircle(),
-          SizedBox(width: kDefaultPadding * 0.75),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                Get.arguments['data'].name,
-                style: TextStyle(fontSize: 16),
-              ),
-              Text(
-                Get.arguments['data'].isActive
-                    ? "Online now"
-                    : "Last active " + Get.arguments['data'].time,
-                style: TextStyle(fontSize: 12),
-              )
-            ],
-          )
-        ],
+      title: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            BackButton(),
+            UserCircle(),
+            SizedBox(width: kDefaultPadding * 0.75),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  Get.arguments['data'].name,
+                  style: TextStyle(fontSize: 16),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  Get.arguments['data'].isActive
+                      ? "Online now"
+                      : "Last active " + Get.arguments['data'].time,
+                  style: TextStyle(fontSize: 12),
+                )
+              ],
+            )
+          ],
+        ),
       ),
       actions: [
         IconButton(
