@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
@@ -52,10 +53,11 @@ class CustomAvatar extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    AutoSizeText(
                       chat.name,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 10,
                     ),
                     SizedBox(height: 8),
                     Opacity(

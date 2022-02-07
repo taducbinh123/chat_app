@@ -31,20 +31,26 @@ class AddContactScreen extends GetView<ContactScreenController> {
                   child: Row(
                     children: [
                       Expanded(
-                        child:
-                        Obx(() => AutoSizeText(
-                          contactController.listNameChoose.value,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 10,
-                        )),
+                        child: Obx(() => AutoSizeText(
+                              contactController.listNameChoose.value,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 10,
+                            )),
                       ),
-                      ElevatedButton(child: Text("Tạo mới"), onPressed: () {
-                        chatController.addChat(Chat(name: contactController.listNameChoose.value,lastMessage: "",time: DateTime.now().toString(),isActive: true,image: ""));
+                      ElevatedButton(
+                          child: Text("Tạo mới"),
+                          onPressed: () {
+                            chatController.addChat(Chat(
+                                name: contactController.listNameChoose.value,
+                                lastMessage: "",
+                                time: DateTime.now().toString(),
+                                isActive: true,
+                                image: ""));
 
-                        // chatController.updateChats();
-                        Get.back();
-                        // Get.toNamed(chatscreen);
-                      }),
+                            // chatController.updateChats();
+                            Get.back();
+                            // Get.toNamed(chatscreen);
+                          }),
                     ],
                   ),
                 ),

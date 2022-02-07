@@ -56,13 +56,14 @@ class ContactScreenController extends GetxController {
     if (name.isEmpty) {
       contactList.value = chatsData;
     } else {
-      // contactList.value = chatsData.where((element) =>
-      //     element.name.toLowerCase().contains(name.toLowerCase())).toList();
-      chatsData.forEach((element) {
-        if(element.name.toLowerCase().contains(name.toLowerCase())){
-          contactList.value.add(element);
-        }
-      });
+      contactList.value = chatsData.where((element) =>
+          element.name.toLowerCase().contains(name.toLowerCase())).toList();
+      // chatsData.forEach((element) {
+      //   if(element.name.toLowerCase().contains(name.toLowerCase())){
+      //     contactList.value.add(element);
+      //   }
+      // });
+      print(contactList.value.toString());
     }
   }
 
