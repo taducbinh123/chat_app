@@ -18,17 +18,19 @@ class ContactScreenController extends GetxController {
   var listNameChoose = "".obs;
 
   changeState(int index,Chat e){
+    // change state
     var stateChange;
-    for (var element in state) {
+    for (State element in state) {
       if(element.chat == e){
-        element.state = !element.state;
+        element.state.value = !element.state.value;
         stateChange = element;
         break;
       }
     }
     // state[index] = !state[index];
+    // format string name
     listNameChoose.value = "";
-    if(stateChange.state){
+    if(stateChange.state.value){
       listContactChoose.add(e);
       for (var value in listContactChoose) {
         print(value.name);
@@ -38,11 +40,13 @@ class ContactScreenController extends GetxController {
       print(listNameChoose);
     }else{
       listContactChoose.remove(e);
-      for (var value in listContactChoose) {
-        print(value.name);
-        listNameChoose.value += value.name + ", ";
+      if(listContactChoose.length !=0) {
+        for (var value in listContactChoose) {
+          print(value.name);
+          listNameChoose.value += value.name + ", ";
+        }
+        listNameChoose.value = listNameChoose.substring(0, listNameChoose.value.length -2);
       }
-      listNameChoose.value = listNameChoose.substring(0, listNameChoose.value.length -2);
       print(listNameChoose);
     }
   }
@@ -60,25 +64,17 @@ class ContactScreenController extends GetxController {
   }
 
   resetState(){
+    state.clear();
     chatsData.forEach((element) {
-      state.add(State(chat: element,state: false));
+      state.add(State(chat: element,state: false.obs));
     });
   }
 
-  bool getStateByChat(Chat e){
-    for (State element in state) {
-      if(element.chat == e){
-        print("dcsj")
-        return element.state;
-      }
-    }
-    return false;
-  }
 }
 
 class State{
   final Chat chat;
-  bool state;
+  RxBool state;
 
   State({required this.chat,required this.state});
 }

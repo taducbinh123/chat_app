@@ -67,7 +67,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                   press: () => {
                     print("contact with ${element.name}"),
                     contactController.changeState(index, element),
-                    print(contactController.getStateByChat(element)),
+                    // print(contactController.getStateByChat(element)),
                     // Get.to(() => MessagesScreen()),
                   },
                   check: true,
@@ -98,6 +98,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                 contactController.contactList.value = chatsData,
                 contactController.listNameChoose.value = "",
                 contactController.listContactChoose.value = [],
+                contactController.resetState(),
               }),
       elevation: 0,
       bottom: PreferredSize(
@@ -121,10 +122,6 @@ class AddContactScreen extends GetView<ContactScreenController> {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
                   contactController.contactList.value = chatsData;
-                  // contactController.listNameChoose.value = "";
-                  // contactController.listContactChoose.value = [];
-                  // contactController.state.value =
-                  //     List.filled(chatsData.length, false);
                 },
               ),
               border: InputBorder.none,

@@ -24,7 +24,7 @@ class CustomAvatarContactAdd extends StatelessWidget {
     // TODO: implement build
     return Container(
         child: Obx(()=>Card(
-          color:  check ? (contactController.getStateByChat(chat) ? Colors.grey : colorCard) : colorCard,
+          color:  check ? (contactController.state.firstWhere((element) => element.chat == chat).state.value ? Colors.grey : colorCard) : colorCard,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
