@@ -19,7 +19,7 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 class ContactView extends GetView<ContactScreenController> {
   @override
   Widget build(BuildContext context) {
-    final contactController = Get.put(ContactScreenController());
+    ContactScreenController contactController = Get.find();
     return Scaffold(
       body: Column(
         children: [
@@ -73,10 +73,10 @@ class ContactView extends GetView<ContactScreenController> {
           size: 25,
         ),
         onPressed: () {
-          Get.to(() => AddContactScreen());
-          contactController.listNameChoose.value = "";
-          contactController.listContactChoose.value = [];
-          contactController.resetState();
+          // Get.to(() => AddContactScreen());
+          // contactController.listNameChoose.value = "";
+          // contactController.listContactChoose.value = [];
+          // contactController.resetState();
         },
       )),
     );

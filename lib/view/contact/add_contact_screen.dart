@@ -2,16 +2,20 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact_add.dart';
+import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
+import 'package:hello_world_flutter/view/chat_screen.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddContactScreen extends GetView<ContactScreenController> {
   @override
   Widget build(BuildContext context) {
     ContactScreenController contactController = Get.find();
+    ChatScreenController chatController = Get.find();
 
     return Scaffold(
       appBar: searchAppBar(context),
@@ -34,7 +38,12 @@ class AddContactScreen extends GetView<ContactScreenController> {
                           maxLines: 10,
                         )),
                       ),
-                      ElevatedButton(child: Text("Tạo mới"), onPressed: () {}),
+                      ElevatedButton(child: Text("Tạo mới"), onPressed: () {
+                        chatsData.add(new Chat(name: contactController.listNameChoose.value,lastMessage: "",time: DateTime.now().toString(),isActive: true,image: ""));
+                        chatController.updateChats();
+                        Get.back();
+                        // Get.toNamed(chatscreen);
+                      }),
                     ],
                   ),
                 ),

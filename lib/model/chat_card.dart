@@ -1,4 +1,6 @@
 
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
 class Chat{
   final String name, lastMessage, image, time;
   final bool isActive;
@@ -13,7 +15,7 @@ class Chat{
 
 }
 
-List<Chat> chatsData = [
+var chatsData = [
   Chat(
     name: "Jenny Wilson",
     lastMessage: "Hope you are doing well...",
