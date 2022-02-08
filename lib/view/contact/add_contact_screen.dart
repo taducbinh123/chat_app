@@ -124,6 +124,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                 contactController.listNameChoose.value = "",
                 contactController.listContactChoose.value = [],
                 contactController.resetState(),
+                contactController.listAvatarChoose.clear(),
               }),
       elevation: 0,
       bottom: PreferredSize(
