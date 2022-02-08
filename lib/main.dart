@@ -8,6 +8,7 @@ import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:hello_world_flutter/view/chat_screen.dart';
 import 'package:hello_world_flutter/view/contact/contact_view.dart';
 import 'package:hello_world_flutter/view/pm_screen.dart';
+import 'package:hello_world_flutter/view/setting/setting_screen.dart';
 
 import 'common/constant/path.dart';
 
@@ -48,6 +49,7 @@ class MyApp extends GetWidget<AuthenticationController> {
         GetPage(name: dashboard, page: () => Dashboard()),
         GetPage(name: callscreen, page: () => CallScreen()),
         GetPage(name: messagescreen, page: () => MessagesScreen()),
+        GetPage(name: settingScreen, page: () => SettingScreen()),
 
       ],
     );

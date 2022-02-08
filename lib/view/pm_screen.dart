@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/chat_input_field.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
-import 'package:hello_world_flutter/view/setting/setting_screen.dart';
+import 'package:hello_world_flutter/model/chat_card.dart';
 
 import 'message/message.dart';
 
@@ -79,7 +80,8 @@ class MessagesScreen extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {
-            Get.to(SettingScreen());
+            Chat chat = Get.arguments['data'];
+            Get.toNamed(settingScreen, arguments: {"data": chat});
           },
         ),
         SizedBox(width: kDefaultPadding / 2),
