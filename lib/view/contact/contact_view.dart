@@ -11,10 +11,8 @@ import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 
 import 'package:hello_world_flutter/model/chat_card.dart';
-import 'package:hello_world_flutter/view/contact/add_contact_screen.dart';
-import 'package:hello_world_flutter/view/pm_screen.dart';
 import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+
 
 class ContactView extends GetView<ContactScreenController> {
   @override
