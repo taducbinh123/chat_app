@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
+import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 
 class SelectCircle extends StatelessWidget {
   SelectCircle(
-      {Key? key, required this.height, required this.width, required this.text})
+      {Key? key, required this.height, required this.width, required this.text, required this.chat})
       : super(key: key);
   var height;
   var width;
   var text;
+  var chat;
   @override
   Widget build(BuildContext context) {
+    ContactScreenController contactController = Get.find();
     return Container(
       height: height,
       width: width,
@@ -44,6 +48,7 @@ class SelectCircle extends StatelessWidget {
               ),
               onTap: (){
                 print("tapped");
+                contactController.changeState(chat, 0, 0);
               },
             ),
           )

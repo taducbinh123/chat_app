@@ -1,11 +1,17 @@
+// import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
 
 class ContactScreenController extends GetxController {
 
   TextEditingController searchController = TextEditingController();
+
+  List<SelectCircle> listAvatarChoose = [];
+
   var contactList = chatsData.obs;
 
   var state = [].obs;
@@ -17,7 +23,7 @@ class ContactScreenController extends GetxController {
   var listContactChoose = [].obs;
   var listNameChoose = "".obs;
 
-  changeState(int index,Chat e){
+  changeState(Chat e, double screenWidth, double screenHeight){
     // change state
     var stateChange;
     for (State element in state) {
@@ -32,6 +38,7 @@ class ContactScreenController extends GetxController {
     listNameChoose.value = "";
     if(stateChange.state.value){
       listContactChoose.add(e);
+      listAvatarChoose.add(new SelectCircle(chat: e,height: screenWidth*0.12, width: screenHeight*0.06, text: e.name));
       for (var value in listContactChoose) {
         print(value.name);
         listNameChoose.value += value.name + ", ";
@@ -40,6 +47,7 @@ class ContactScreenController extends GetxController {
       print(listNameChoose);
     }else{
       listContactChoose.remove(e);
+      listAvatarChoose = listAvatarChoose.where((element) => element.chat != e).toList();
       if(listContactChoose.length !=0) {
         for (var value in listContactChoose) {
           print(value.name);

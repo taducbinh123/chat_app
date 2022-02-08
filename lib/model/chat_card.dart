@@ -2,10 +2,11 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class Chat{
-  final String name, lastMessage, image, time;
+  final String id,name, lastMessage, image, time;
   final bool isActive;
 
   Chat({
+    this.id = '',
     this.name = '',
     this.lastMessage = '',
     this.image = '',
@@ -17,6 +18,7 @@ class Chat{
 
 var chatsData = [
   Chat(
+    id : '1',
     name: "Jenny Wilson",
     lastMessage: "Hope you are doing well...",
     image: "assets/images/user.png",
@@ -24,6 +26,7 @@ var chatsData = [
     isActive: false,
   ),
   Chat(
+    id : '2',
     name: "Esther Howard",
     lastMessage: "Hello Abdullah! I am...",
     image: "assets/images/user_2.png",
@@ -31,6 +34,7 @@ var chatsData = [
     isActive: true,
   ),
   Chat(
+    id : '3',
     name: "Ralph Edwards",
     lastMessage: "Do you have update...",
     image: "assets/images/user_3.png",
@@ -38,6 +42,7 @@ var chatsData = [
     isActive: false,
   ),
   Chat(
+    id : '4',
     name: "Jacob Jones",
     lastMessage: "You’re welcome :)",
     image: "assets/images/user_4.png",
@@ -45,6 +50,7 @@ var chatsData = [
     isActive: true,
   ),
   Chat(
+    id : '5',
     name: "Albert Flores",
     lastMessage: "Thanks",
     image: "assets/images/user_5.png",
@@ -52,6 +58,7 @@ var chatsData = [
     isActive: false,
   ),
   Chat(
+    id : '6',
     name: "Jenny Wilson",
     lastMessage: "Hope you are doing well...",
     image: "assets/images/user.png",
@@ -59,6 +66,7 @@ var chatsData = [
     isActive: false,
   ),
   Chat(
+    id : '7',
     name: "Esther Howard",
     lastMessage: "Hello Abdullah! I am...",
     image: "assets/images/user_2.png",
@@ -66,6 +74,7 @@ var chatsData = [
     isActive: true,
   ),
   Chat(
+    id : '8',
     name: "Ralph Edwards",
     lastMessage: "Do you have update...",
     image: "assets/images/user_3.png",

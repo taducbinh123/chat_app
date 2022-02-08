@@ -39,10 +39,8 @@ class AddContactScreen extends GetView<ContactScreenController> {
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
-                                children: [
-
-
-                                ],
+                                children:
+                                  contactController.listAvatarChoose
                               ),
                             // )
                         ),
@@ -93,7 +91,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                   chat: element,
                   press: () => {
                     print("contact with ${element.name}"),
-                    contactController.changeState(index, element),
+                    contactController.changeState(element, screenWidth, screenHeight),
                     // print(contactController.getStateByChat(element)),
                     // Get.to(() => MessagesScreen()),
                   },
