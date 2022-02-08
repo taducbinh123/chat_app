@@ -5,6 +5,7 @@ import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
 import 'package:hello_world_flutter/features/features.dart';
 import 'package:hello_world_flutter/view/call/call_screen.dart';
 import 'package:hello_world_flutter/view/contact/contact_view.dart';
+import 'package:hello_world_flutter/view/setting/setting_screen.dart';
 
 import 'chat_screen.dart';
 

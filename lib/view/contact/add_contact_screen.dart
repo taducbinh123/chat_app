@@ -1,10 +1,10 @@
-import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
-import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact_add.dart';
+import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
@@ -16,6 +16,9 @@ class AddContactScreen extends GetView<ContactScreenController> {
   Widget build(BuildContext context) {
     ContactScreenController contactController = Get.find();
     ChatScreenController chatController = Get.find();
+    var _mediaQueryData = MediaQuery.of(context);
+    double screenWidth = _mediaQueryData.size.width;
+    double screenHeight = _mediaQueryData.size.height;
 
     return Scaffold(
       appBar: searchAppBar(context),
@@ -31,11 +34,19 @@ class AddContactScreen extends GetView<ContactScreenController> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Obx(() => AutoSizeText(
-                              contactController.listNameChoose.value,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 10,
-                            )),
+                        child:
+                      // Obx(() =>
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+
+
+                                ],
+                              ),
+                            // )
+                        ),
+
                       ),
                       ElevatedButton(
                           child: Text("Tạo mới"),

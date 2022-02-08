@@ -4,14 +4,18 @@ import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/chat_input_field.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
+import 'package:hello_world_flutter/view/setting/setting_screen.dart';
 
 import 'message/message.dart';
 
 class MessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var _mediaQueryData = MediaQuery.of(context);
+    double screenWidth = _mediaQueryData.size.width;
+    double screenHeight = _mediaQueryData.size.height;
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(screenWidth, screenHeight),
       body: Column(
         children: [
           Expanded(
@@ -30,7 +34,7 @@ class MessagesScreen extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(screenWidth, screenHeight) {
     return AppBar(
       backgroundColor: kPrimaryColor,
       automaticallyImplyLeading: false,
@@ -39,7 +43,10 @@ class MessagesScreen extends StatelessWidget {
         child: Row(
           children: [
             BackButton(),
-            UserCircle(),
+            UserCircle(
+              height: screenWidth * 0.1,
+              width: screenHeight * 0.05,
+            ),
             SizedBox(width: kDefaultPadding * 0.75),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,6 +75,12 @@ class MessagesScreen extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.videocam),
           onPressed: () {},
+        ),
+        IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () {
+            Get.to(SettingScreen());
+          },
         ),
         SizedBox(width: kDefaultPadding / 2),
       ],

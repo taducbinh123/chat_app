@@ -16,6 +16,9 @@ import 'package:hello_world_flutter/view/contact/add_contact_screen.dart';
 class ChatScreen extends GetView<ContactScreenController> {
   @override
   Widget build(BuildContext context) {
+    var _mediaQueryData = MediaQuery.of(context);
+    double screenWidth = _mediaQueryData.size.width;
+    double screenHeight = _mediaQueryData.size.height;
     final contactController = Get.put(ContactScreenController());
     final chatController = Get.put(ChatScreenController());
     bool check = false;
@@ -25,7 +28,10 @@ class ChatScreen extends GetView<ContactScreenController> {
           Container(
             color: kPrimaryColor,
             child: ChatAppBar(
-              title: UserCircle(),
+              title: UserCircle(
+                height: screenHeight*0.06,
+                width: screenWidth*0.12,
+              ),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(
