@@ -55,7 +55,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                                 time: DateTime.now().toString(),
                                 isActive: true,
                                 image: ""));
-
+                            contactController.listAvatarChoose.clear();
                             // chatController.updateChats();
                             Get.back();
                             // Get.toNamed(chatscreen);
