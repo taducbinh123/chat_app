@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:hello_world_flutter/view/setting/setting_screen.dart';
+
 
 const contact = '/Contact_Screen';
 const chatscreen = '/Chat_Screen';

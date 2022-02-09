@@ -4,11 +4,9 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact_add.dart';
-import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
-import 'package:hello_world_flutter/view/chat_screen.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddContactScreen extends GetView<ContactScreenController> {

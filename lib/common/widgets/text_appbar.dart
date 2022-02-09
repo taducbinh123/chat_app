@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
 
 class TextAppBar extends StatelessWidget {
   TextAppBar({Key? key, required this.title}) : super(key: key);

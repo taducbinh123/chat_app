@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
 
 class CustomAvatarContact extends StatelessWidget {
@@ -16,7 +14,6 @@ class CustomAvatarContact extends StatelessWidget {
   final VoidCallback press;
   @override
   Widget build(BuildContext context) {
-    ContactScreenController contactController = Get.find<ContactScreenController>();
     // TODO: implement build
     return Container(
       child:  InkWell(

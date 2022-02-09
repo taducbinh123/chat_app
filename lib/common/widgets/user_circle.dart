@@ -8,14 +8,7 @@ class UserCircle extends StatelessWidget {
   var width;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        backgroundColor: blackColor,
-        builder: (context) => Container(),
-      ),
-      child: Container(
+    return  Container(
         height: height,
         width: width,
         decoration: BoxDecoration(
@@ -49,7 +42,6 @@ class UserCircle extends StatelessWidget {
             )
           ],
         ),
-      ),
     );
   }
 }

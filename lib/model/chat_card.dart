@@ -1,5 +1,4 @@
 
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class Chat{
   final String id,name, lastMessage, image, time;
