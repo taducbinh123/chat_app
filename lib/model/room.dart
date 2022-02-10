@@ -35,7 +35,7 @@ class Room {
 
 var roomsData = [
   Room(
-      listChats: [chatsData[0]],
+      listChats: [chatsData[0],chatsData[1]],
       roomUid: "1",
       regDate: DateTime.now(),
       modiDate: DateTime.now(),
