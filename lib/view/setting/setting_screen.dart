@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
+import 'package:hello_world_flutter/model/room.dart';
+import 'package:hello_world_flutter/view/room_member/room_member_screen.dart';
 
 List _elements = [
   {'name': 'Add Member', 'group': 'Room Info'},
@@ -82,7 +84,11 @@ class SettingScreen extends StatelessWidget {
                       title: Text(element['name']),
                       trailing: Icon(Icons.arrow_forward),
                       onTap: () => {
+                        if(element['name'].toString() == 'Room Member'){
+                          Get.to(() => RoomMemberScreen(room: roomsData[0])),
+                        }else{
 
+                        }
                       },
                     ),
                   ),
