@@ -81,6 +81,9 @@ class SettingScreen extends StatelessWidget {
                     child: ListTile(
                       title: Text(element['name']),
                       trailing: Icon(Icons.arrow_forward),
+                      onTap: () => {
+
+                      },
                     ),
                   ),
                 );
