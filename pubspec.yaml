@@ -37,6 +37,7 @@ dependencies:
   search_app_bar_page: ^2.1.2
   equatable: ^2.0.3
   auto_size_text: ^3.0.0
+  socket_io_client: ^1.0.2
 
 dev_dependencies:
   flutter_test:

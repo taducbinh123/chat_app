@@ -9,7 +9,6 @@ import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
-
 import 'package:hello_world_flutter/view/contact/add_contact_screen.dart';
 
 class ChatScreen extends GetView<ContactScreenController> {
@@ -18,8 +17,11 @@ class ChatScreen extends GetView<ContactScreenController> {
     var _mediaQueryData = MediaQuery.of(context);
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
+
     final contactController = Get.put(ContactScreenController());
     final chatController = Get.put(ChatScreenController());
+
+
     bool check = false;
     return Scaffold(
       body: Column(
@@ -28,8 +30,8 @@ class ChatScreen extends GetView<ContactScreenController> {
             color: kPrimaryColor,
             child: ChatAppBar(
               title: UserCircle(
-                height: screenHeight*0.06,
-                width: screenWidth*0.12,
+                height: screenHeight * 0.06,
+                width: screenWidth * 0.12,
               ),
               actions: <Widget>[
                 IconButton(
@@ -53,7 +55,7 @@ class ChatScreen extends GetView<ContactScreenController> {
             ),
           ),
           Obx(
-                () => Visibility(
+            () => Visibility(
                 visible: chatController.state.value,
                 child: TextFieldSearch(
                     textEditingController: chatController.searchController,
@@ -66,8 +68,9 @@ class ChatScreen extends GetView<ContactScreenController> {
                 itemCount: chatController.chatTempList.length,
                 itemBuilder: (context, index) => CustomAvatar(
                   chat: chatController.chatTempList.value[index],
-                  press: () => Get.toNamed(messagescreen,
-                      arguments: {"data": chatController.chatTempList.value[index]}),
+                  press: () => Get.toNamed(messagescreen, arguments: {
+                    "data": chatController.chatTempList.value[index]
+                  }),
                 ),
               ),
             ),
