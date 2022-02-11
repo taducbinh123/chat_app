@@ -42,7 +42,6 @@ class AddContactScreen extends GetView<ContactScreenController> {
                               ),
                             // )
                         ),
-
                       ),
                       ElevatedButton(
                           child: Text("Tạo mới"),
