@@ -6,21 +6,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatScreenController extends GetxController {
   var state = false.obs;
-  var EVENTS = [
-    'connect',
-    'connect_error',
-    'connect_timeout',
-    'connecting',
-    'disconnect',
-    'error',
-    'reconnect',
-    'reconnect_attempt',
-    'reconnect_failed',
-    'reconnect_error',
-    'reconnecting',
-    'ping',
-    'pong'
-  ];
+
   var test = "".obs;
 
   TextEditingController searchController = TextEditingController();
@@ -43,17 +29,45 @@ class ChatScreenController extends GetxController {
   }
 
   void connect() {
+    // const URI_SERVER="wss://demo.piesocket.com/v3/channel_1?api_key=oCdCMcMPQpbvNjUIzqtvF1d2X2okWpDQj4AwARJuAgtjhzKxVEjQU6IdCjwm&notify_self";
+    // IO.Socket socket = IO.io(
+    //     URI_SERVER,
+    //     IO.OptionBuilder().setTransports(['websocket']) // for Flutter or Dart VM
+    //         .setExtraHeaders({'foo': 'bar'}) // optional
+    //         .build());
+    //
+    // socket.onConnect((_) {
+    //   print('connect1');
+    // });
+    // // Replace 'onConnect' with any of the above events.
+    // socket.onConnect((_) {
+    //   print('connect');
+    // });
+    // socket.on('connect_error', (data) {
+    //   print(data);
+    // });
+    // socket.onDisconnect((_) => print('disconnect'));
 
-    IO.Socket socket = IO.io("http://localhost:8800/socket.io/",<String, dynamic>{
+    IO.Socket socket = IO.io("http://192.168.0.43:8800", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
-    }
-    );
-    IO.Socket roomSocket = IO.io("http://localhost:8800"+"/room",<String, dynamic>{
+    });
+    IO.Socket roomSocket =
+        IO.io("http://192.168.0.43:8800" + "/room", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
     socket.connect();
+    socket.onConnect((_) {
+      if (socket.connected) {
+        print('socket connected');
+      }
+    });
+    socket.on('connect', (_) => print(socket.connected));
+    print("isConnected to " + socket.connected.toString());
+    socket.on('disconnect', (_) => print('disconnect'));
+    socket.on('fromServer', (_) => print(_));
+
     roomSocket.connect();
     socket.onConnect((data) {
       print('connect');
@@ -63,7 +77,7 @@ class ChatScreenController extends GetxController {
     socket.on('create', (data) => {print(data)});
     socket.on('exception', (data) => print("event exception" + data));
     socket.on('disconnect', (data) => print("Disconnected" + data));
-    print("isConnected to "+socket.connected.toString());
+
   }
 
   addChat(var chat) {
