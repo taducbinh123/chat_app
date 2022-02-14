@@ -68,9 +68,12 @@ class ChatScreen extends GetView<ContactScreenController> {
                 itemCount: chatController.chatTempList.length,
                 itemBuilder: (context, index) => CustomAvatar(
                   chat: chatController.chatTempList.value[index],
-                  press: () => Get.toNamed(messagescreen, arguments: {
-                    "data": chatController.chatTempList.value[index]
-                  }),
+                  press: () => {
+                    Get.toNamed(messagescreen, arguments: {
+                      "data": chatController.chatTempList.value[index]
+                    }),
+                    chatController.connect(),
+                  },
                 ),
               ),
             ),

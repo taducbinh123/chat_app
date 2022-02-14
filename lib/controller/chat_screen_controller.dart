@@ -48,12 +48,12 @@ class ChatScreenController extends GetxController {
     // });
     // socket.onDisconnect((_) => print('disconnect'));
 
-    IO.Socket socket = IO.io("http://192.168.0.43:8800", <String, dynamic>{
+    IO.Socket socket = IO.io("http://10.0.2.2:8800", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
     IO.Socket roomSocket =
-        IO.io("http://192.168.0.43:8800" + "/room", <String, dynamic>{
+        IO.io("http://10.0.2.2:8800" + "/room", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
@@ -69,15 +69,25 @@ class ChatScreenController extends GetxController {
     socket.on('fromServer', (_) => print(_));
 
     roomSocket.connect();
-    socket.onConnect((data) {
+    roomSocket.onConnect((data) {
       print('connect');
-
+      roomSocket.emit('createGroup', {"test": 'test'});
+      roomSocket
+          .emitWithAck("getRoomsByUserUid", {"userUid": "20170928174704927015"},
+              ack: (data) {
+        // print('ack $data');
+        if (data != null) {
+          print('from server');
+          print(data);
+        } else {
+          print("Null");
+        }
+      });
+      print(data);
     });
-    roomSocket.emit('createGroup', { test: 'test' });
     socket.on('create', (data) => {print(data)});
     socket.on('exception', (data) => print("event exception" + data));
     socket.on('disconnect', (data) => print("Disconnected" + data));
-
   }
 
   addChat(var chat) {
