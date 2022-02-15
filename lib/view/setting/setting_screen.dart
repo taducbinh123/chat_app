@@ -84,11 +84,11 @@ class SettingScreen extends StatelessWidget {
                       title: Text(element['name']),
                       trailing: Icon(Icons.arrow_forward),
                       onTap: () => {
-                        if(element['name'].toString() == 'Room Member'){
-                          Get.to(() => RoomMemberScreen(room: roomsData[0])),
-                        }else{
-
-                        }
+                        // if(element['name'].toString() == 'Room Member'){
+                        //   Get.to(() => RoomMemberScreen(room: roomsData[0])),
+                        // }else{
+                        //
+                        // }
                       },
                     ),
                   ),

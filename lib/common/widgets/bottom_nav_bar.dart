@@ -18,25 +18,25 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
               icon: Icon(
                 Icons.message,
               ),
-              title: Text('Chats'),
+              label: 'Chats',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.phone,
               ),
-              title: Text('Calls'),
+              label: 'Calls',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.contacts,
               ),
-              title: Text('Contacts'),
+              label: 'Contacts',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
               ),
-              title: Text('Home'),
+              label: 'Home',
             ),
           ],
           currentIndex: navBarController.selectedIndex,

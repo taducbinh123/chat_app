@@ -33,17 +33,17 @@ class RoomMemberScreen extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: room.listChats.length,
-                itemBuilder: (context, index) => CustomAvatarContact(
-                  chat: room.listChats[index],
-                  press: () => {
-
-                  },
-                ),
-              ),
-            )
+            // Expanded(
+            //   child: ListView.builder(
+            //     itemCount: room.listChats.length,
+            //     itemBuilder: (context, index) => CustomAvatarContact(
+            //       chat: room.listChats[index],
+            //       press: () => {
+            //
+            //       },
+            //     ),
+            //   ),
+            // )
           ],
         ));
   }
