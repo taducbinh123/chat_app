@@ -72,7 +72,6 @@ class ChatScreen extends GetView<ContactScreenController> {
                     Get.toNamed(messagescreen, arguments: {
                       "data": chatController.chatTempList.value[index]
                     }),
-                    chatController.connect(),
                   },
                 ),
               ),

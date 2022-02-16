@@ -67,7 +67,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
           ),
           Expanded(
             child: Obx(
-              () => GroupedListView<Employee, String>(
+              () => GroupedListView<dynamic, String>(
                 elements: contactController.contactList.value,
                 groupBy: (element) => element.USER_NM_ENG[0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
