@@ -90,4 +90,7 @@ class Employee {
 
     return data;
   }
+
+  List<Employee> listFromJson(list) =>
+      List<Employee>.from(list.map((x) => Employee.fromJson(x)));
 }

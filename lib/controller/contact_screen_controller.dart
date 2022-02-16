@@ -10,6 +10,9 @@ import 'package:hello_world_flutter/provider/contact_view_provider.dart';
 
 class ContactScreenController extends GetxController {
 
+  // final contactProvider = Get.put(ContactViewProvider());
+
+  ContactViewProvider contactViewProvider = ContactViewProvider();
   TextEditingController searchController = TextEditingController();
 
   List<SelectCircle> listAvatarChoose = [];
@@ -24,14 +27,14 @@ class ContactScreenController extends GetxController {
   }
 
   initDataEmployee(String userUid){
-    var data;
-    ContactViewProvider().getEmployee(userUid).then((value) {
-      data = value.body;
-      print(data);
-      print(value.toString());
-    }, onError: (err) {
-
-        });
+    var data = contactViewProvider.getEmployee(userUid);
+    // contactProvider.getEmployee(userUid).then((value) {
+    //   data = value.body;
+    //   print(data);
+    //   print(value.body);
+    // }, onError: (err) {
+    //
+    //     });
 
   }
 
