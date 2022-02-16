@@ -1,10 +1,12 @@
 // import 'dart:js';
 
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
+import 'package:hello_world_flutter/provider/contact_view_provider.dart';
 
 class ContactScreenController extends GetxController {
 
@@ -18,6 +20,19 @@ class ContactScreenController extends GetxController {
   // var contactTempList = chatsData.obs;
   ContactScreenController(){
     resetState();
+    initDataEmployee('20170928174704927015');
+  }
+
+  initDataEmployee(String userUid){
+    var data;
+    ContactViewProvider().getEmployee(userUid).then((value) {
+      data = value.body;
+      print(data);
+      print(value.toString());
+    }, onError: (err) {
+
+        });
+
   }
 
   var listContactChoose = [].obs;

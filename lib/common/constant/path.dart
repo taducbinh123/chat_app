@@ -13,3 +13,4 @@ const roomMemberScreen = '/room_member_screen';
 
 
 const chatApiHost= 'http://localhost:8800';
+const imwareApiHost= 'http://localhost:9090';

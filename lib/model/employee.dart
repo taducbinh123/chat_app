@@ -21,24 +21,24 @@ class Employee {
 
   Employee(
       {this.USER_CHECK,
-        this.USER_NM_KOR,
-       this.USE_CHECK,
-       this.USER_EMAIL,
-       this.USER_ID,
-       this.USER_UID,
-       this.DEPT_NM,
-       this.DEPT_CD,
-       this.DEPT_LEV,
+      this.USER_NM_KOR,
+      this.USE_CHECK,
+      this.USER_EMAIL,
+      this.USER_ID,
+      this.USER_UID,
+      this.DEPT_NM,
+      this.DEPT_CD,
+      this.DEPT_LEV,
       this.ROOM_OPEN_CHECK,
-       this.ONLINE_YN,
-       this.POSITION,
-       this.POSITION_ORDER,
-       this.USER_PHONE,
+      this.ONLINE_YN,
+      this.POSITION,
+      this.POSITION_ORDER,
+      this.USER_PHONE,
       this.UP_DEPT_CODE,
-       this.USER_NM_ENG,
-       this.USER_IMG,
-       this.ADDED_FRIEND,
-       this.IS_FRIEND});
+      this.USER_NM_ENG,
+      this.USER_IMG,
+      this.ADDED_FRIEND,
+      this.IS_FRIEND});
 
   @override
   String toString() {
