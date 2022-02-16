@@ -50,7 +50,7 @@ class SettingScreen extends StatelessWidget {
             height: 8,
           ),
           AutoSizeText(
-            Get.arguments['data'].name,
+            Get.arguments['data'].roomDefaultName,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
             overflow: TextOverflow.ellipsis,
             maxLines: 2,

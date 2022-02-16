@@ -11,7 +11,7 @@ class Employee {
   String? ROOM_OPEN_CHECK;
   String? ONLINE_YN;
   String? POSITION;
-  String? POSITION_ORDER;
+  int? POSITION_ORDER;
   String? USER_PHONE;
   String? UP_DEPT_CODE;
   String? USER_NM_ENG;

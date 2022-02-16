@@ -6,6 +6,7 @@ import 'package:hello_world_flutter/common/widgets/chat_input_field.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
+import 'package:hello_world_flutter/model/room.dart';
 
 import 'message/message.dart';
 
@@ -53,16 +54,16 @@ class MessagesScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Get.arguments['data'].name,
+                  Get.arguments['data'].roomDefaultName,
                   style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                 ),
-                Text(
-                  Get.arguments['data'].isActive
-                      ? "Online now"
-                      : "Last active " + Get.arguments['data'].time,
-                  style: TextStyle(fontSize: 12),
-                )
+                // Text(
+                //   Get.arguments['data'].isActive
+                //       ? "Online now"
+                //       : "Last active " + Get.arguments['data'].time,
+                //   style: TextStyle(fontSize: 12),
+                // )
               ],
             )
           ],
@@ -80,8 +81,8 @@ class MessagesScreen extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {
-            Chat chat = Get.arguments['data'];
-            Get.toNamed(settingScreen, arguments: {"data": chat});
+            Room room = Get.arguments['data'];
+            Get.toNamed(settingScreen, arguments: {"data": room});
           },
         ),
         SizedBox(width: kDefaultPadding / 2),

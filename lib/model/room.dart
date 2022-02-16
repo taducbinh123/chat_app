@@ -1,33 +1,64 @@
-
 import 'package:hello_world_flutter/model/message.dart';
 
 class Room {
-  final String roomUid;
-  final DateTime regDate;
-  final DateTime modiDate;
-  final String regUserUid;
-  final String modiUserUid;
-  final String roomDefaultName;
-  final String roomType;
-  final String keyRoom;
-  final String roomImg;
-  final String notifyType;
-  final String messageUid;
+  String roomUid;
+  String regDate;
+  String modiDate;
+  String regUserUid;
+  String? modiUserUid;
+  String roomDefaultName;
+  String roomType;
+  String keyRoom;
+  String? roomImg;
+  String? notifyType;
+  int lastMsgUid;
+  MessageModel messageModel;
 
+  Room({
+    required this.roomUid,
+    required this.regDate,
+    required this.modiDate,
+    required this.regUserUid,
+    this.modiUserUid,
+    required this.roomDefaultName,
+    required this.roomType,
+    required this.keyRoom,
+    this.roomImg,
+    this.notifyType,
+    required this.lastMsgUid,
+    required this.messageModel,
+  });
 
-  Room(
-      {required this.roomUid,
-      required this.regDate,
-      required this.modiDate,
-      required this.regUserUid,
-      required this.modiUserUid,
-      required this.roomDefaultName,
-      required this.roomType,
-      required this.keyRoom,
-      required this.roomImg,
-      required this.notifyType,
-      required this.messageUid,
-      });
+  Room.fromJson(Map<dynamic, dynamic> json)
+      : roomUid = json['ROOM_UID'] as String,
+        regDate = json['REG_DATE'] as String,
+        modiDate = json['MODI_DATE'] as String,
+        regUserUid = json['REG_USER_UID'] as String,
+        modiUserUid = json['MODI_USER_UID'],
+        roomDefaultName = json['ROOM_DEFAULT_NAME'] as String,
+        roomType = json['ROOM_TYPE'] as String,
+        keyRoom = json['KEY_ROOM'] as String,
+        roomImg = json['ROOM_IMG'],
+        notifyType = json['NOTIFY_TYPE'],
+        lastMsgUid = json['LAST_MSG_UID'],
+        messageModel = MessageModel.fromJson(json['LAST_MSG']);
+
+  Map<dynamic, dynamic> toJson() {
+    return {
+      'ROOM_UID': roomUid,
+      'REG_DATE': regDate,
+      'MODI_DATE': modiDate,
+      'REG_USER_UID': regUserUid,
+      'MODI_USER_UID': modiUserUid,
+      'ROOM_DEFAULT_NAME': roomDefaultName,
+      'ROOM_TYPE': roomType,
+      'KEY_ROOM': keyRoom,
+      'ROOM_IMG': roomImg,
+      'NOTIFY_TYPE': notifyType,
+      'LAST_MSG_UID': lastMsgUid,
+      'LAST_MSG':messageModel
+    };
+  }
 
   @override
   String toString() {

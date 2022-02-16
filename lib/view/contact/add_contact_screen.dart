@@ -66,7 +66,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
           ),
           Expanded(
             child: Obx(
-              () => GroupedListView<Chat, String>(
+              () => GroupedListView<dynamic, String>(
                 elements: contactController.contactList.value,
                 groupBy: (element) => element.name[0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
@@ -117,7 +117,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => {
                 Get.back(),
-                contactController.contactList.value = chatsData,
+                contactController.contactList.value = [],
                 contactController.listNameChoose.value = "",
                 contactController.listContactChoose.value = [],
                 contactController.resetState(),
@@ -144,7 +144,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                 onPressed: () {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
-                  contactController.contactList.value = chatsData;
+                  contactController.contactList.value = [];
                 },
               ),
               border: InputBorder.none,

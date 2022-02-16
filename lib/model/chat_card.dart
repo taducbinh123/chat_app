@@ -14,7 +14,7 @@ class Chat{
   });
 
 }
-
+var chatsData1 = [];
 var chatsData = [
   Chat(
     id : '1',

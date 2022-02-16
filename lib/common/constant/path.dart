@@ -12,5 +12,5 @@ const settingScreen = '/Setting_screen';
 const roomMemberScreen = '/room_member_screen';
 
 
-const chatApiHost= 'http://localhost:8800';
-const imwareApiHost= 'http://localhost:9090';
+const chatApiHost= 'http://10.0.2.2:8800';
+const imwareApiHost= 'http://10.0.2.2:9090';

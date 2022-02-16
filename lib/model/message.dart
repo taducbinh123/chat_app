@@ -1,60 +1,42 @@
 class MessageModel {
-  String? mSGCONT;
-  String? mSGUID;
-  String? uSERNMENG;
-  String? uSERNMKOR;
-  String? rYN;
-  String? uSERIMG;
-  String? rEADMEMBERS;
-  String? uSERID;
-  String? rOOMUID;
-  String? uSERUID;
-  String? mSGTYPECODE;
-  int? sENDDATE;
+  String? ROOM_UID;
+  String? MSG_UID;
+  late String MSG_CONT;
+  String? MSG_TYPE_CODE;
+  late String SEND_DATE;
+  String? USER_UID;
 
   MessageModel(
-      {this.mSGCONT,
-      this.mSGUID,
-      this.uSERNMENG,
-      this.uSERNMKOR,
-      this.rYN,
-      this.uSERIMG,
-      this.rEADMEMBERS,
-      this.uSERID,
-      this.rOOMUID,
-      this.uSERUID,
-      this.mSGTYPECODE,
-      this.sENDDATE});
+      {this.ROOM_UID,
+      this.MSG_UID,
+      required this.MSG_CONT,
+      this.MSG_TYPE_CODE,
+      required this.SEND_DATE,
+      this.USER_UID});
+
+  @override
+  String toString() {
+    return 'MessageModel{ROOM_UID: $ROOM_UID, MSG_UID: $MSG_UID, MSG_CONT: $MSG_CONT, MSG_TYPE_CODE: $MSG_TYPE_CODE, SEND_DATE: $SEND_DATE, USER_UID: $USER_UID}';
+  }
 
   MessageModel.fromJson(Map<String, dynamic> json) {
-    mSGCONT = json['MSG_CONT'];
-    mSGUID = json['MSG_UID'];
-    uSERNMENG = json['USER_NM_ENG'];
-    uSERNMKOR = json['USER_NM_KOR'];
-    rYN = json['RYN'];
-    uSERIMG = json['USER_IMG'];
-    rEADMEMBERS = json['READ_MEMBERS'];
-    uSERID = json['USER_ID'];
-    rOOMUID = json['ROOM_UID'];
-    uSERUID = json['USER_UID'];
-    mSGTYPECODE = json['MSG_TYPE_CODE'];
-    sENDDATE = json['SEND_DATE'];
+    ROOM_UID = json['ROOM_UID'] as String;
+    MSG_UID = json['MSG_UID'] as String;
+    MSG_CONT = json['MSG_CONT'] as String;
+    MSG_TYPE_CODE = json['MSG_TYPE_CODE'] as String;
+    SEND_DATE = json['SEND_DATE'] as String;
+    USER_UID = json['USER_UID'] as String;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['MSG_CONT'] = this.mSGCONT;
-    data['MSG_UID'] = this.mSGUID;
-    data['USER_NM_ENG'] = this.uSERNMENG;
-    data['USER_NM_KOR'] = this.uSERNMKOR;
-    data['RYN'] = this.rYN;
-    data['USER_IMG'] = this.uSERIMG;
-    data['READ_MEMBERS'] = this.rEADMEMBERS;
-    data['USER_ID'] = this.uSERID;
-    data['ROOM_UID'] = this.rOOMUID;
-    data['USER_UID'] = this.uSERUID;
-    data['MSG_TYPE_CODE'] = this.mSGTYPECODE;
-    data['SEND_DATE'] = this.sENDDATE;
+    data['ROOM_UID'] = this.ROOM_UID;
+    data['MSG_UID'] = this.MSG_UID;
+    data['MSG_CONT'] = this.MSG_CONT;
+    data['MSG_TYPE_CODE'] = this.MSG_TYPE_CODE;
+    data['SEND_DATE'] = this.SEND_DATE;
+    data['USER_UID'] = this.USER_UID;
+
     return data;
   }
 }

@@ -1,33 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 import 'package:hello_world_flutter/model/room.dart';
+
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class ChatScreenController extends GetxController {
-  var state = false.obs;
-  var test = "".obs;
-  var chatsData = [].obs;
-  TextEditingController searchController = TextEditingController();
-  var chatTempList = [].obs;
-  chatNameSearch(String name) {
-    if (name.isEmpty) {
-      chatTempList.value = chatsData;
-    } else {
-      chatTempList.value = chatsData
-          .where((element) =>
-              element.name.toLowerCase().contains(name.toLowerCase()))
-          .toList();
-    }
-  }
+abstract class ChatScreenRepos extends GetxService {
+  List<Room> getRoom();
+}
 
+class ChatScreenService extends ChatScreenRepos {
   @override
-  void onInit() {
-    connect();
-    super.onInit();
-  }
-
-  connect() {
+  List<Room> getRoom() {
+    List<Room> rooms = [];
     IO.Socket socket = IO.io("http://10.0.2.2:8800", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
@@ -64,9 +47,8 @@ class ChatScreenController extends GetxController {
           print(data[0]);
           for (int i = 0; i < result.length; i++) {
             Room rm = Room.fromJson(result[i] as Map<dynamic, dynamic>);
-            chatsData.add(rm);
+            rooms.add(rm);
           }
-          chatTempList = chatsData;
         } else {
           print("Null");
         }
@@ -75,13 +57,6 @@ class ChatScreenController extends GetxController {
     socket.on('create', (data) => {});
     socket.on('exception', (data) => print("event exception" + data));
     socket.on('disconnect', (data) => print("Disconnected" + data));
-  }
-
-  addChat(var chat) {
-    chatTempList.add(chat);
-  }
-
-  onPress(var check) {
-    state.value = check;
+    return rooms;
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
+import 'package:hello_world_flutter/model/room.dart';
 
 class CustomAvatar extends StatelessWidget {
   const CustomAvatar({
@@ -11,7 +12,7 @@ class CustomAvatar extends StatelessWidget {
     required this.press,
   }) : super(key: key);
 
-  final Chat chat;
+  final Room chat;
   final VoidCallback press;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class CustomAvatar extends StatelessWidget {
                 CircleAvatar(
                   radius: 24,
                 ),
-                if (chat.isActive)
+                // if (true)
                   Positioned(
                     right: 0,
                     bottom: 0,
@@ -54,7 +55,7 @@ class CustomAvatar extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AutoSizeText(
-                      chat.name,
+                      chat.roomDefaultName,
                       style: TextStyle(fontWeight: FontWeight.w500),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 10,
@@ -63,7 +64,7 @@ class CustomAvatar extends StatelessWidget {
                     Opacity(
                       opacity: 0.64,
                       child: Text(
-                        chat.lastMessage,
+                        chat.messageModel.MSG_CONT,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -74,7 +75,7 @@ class CustomAvatar extends StatelessWidget {
             ),
             Opacity(
               opacity: 0.64,
-              child: Text(chat.time),
+              child: Text(chat.messageModel.SEND_DATE),
             ),
           ],
         ),
