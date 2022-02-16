@@ -67,7 +67,7 @@ class CustomAvatarContactAdd extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            employee.USER_NM_ENG,
+                            employee.USER_NM_KOR,
                             style:
                             TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                           ),

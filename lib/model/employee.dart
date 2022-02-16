@@ -2,7 +2,7 @@ class Employee {
   String USER_CHECK;
   String USER_NM_KOR;
   String USE_CHECK;
-  String USER_EMAIL;
+  String? USER_EMAIL;
   String USER_ID;
   String USER_UID;
   String DEPT_NM;
@@ -12,9 +12,9 @@ class Employee {
   String ONLINE_YN;
   String POSITION;
   int POSITION_ORDER;
-  String USER_PHONE;
-  String UP_DEPT_CODE;
-  String USER_NM_ENG;
+  String? USER_PHONE;
+  String? UP_DEPT_CODE;
+  String? USER_NM_ENG;
   String USER_IMG;
   String ADDED_FRIEND;
   int IS_FRIEND;
@@ -23,7 +23,7 @@ class Employee {
       required this.USER_CHECK,
     required this.USER_NM_KOR,
     required this.USE_CHECK,
-    required this.USER_EMAIL,
+    this.USER_EMAIL,
     required this.USER_ID,
     required this.USER_UID,
     required this.DEPT_NM,
@@ -33,9 +33,9 @@ class Employee {
     required this.ONLINE_YN,
     required this.POSITION,
     required this.POSITION_ORDER,
-    required this.USER_PHONE,
-    required this.UP_DEPT_CODE,
-    required this.USER_NM_ENG,
+    this.USER_PHONE,
+    this.UP_DEPT_CODE,
+    this.USER_NM_ENG,
     required this.USER_IMG,
     required this.ADDED_FRIEND,
     required this.IS_FRIEND});
@@ -61,7 +61,7 @@ class Employee {
         POSITION : json['POSITION'],
         POSITION_ORDER : json['POSITION_ORDER'],
         USER_PHONE : json['USER_PHONE'],
-        UP_DEPT_CODE : json['UP_DEPT_CODE'].toString() != Null ?  json['UP_DEPT_CODE'] : "",
+        UP_DEPT_CODE : json['UP_DEPT_CODE'],
         USER_NM_ENG : json['USER_NM_ENG'],
         USER_IMG : json['USER_IMG'],
         ADDED_FRIEND : json['ADDED_FRIEND'],

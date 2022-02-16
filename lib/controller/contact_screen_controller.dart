@@ -83,7 +83,7 @@ class ContactScreenController extends GetxController {
     } else {
       contactList.value = initData
           .where((element) =>
-              element.USER_NM_ENG.toLowerCase().contains(name.toLowerCase()))
+              element.USER_NM_KOR.toLowerCase().contains(name.toLowerCase()))
           .toList();
       // chatsData.forEach((element) {
       //   if(element.name.toLowerCase().contains(name.toLowerCase())){

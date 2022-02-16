@@ -69,10 +69,10 @@ class AddContactScreen extends GetView<ContactScreenController> {
             child: Obx(
               () => GroupedListView<dynamic, String>(
                 elements: contactController.contactList.value,
-                groupBy: (element) => element.USER_NM_ENG[0].toString().toUpperCase(),
+                groupBy: (element) => element.USER_NM_KOR[0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
                 itemComparator: (item1, item2) =>
-                    item1.USER_NM_ENG.toString().compareTo(item2.USER_NM_ENG.toString()),
+                    item1.USER_NM_KOR.toString().compareTo(item2.USER_NM_KOR.toString()),
                 order: GroupedListOrder.DESC,
                 useStickyGroupSeparators: true,
                 groupSeparatorBuilder: (String value) => Padding(
