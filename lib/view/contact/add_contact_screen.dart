@@ -7,6 +7,7 @@ import 'package:hello_world_flutter/common/widgets/avatar_contact_add.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
+import 'package:hello_world_flutter/model/employee.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddContactScreen extends GetView<ContactScreenController> {
@@ -26,7 +27,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
             height: 20,
           ),
           Obx(() => Visibility(
-                visible: contactController.listNameChoose.value != "",
+                visible: contactController.listContactChoose.value.length != 0,
                 child: Container(
                   padding: EdgeInsets.fromLTRB(25.0, 0.0, 8.0, 0.0),
                   child: Row(
@@ -46,12 +47,12 @@ class AddContactScreen extends GetView<ContactScreenController> {
                       ElevatedButton(
                           child: Text("Tạo mới"),
                           onPressed: () {
-                            chatController.addChat(Chat(
-                                name: contactController.listNameChoose.value,
-                                lastMessage: "",
-                                time: DateTime.now().toString(),
-                                isActive: true,
-                                image: ""));
+                            // chatController.addChat(Chat(
+                            //     name: contactController.listNameChoose.value,
+                            //     lastMessage: "",
+                            //     time: DateTime.now().toString(),
+                            //     isActive: true,
+                            //     image: ""));
                             contactController.listAvatarChoose.clear();
                             // chatController.updateChats();
                             Get.back();
@@ -66,12 +67,12 @@ class AddContactScreen extends GetView<ContactScreenController> {
           ),
           Expanded(
             child: Obx(
-              () => GroupedListView<Chat, String>(
+              () => GroupedListView<Employee, String>(
                 elements: contactController.contactList.value,
-                groupBy: (element) => element.name[0].toString().toUpperCase(),
+                groupBy: (element) => element.USER_NM_ENG[0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
                 itemComparator: (item1, item2) =>
-                    item1.name.toString().compareTo(item2.name.toString()),
+                    item1.USER_NM_ENG.toString().compareTo(item2.USER_NM_ENG.toString()),
                 order: GroupedListOrder.DESC,
                 useStickyGroupSeparators: true,
                 groupSeparatorBuilder: (String value) => Padding(
@@ -85,9 +86,9 @@ class AddContactScreen extends GetView<ContactScreenController> {
                 // showPreview: true,
                 indexedItemBuilder: (context, element, index) =>
                     CustomAvatarContactAdd(
-                  chat: element,
+                  employee: element,
                   press: () => {
-                    print("contact with ${element.name}"),
+                    print("contact with ${element.USER_NM_ENG}"),
                     contactController.changeState(element, screenWidth, screenHeight),
                     // print(contactController.getStateByChat(element)),
                     // Get.to(() => MessagesScreen()),
@@ -117,8 +118,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => {
                 Get.back(),
-                contactController.contactList.value = chatsData,
-                contactController.listNameChoose.value = "",
+                contactController.contactList.value = contactController.initData,
                 contactController.listContactChoose.value = [],
                 contactController.resetState(),
                 contactController.listAvatarChoose.clear(),
@@ -144,7 +144,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                 onPressed: () {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
-                  contactController.contactList.value = chatsData;
+                  contactController.contactList.value = contactController.initData;
                 },
               ),
               border: InputBorder.none,

@@ -12,6 +12,7 @@ import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 
 import 'package:hello_world_flutter/model/chat_card.dart';
 import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
+import 'package:hello_world_flutter/model/employee.dart';
 
 
 class ContactView extends GetView<ContactScreenController> {
@@ -33,12 +34,12 @@ class ContactView extends GetView<ContactScreenController> {
               onChanged: contactController.contactNameSearch),
           Expanded(
             child: Obx(
-              () => GroupedListView<Chat, String>(
+              () => GroupedListView<dynamic, String>(
                 elements: contactController.contactList.value,
-                groupBy: (element) => element.name[0].toString().toUpperCase(),
+                groupBy: (element) => element.USER_NM_ENG![0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
                 itemComparator: (item1, item2) =>
-                    item1.name.toString().compareTo(item2.name.toString()),
+                    item1.USER_NM_ENG.toString().compareTo(item2.USER_NM_ENG.toString()),
                 order: GroupedListOrder.DESC,
                 useStickyGroupSeparators: true,
                 groupSeparatorBuilder: (String value) => Padding(
@@ -52,9 +53,9 @@ class ContactView extends GetView<ContactScreenController> {
 
                 // showPreview: true,
                 itemBuilder: (context, element) => CustomAvatarContact(
-                  chat: element,
+                  employee: element,
                   press: () => {
-                    print("contact with ${element.name}"),
+                    print("contact with ${element.USER_NM_ENG}"),
                     Get.toNamed(messagescreen, arguments: {"data": element}),
                   },
                 ),

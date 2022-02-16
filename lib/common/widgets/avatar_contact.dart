@@ -2,15 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
+import 'package:hello_world_flutter/model/employee.dart';
 
 class CustomAvatarContact extends StatelessWidget {
   const CustomAvatarContact({
     Key? key,
-    required this.chat,
+    required this.employee,
     required this.press
   }) : super(key: key);
 
-  final Chat chat;
+  final Employee employee;
   final VoidCallback press;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class CustomAvatarContact extends StatelessWidget {
                     CircleAvatar(
                       radius: 24,
                     ),
-                    if (chat.isActive)
+                    if (employee.ONLINE_YN == 'Y')
                       Positioned(
                         right: 0,
                         bottom: 0,
@@ -54,7 +55,7 @@ class CustomAvatarContact extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          chat.name,
+                          employee.USER_NM_ENG,
                           style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                         ),

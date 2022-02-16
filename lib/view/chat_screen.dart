@@ -89,7 +89,6 @@ class ChatScreen extends GetView<ContactScreenController> {
           ),
           onPressed: () {
             Get.to(() => AddContactScreen());
-            contactController.listNameChoose.value = "";
             contactController.listContactChoose.value = [];
             contactController.resetState();
           },

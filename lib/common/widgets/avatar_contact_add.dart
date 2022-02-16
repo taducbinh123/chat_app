@@ -4,17 +4,18 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/model/chat_card.dart';
+import 'package:hello_world_flutter/model/employee.dart';
 
 class CustomAvatarContactAdd extends StatelessWidget {
   const CustomAvatarContactAdd({
     Key? key,
-    required this.chat,
+    required this.employee,
     required this.press,
     required this.check,
     required this.index
   }) : super(key: key);
 
-  final Chat chat;
+  final Employee employee;
   final VoidCallback press;
   final bool check;
   final int index;
@@ -24,7 +25,7 @@ class CustomAvatarContactAdd extends StatelessWidget {
     // TODO: implement build
     return Container(
         child: Obx(()=>Card(
-          color:  check ? (contactController.state.firstWhere((element) => element.chat == chat).state.value ? Colors.grey : colorCard) : colorCard,
+          color:  check ? (contactController.state.firstWhere((element) => element.employee == employee).state.value ? Colors.grey : colorCard) : colorCard,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
@@ -40,7 +41,7 @@ class CustomAvatarContactAdd extends StatelessWidget {
                       CircleAvatar(
                         radius: 24,
                       ),
-                      if (chat.isActive)
+                      if (employee.ONLINE_YN == 'Y')
                         Positioned(
                           right: 0,
                           bottom: 0,
@@ -66,7 +67,7 @@ class CustomAvatarContactAdd extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            chat.name,
+                            employee.USER_NM_ENG,
                             style:
                             TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                           ),
