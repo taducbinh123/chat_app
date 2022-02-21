@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/model/room.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -10,16 +11,6 @@ class ChatScreenController extends GetxController {
   var chatsData = [].obs;
   TextEditingController searchController = TextEditingController();
   var chatTempList = [].obs;
-  chatNameSearch(String name) {
-    if (name.isEmpty) {
-      chatTempList.value = chatsData;
-    } else {
-      chatTempList.value = chatsData
-          .where((element) =>
-              element.name.toLowerCase().contains(name.toLowerCase()))
-          .toList();
-    }
-  }
 
   @override
   void onInit() {
@@ -27,14 +18,14 @@ class ChatScreenController extends GetxController {
     super.onInit();
   }
 
-  connect() {
-    IO.Socket socket = IO.io("http://10.0.2.2:8800", <String, dynamic>{
+  connect() async {
+    IO.Socket socket = IO.io(chatApiHost, <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
     socket.io.options['extraHeaders'] = {"Content-Type": "application/json"};
     IO.Socket roomSocket =
-        IO.io("http://10.0.2.2:8800" + "/room", <String, dynamic>{
+        IO.io(chatApiHost + "/room", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
@@ -75,6 +66,17 @@ class ChatScreenController extends GetxController {
     socket.on('create', (data) => {});
     socket.on('exception', (data) => print("event exception" + data));
     socket.on('disconnect', (data) => print("Disconnected" + data));
+  }
+
+  chatNameSearch(String name) {
+    if (name.isEmpty) {
+      chatTempList.value = chatsData;
+    } else {
+      chatTempList.value = chatsData
+          .where((element) =>
+          element.name.toLowerCase().contains(name.toLowerCase()))
+          .toList();
+    }
   }
 
   addChat(var chat) {
