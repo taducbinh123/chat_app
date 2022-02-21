@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
+import 'package:hello_world_flutter/model/message.dart';
 
 
 class TextMessage extends StatelessWidget {
@@ -10,7 +11,7 @@ class TextMessage extends StatelessWidget {
     this.message,
   }) : super(key: key);
 
-  final ChatMessage? message;
+  final MessageModel? message;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +21,13 @@ class TextMessage extends StatelessWidget {
         vertical: kDefaultPadding / 2,
       ),
       decoration: BoxDecoration(
-        color: kPrimaryColor.withOpacity(message!.isSender ? 1 : 0.1),
+        color: kPrimaryColor.withOpacity(message!.USER_UID != "" ? 1 : 0.1),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Text(
-        message!.text,
+        message!.MSG_CONT,
         style: TextStyle(
-          color: message!.isSender
+          color: message!.USER_UID != ""
               ? Colors.white
               : Theme.of(context).textTheme.bodyText1!.color,
         ),

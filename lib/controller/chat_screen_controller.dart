@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/model/room.dart';
+import 'package:hello_world_flutter/provider/message_provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatScreenController extends GetxController {
+
+  final MessageProvider messageProvider = MessageProvider();
+
   var state = false.obs;
   var test = "".obs;
   var chatsData = [].obs;
@@ -77,6 +82,17 @@ class ChatScreenController extends GetxController {
           element.name.toLowerCase().contains(name.toLowerCase()))
           .toList();
     }
+  }
+
+  getMessageByRoomId(var chatRoom) async {
+    // print(chatRoom);
+    print(chatRoom.roomUid);
+    var listMessage = await messageProvider.getMessageByRoomId(chatRoom.roomUid);
+    print(listMessage);
+    Get.toNamed(messagescreen, arguments: {
+      "room": chatRoom,
+      "data": listMessage
+    });
   }
 
   addChat(var chat) {

@@ -15,6 +15,7 @@ class MessagesScreen extends StatelessWidget {
     var _mediaQueryData = MediaQuery.of(context);
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
+    var listMessage = Get.arguments['data'];
     return Scaffold(
       appBar: buildAppBar(screenWidth, screenHeight),
       body: Column(
@@ -23,9 +24,9 @@ class MessagesScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
               child: ListView.builder(
-                itemCount: demeChatMessages.length,
+                itemCount: listMessage.length,
                 itemBuilder: (context, index) =>
-                    Message(message: demeChatMessages[index]),
+                    Message(message: listMessage[index]),
               ),
             ),
           ),
@@ -53,7 +54,7 @@ class MessagesScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Get.arguments['data'].roomDefaultName,
+                  Get.arguments['room'].roomDefaultName,
                   style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -80,8 +81,8 @@ class MessagesScreen extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {
-            Room room = Get.arguments['data'];
-            Get.toNamed(settingScreen, arguments: {"data": room});
+            Room room = Get.arguments['room'];
+            Get.toNamed(settingScreen, arguments: {"room": room});
           },
         ),
         SizedBox(width: kDefaultPadding / 2),

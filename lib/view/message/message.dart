@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
+import 'package:hello_world_flutter/model/message.dart';
 
 
 import 'audio_message.dart';
@@ -14,30 +15,30 @@ class Message extends StatelessWidget {
     required this.message,
   }) : super(key: key);
 
-  final ChatMessage message;
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
-    Widget messageContaint(ChatMessage message) {
-      switch (message.messageType) {
-        case ChatMessageType.text:
+    Widget messageContaint(MessageModel message) {
+      switch (message.MSG_TYPE_CODE) {
+        case "TEXT":
           return TextMessage(message: message);
-        case ChatMessageType.audio:
-          return AudioMessage(message: message);
-        case ChatMessageType.video:
-          return VideoMessage();
+        // case ChatMessageType.audio:
+        //   return AudioMessage(message: message);
+        // case ChatMessageType.video:
+        //   return VideoMessage();
         default:
           return SizedBox();
       }
     }
-
+    // test
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Row(
         mainAxisAlignment:
-            message.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+        message!.USER_UID != ""  ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!message.isSender) ...[
+          if (message!.USER_UID == "") ...[ // !message.isSender - phải check xem có phải do client gửi tin nhắn ko
             CircleAvatar(
               radius: 12,
               backgroundImage: AssetImage("assets/images/user_2.png"),
@@ -45,7 +46,7 @@ class Message extends StatelessWidget {
             SizedBox(width: kDefaultPadding / 2),
           ],
           messageContaint(message),
-          if (message.isSender) MessageStatusDot(status: message.messageStatus)
+          if (message!.USER_UID == "") MessageStatusDot(status: MessageStatus.viewed)
         ],
       ),
     );
