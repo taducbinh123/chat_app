@@ -1,16 +1,11 @@
-// import 'dart:js';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
-import 'package:hello_world_flutter/model/chat_card.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 import 'package:hello_world_flutter/provider/contact_view_provider.dart';
 
 class ContactScreenController extends GetxController {
-  // final contactProvider = Get.put(ContactViewProvider());
 
   final ContactViewProvider contactViewProvider = ContactViewProvider();
   TextEditingController searchController = TextEditingController();
@@ -45,7 +40,6 @@ class ContactScreenController extends GetxController {
         break;
       }
     }
-    // state[index] = !state[index];
     // format string name
     // listNameChoose.value = "";
     if (stateChange.state.value) {
@@ -77,7 +71,6 @@ class ContactScreenController extends GetxController {
   }
 
   contactNameSearch(String name) {
-    // state = List.filled(chatsData.length,false).obs;
     if (name.isEmpty) {
       contactList.value = initData;
     } else {
@@ -85,11 +78,6 @@ class ContactScreenController extends GetxController {
           .where((element) =>
               element.USER_NM_KOR.toLowerCase().contains(name.toLowerCase()))
           .toList();
-      // chatsData.forEach((element) {
-      //   if(element.name.toLowerCase().contains(name.toLowerCase())){
-      //     contactList.value.add(element);
-      //   }
-      // });
       print(contactList.value.toString());
     }
   }

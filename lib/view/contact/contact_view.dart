@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:grouped_list/grouped_list.dart';
-import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact.dart';
 import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
 import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
-
-import 'package:hello_world_flutter/model/chat_card.dart';
 import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
-import 'package:hello_world_flutter/model/employee.dart';
 
 
 class ContactView extends GetView<ContactScreenController> {
@@ -56,7 +50,7 @@ class ContactView extends GetView<ContactScreenController> {
                   employee: element,
                   press: () => {
                     print("contact with ${element.USER_NM_ENG}"),
-                    Get.toNamed(messagescreen, arguments: {"data": element}),
+                    // Get.toNamed(messagescreen, arguments: {"data": element}),
                   },
                 ),
               ),
