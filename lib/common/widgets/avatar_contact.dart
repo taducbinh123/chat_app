@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/model/chat_card.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 
 class CustomAvatarContact extends StatelessWidget {

@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/model/chat_card.dart';
 import 'package:hello_world_flutter/model/room.dart';
 
 class CustomAvatar extends StatelessWidget {

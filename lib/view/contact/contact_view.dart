@@ -10,9 +10,8 @@ import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
 import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 
-import 'package:hello_world_flutter/model/chat_card.dart';
 import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
-import 'package:hello_world_flutter/model/employee.dart';
+
 
 
 class ContactView extends GetView<ContactScreenController> {

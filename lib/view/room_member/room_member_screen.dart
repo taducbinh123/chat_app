@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hello_world_flutter/common/widgets/avatar.dart';
-import 'package:hello_world_flutter/common/widgets/avatar_contact.dart';
 import 'package:hello_world_flutter/model/room.dart';
 
 class RoomMemberScreen extends StatelessWidget {
@@ -11,9 +9,6 @@ class RoomMemberScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _mediaQueryData = MediaQuery.of(context);
-    double screenWidth = _mediaQueryData.size.width;
-    double screenHeight = _mediaQueryData.size.height;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

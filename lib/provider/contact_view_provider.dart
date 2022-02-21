@@ -1,7 +1,4 @@
 import 'dart:convert';
-// import 'dart:html';
-
-import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 import 'package:http/http.dart' as http;
@@ -22,11 +19,18 @@ class ContactViewProvider {
     return parsed.map<Employee>((json) => Employee.fromJson(json)).toList();
   }
 
+  static String utf8convert(String text) {
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
+  }
+
   getEmployee(String userUid) async {
     final response = await http.get(Uri.parse(imwareApiHost +
         '/chatuser/chatuser_0101/getListFrd.ajax?USER_UID=' +
         userUid));
-    List<dynamic> decodeData = convert.jsonDecode(response.body);
+
+    List<dynamic> decodeData = convert.jsonDecode(utf8convert(response.body));
+
     return decodeData.map((e) => Employee.fromJson(e)).toList();
   }
 }

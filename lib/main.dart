@@ -8,7 +8,6 @@ import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:hello_world_flutter/view/chat_screen.dart';
 import 'package:hello_world_flutter/view/contact/contact_view.dart';
 import 'package:hello_world_flutter/view/pm_screen.dart';
-import 'package:hello_world_flutter/view/room_member/room_member_screen.dart';
 import 'package:hello_world_flutter/view/setting/setting_screen.dart';
 
 import 'common/constant/path.dart';
