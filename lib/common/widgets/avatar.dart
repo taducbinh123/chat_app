@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/room.dart';
+import 'package:intl/intl.dart';
 
 class CustomAvatar extends StatelessWidget {
   const CustomAvatar({
@@ -74,7 +75,9 @@ class CustomAvatar extends StatelessWidget {
             ),
             Opacity(
               opacity: 0.64,
-              child: Text(chat.messageModel.SEND_DATE),
+              child: Text(
+                  DateFormat('dd-MM-yyyy – hh:mm').format( DateTime.parse(chat.messageModel.SEND_DATE))
+                 .toString()),
             ),
           ],
         ),

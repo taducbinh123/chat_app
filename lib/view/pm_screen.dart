@@ -82,6 +82,7 @@ class MessagesScreen extends StatelessWidget {
           icon: Icon(Icons.settings),
           onPressed: () {
             Room room = Get.arguments['room'];
+            print(room);
             Get.toNamed(settingScreen, arguments: {"room": room});
           },
         ),

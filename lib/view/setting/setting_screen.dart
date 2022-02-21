@@ -6,7 +6,6 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 
-
 List _elements = [
   {'name': 'Add Member', 'group': 'Room Info'},
   {'name': 'Leave Room', 'group': 'Privacy'},
@@ -48,11 +47,14 @@ class SettingScreen extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          AutoSizeText(
-            Get.arguments['data'].roomDefaultName,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AutoSizeText(
+              Get.arguments['room'].roomDefaultName,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
           ),
           SizedBox(
             height: 20,

@@ -1,13 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
 import 'package:hello_world_flutter/model/message.dart';
+import 'package:hello_world_flutter/view/message/center_text_message.dart';
 
-
-import 'audio_message.dart';
 import 'text_message.dart';
-import 'video_message.dart';
 
 class Message extends StatelessWidget {
   const Message({
@@ -23,6 +20,8 @@ class Message extends StatelessWidget {
       switch (message.MSG_TYPE_CODE) {
         case "TEXT":
           return TextMessage(message: message);
+        case "CREATE_ROOM":
+          return CenterTextMessage(message: message);
         // case ChatMessageType.audio:
         //   return AudioMessage(message: message);
         // case ChatMessageType.video:
@@ -31,14 +30,17 @@ class Message extends StatelessWidget {
           return SizedBox();
       }
     }
+
     // test
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Row(
-        mainAxisAlignment:
-        message!.USER_UID != ""  ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: message!.USER_UID != ""
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         children: [
-          if (message!.USER_UID == "") ...[ // !message.isSender - phải check xem có phải do client gửi tin nhắn ko
+          if (message!.USER_UID == "") ...[
+            // !message.isSender - phải check xem có phải do client gửi tin nhắn ko
             CircleAvatar(
               radius: 12,
               backgroundImage: AssetImage("assets/images/user_2.png"),
@@ -46,7 +48,8 @@ class Message extends StatelessWidget {
             SizedBox(width: kDefaultPadding / 2),
           ],
           messageContaint(message),
-          if (message!.USER_UID == "") MessageStatusDot(status: MessageStatus.viewed)
+          if (message!.USER_UID == "")
+            MessageStatusDot(status: MessageStatus.viewed)
         ],
       ),
     );
