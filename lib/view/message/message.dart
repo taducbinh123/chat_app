@@ -3,6 +3,7 @@ import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/view/message/center_text_message.dart';
+import 'package:intl/intl.dart';
 
 import 'text_message.dart';
 
@@ -35,20 +36,36 @@ class Message extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Row(
-        mainAxisAlignment: message!.USER_UID != ""
+        mainAxisAlignment: message!.MSG_TYPE_CODE != "TEXT"
             ? MainAxisAlignment.end
             : MainAxisAlignment.start,
         children: [
-          if (message!.USER_UID == "") ...[
+          if (message!.MSG_TYPE_CODE == "TEXT") ...[
             // !message.isSender - phải check xem có phải do client gửi tin nhắn ko
             CircleAvatar(
               radius: 12,
               backgroundImage: AssetImage("assets/images/user_2.png"),
             ),
             SizedBox(width: kDefaultPadding / 2),
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    DateFormat('hh:mm - dd-MM-yyyy')
+                        .format(DateTime.parse(message.SEND_DATE))
+                        .toString(),
+                    style: TextStyle(
+                      fontSize: 11,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  messageContaint(message),
+                ],
+              ),
+            ),
           ],
-          messageContaint(message),
-          if (message!.USER_UID == "")
+          if (message!.MSG_TYPE_CODE == "TEXT")
             MessageStatusDot(status: MessageStatus.viewed)
         ],
       ),
