@@ -26,8 +26,8 @@ class ChatScreenController extends GetxController {
     initDataRoom();
   }
 
-  initDataRoom() async {
-    chatsData = await _socketProvider.connect();
+  initDataRoom()  {
+    chatsData = _socketProvider.connect();
     chatTempList.value = chatsData;
     print(chatTempList.value);
   }
