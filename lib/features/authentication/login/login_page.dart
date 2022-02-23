@@ -29,7 +29,7 @@ class __SignInFormState extends State<_SignInForm> {
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   bool _autoValidate = false;
 
   @override
@@ -45,16 +45,16 @@ class __SignInFormState extends State<_SignInForm> {
             children: <Widget>[
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'Email address',
+                  labelText: 'Username',
                   filled: true,
                   isDense: true,
                 ),
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
+                controller: _usernameController,
+                keyboardType: TextInputType.text,
                 autocorrect: false,
                 validator: (value) {
                   if (value == null) {
-                    return 'Email is required.';
+                    return 'Username is required.';
                   }
                   return null;
                 },
@@ -108,7 +108,7 @@ class __SignInFormState extends State<_SignInForm> {
 
   _onLoginButtonPressed() {
     if (_key.currentState!.validate()) {
-      _controller.login(_emailController.text, _passwordController.text);
+      _controller.login(_usernameController.text, _passwordController.text);
     } else {
       setState(() {
         _autoValidate = true;

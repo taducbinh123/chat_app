@@ -14,3 +14,4 @@ const roomMemberScreen = '/room_member_screen';
 
 const chatApiHost= 'http://10.0.2.2:8800';
 const imwareApiHost= 'http://10.0.2.2:9090';
+const authApiUrl = 'http://117.4.244.25:9327';

@@ -40,6 +40,8 @@ dependencies:
   socket_io_client: ^2.0.0-beta.4-nullsafety.0
   http: ^0.13.4
   intl: ^0.17.0
+  crypto: ^3.0.1
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:

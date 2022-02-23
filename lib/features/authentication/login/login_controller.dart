@@ -10,11 +10,11 @@ class LoginController  extends GetxController {
 
   LoginState get state => _loginStateStream.value;
 
-  void login(String email, String password) async {
+  void login(String username, String password) async {
     _loginStateStream.value = LoginLoading();
 
     try{
-      await _authenticationController.signIn(email, password);
+      await _authenticationController.signIn(username, password);
       _loginStateStream.value = LoginState();
     } on AuthenticationException catch(e){
       _loginStateStream.value = LoginFailure(error: e.message);

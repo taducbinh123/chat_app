@@ -1,6 +1,8 @@
 
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/features/authentication/authentication.dart';
+import 'package:hello_world_flutter/model/models.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationController extends GetxController {
   final AuthenticationService _authenticationService;
@@ -16,9 +18,9 @@ class AuthenticationController extends GetxController {
     super.onInit();
   }
 
-  Future<void> signIn(String email, String password) async {
-    final user = await _authenticationService.signInWithEmailAndPassword(
-        email, password);
+  Future<void> signIn(String username, String password) async {
+    final user = await _authenticationService.signInWithUsernameAndPassword(
+        username, password);
     _authenticationStateStream.value = Authenticated(user: user);
   }
 
@@ -32,10 +34,13 @@ class AuthenticationController extends GetxController {
 
     final user = await _authenticationService.getCurrentUser();
 
-    if (user == null) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? accessToken = prefs.getString('access_token');
+    if (accessToken == null) {
       _authenticationStateStream.value = UnAuthenticated();
     } else {
-      _authenticationStateStream.value = Authenticated(user: user);
+      _authenticationStateStream.value = Authenticated(user: new User(name: "", email: ""));
     }
   }
 }
