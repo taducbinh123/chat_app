@@ -21,7 +21,6 @@ class AuthenticationServiceImpl extends AuthenticationService {
   Future<User?> getCurrentUser() async {
     // simulated delay
     await Future.delayed(Duration(seconds: 2));
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     return null;
   }
 
