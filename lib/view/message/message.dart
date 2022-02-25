@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
@@ -36,27 +37,30 @@ class Message extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Row(
-        mainAxisAlignment: message!.MSG_TYPE_CODE != "TEXT"
+        mainAxisAlignment: message.MSG_TYPE_CODE != "TEXT"
             ? MainAxisAlignment.end
             : MainAxisAlignment.start,
         children: [
-          if (message!.MSG_TYPE_CODE == "TEXT") ...[
+          if (message.MSG_TYPE_CODE == "TEXT") ...[
             // !message.isSender - phải check xem có phải do client gửi tin nhắn ko
             CircleAvatar(
-              radius: 12,
-              backgroundImage: AssetImage("assets/images/user_2.png"),
+              radius: 16,
+              backgroundImage: AssetImage("images/default_avatar.png"),
             ),
             SizedBox(width: kDefaultPadding / 2),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    DateFormat('hh:mm - dd-MM-yyyy')
-                        .format(DateTime.parse(message.SEND_DATE))
-                        .toString(),
-                    style: TextStyle(
-                      fontSize: 11,
+                  Container(
+                    constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
+                    child: AutoSizeText(
+                      DateFormat('hh:mm')
+                          .format(DateTime.parse(message.SEND_DATE))
+                          .toString(),
+                      style: TextStyle(
+                        fontSize: 11,
+                      ),
                     ),
                   ),
                   SizedBox(height: 5),
@@ -65,8 +69,8 @@ class Message extends StatelessWidget {
               ),
             ),
           ],
-          if (message!.MSG_TYPE_CODE == "TEXT")
-            MessageStatusDot(status: MessageStatus.viewed)
+          // if (message.MSG_TYPE_CODE == "TEXT")
+          //   MessageStatusDot(status: MessageStatus.viewed)
         ],
       ),
     );

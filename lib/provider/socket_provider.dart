@@ -14,8 +14,6 @@ class SocketProvider {
 
     String? access_token=prefs.getString('access_token');
 
-    print(userUid! + " " + access_token!);
-
     IO.Socket socket = IO.io(chatApiHost, <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
