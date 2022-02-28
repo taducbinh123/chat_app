@@ -4,7 +4,6 @@ import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/chat_input_field.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
-import 'package:hello_world_flutter/model/ChatMessage.dart';
 import 'package:hello_world_flutter/model/room.dart';
 
 import 'message/message.dart';

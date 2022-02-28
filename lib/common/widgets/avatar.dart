@@ -28,6 +28,7 @@ class CustomAvatar extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 24,
+                  backgroundImage:AssetImage("images/default_avatar.png") ,
                 ),
                 // if (true)
                   Positioned(
