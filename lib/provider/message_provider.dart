@@ -11,13 +11,13 @@ class MessageProvider {
     return utf8.decode(bytes);
   }
 
-  getMessageByRoomId(String roomUid) async {
+  getMessageByRoomId(String roomUid,String page) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? access_token=prefs.getString('access_token');
 
     final response = await http.get(
         Uri.parse(
-            chatApiHost + '/api/chat/getmessageByRoomId?roomId=' + roomUid),
+            chatApiHost + '/api/chat/getmessageByRoomId?roomId=' + roomUid+"&page="+page),
         headers: {
           "Authorization": "Bearer " + access_token!
         });
@@ -26,6 +26,7 @@ class MessageProvider {
       print(response.body.toString());
       decodeData = convert.jsonDecode(response.body);
     } else {
+      print(response.body.toString());
       throw Exception('Failed to load message');
     }
 

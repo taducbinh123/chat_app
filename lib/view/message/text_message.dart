@@ -27,7 +27,7 @@ class TextMessage extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: AutoSizeText(
-        message!.MSG_CONT,
+        message!.MSG_CONT.toString(),
         style: TextStyle(
           color: message!.USER_UID != ""
               ? Colors.white

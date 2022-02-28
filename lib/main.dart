@@ -9,10 +9,13 @@ import 'package:hello_world_flutter/view/chat_screen.dart';
 import 'package:hello_world_flutter/view/contact/contact_view.dart';
 import 'package:hello_world_flutter/view/pm_screen.dart';
 import 'package:hello_world_flutter/view/setting/setting_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/constant/path.dart';
 
 void main() async {
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  // await prefs.clear();
   await GetStorage.init();
   initialize();
   runApp(const MyApp());

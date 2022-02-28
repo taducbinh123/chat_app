@@ -28,24 +28,24 @@ class CustomAvatar extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 24,
-                  backgroundImage:AssetImage("images/default_avatar.png") ,
+                  backgroundImage: AssetImage("images/default_avatar.png"),
                 ),
                 // if (true)
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      height: 16,
-                      width: 16,
-                      decoration: BoxDecoration(
-                        color: kDotColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            width: 3),
-                      ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    height: 16,
+                    width: 16,
+                    decoration: BoxDecoration(
+                      color: kDotColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          width: 3),
                     ),
-                  )
+                  ),
+                )
               ],
             ),
             Expanded(
@@ -65,7 +65,7 @@ class CustomAvatar extends StatelessWidget {
                     Opacity(
                       opacity: 0.64,
                       child: Text(
-                        chat.messageModel.MSG_CONT,
+                        chat.messageModel.MSG_CONT.toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -76,9 +76,12 @@ class CustomAvatar extends StatelessWidget {
             ),
             Opacity(
               opacity: 0.64,
-              child: Text(
-                  DateFormat('dd-MM-yyyy – hh:mm').format( DateTime.parse(chat.messageModel.SEND_DATE))
-                 .toString()),
+              child: Text(DateFormat('dd-MM-yyyy – hh:mm')
+                  .format(DateTime.parse(
+                      chat.messageModel.SEND_DATE.toString() != "null"
+                          ? chat.messageModel.SEND_DATE.toString()
+                          : DateTime.now().toString()))
+                  .toString()),
             ),
           ],
         ),

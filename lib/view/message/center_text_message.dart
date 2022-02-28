@@ -14,10 +14,10 @@ class CenterTextMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoSizeText(
-      message!.MSG_CONT +
+      message!.MSG_CONT.toString() +
           " " +
           DateFormat('dd-MM-yyyy – hh:mm')
-              .format(DateTime.parse(message!.SEND_DATE))
+              .format(DateTime.parse(message!.SEND_DATE.toString()))
               .toString(),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
