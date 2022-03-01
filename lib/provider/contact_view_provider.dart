@@ -25,10 +25,10 @@ class ContactViewProvider {
     return utf8.decode(bytes);
   }
 
-  getEmployee(String userUid) async {
+  getEmployee(String? userUid) async {
     final response = await http.get(Uri.parse(imwareApiHost +
         '/chatuser/chatuser_0101/getListFrd.ajax?USER_UID=' +
-        userUid));
+        userUid.toString()));
 
     List<dynamic> decodeData = convert.jsonDecode(utf8convert(response.body));
 
