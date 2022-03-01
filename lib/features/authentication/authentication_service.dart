@@ -91,6 +91,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
   }
 
   saveInforUser(String token, String userUid, String username) async {
+    print(token);
     final response = await http.post(
         Uri.parse(imwareApiHost + '/api/userInfo/saveLoginInfo'),
         headers: {
@@ -100,6 +101,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
     if (response.statusCode == 200) {
     } else {
+      print(response.body);
       throw Exception('Error');
     }
 
