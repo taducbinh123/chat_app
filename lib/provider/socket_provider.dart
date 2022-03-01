@@ -9,7 +9,7 @@ class SocketProvider {
   connect() async {
     List<Room> chatsData = [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userUid = prefs.getString('userUid');
+    String? userUid = prefs.getString("userUid");
 
     String? access_token = prefs.getString('access_token');
     print(access_token);
@@ -23,6 +23,7 @@ class SocketProvider {
       "Content-Type": "application/json"
     };
     roomSocket.connect();
+    roomSocket.on("server_send_message", (data) => "abc");
     roomSocket.onConnect((_) {
       print(prefs.getString('access_token'));
       print("room socket " + roomSocket.connected.toString());

@@ -53,6 +53,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
       print(t);
 
       saveInforUser(info['access_token'], info['userUid'], info['username']);
+
     } else if (response.statusCode == 400) {
       throw AuthenticationException(message: 'Wrong username or password');
     } else {
@@ -106,6 +107,8 @@ class AuthenticationServiceImpl extends AuthenticationService {
     await prefs.setString("access_token", token);
     await prefs.setString("userUid", userUid);
     await prefs.setString("username", username);
+    print(prefs.getString("userUid").toString());
+
   }
 
   saveLogoutInfo() async {

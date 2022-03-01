@@ -33,9 +33,6 @@ class ChatScreenController extends GetxController {
   }
 
   initDataRoom() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    userUid = prefs.getString('userUid') ?? '';
-    access_token = prefs.getString('access_token') ?? '';
     chatsData = await _socketProvider.connect();
     chatTempList.value = chatsData;
     print(chatTempList.value);

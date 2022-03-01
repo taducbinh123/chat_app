@@ -22,9 +22,11 @@ class MessageProvider {
           "Authorization": "Bearer " + access_token!
         });
     List<dynamic> decodeData;
+
     if (response.statusCode == 200) {
       print(response.body.toString());
-      decodeData = convert.jsonDecode(response.body);
+      Map<String, dynamic> map = json.decode(response.body);
+      decodeData = map["rows"];
     } else {
       print(response.body.toString());
       throw Exception('Failed to load message');
