@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 import 'package:hello_world_flutter/provider/contact_view_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ContactScreenController extends GetxController {
 
@@ -18,11 +19,15 @@ class ContactScreenController extends GetxController {
   // var contactTempList = chatsData.obs;
   ContactScreenController() {
     resetState();
-    initDataEmployee('20170928174704927015');
+    initDataEmployee();
   }
 
-  initDataEmployee(String userUid) async {
-    initData = await contactViewProvider.getEmployee(userUid);
+  initDataEmployee() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? userUid = prefs.getString('userUid');
+    print(userUid);
+    initData = await contactViewProvider.getEmployee(userUid!);
     contactList.value = initData;
     print(contactList.value);
   }
