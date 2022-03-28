@@ -49,12 +49,15 @@ class ChatScreenController extends GetxController {
     }
   }
 
+  getLastMessage(var chatRoom) async {
+    _socketProvider.getLastMessage(chatRoom.roomUid, chatRoom.lastMsgUid);
+  }
+
   getMessageByRoomId(var chatRoom) async {
-    // print(chatRoom);
-    print(chatRoom.roomUid);
+    await getLastMessage(chatRoom);
     var listMessage =
         await messageProvider.getMessageByRoomId(chatRoom.roomUid, page);
-    print(listMessage);
+
     Get.toNamed(messagescreen,
         arguments: {"room": chatRoom, "data": listMessage});
   }
