@@ -53,7 +53,7 @@ class ContactScreenController extends GetxController {
           chat: e,
           height: screenWidth * 0.12,
           width: screenHeight * 0.06,
-          text: e.USER_NM_ENG));
+          text: e.USER_NM_KOR));
       // for (var value in listContactChoose) {
       //   print(value.USER_NM_ENG);
       //   listNameChoose.value += value.USER_NM_ENG + ", ";

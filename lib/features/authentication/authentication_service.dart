@@ -48,12 +48,11 @@ class AuthenticationServiceImpl extends AuthenticationService {
       print("đăng nhập thành công");
       var info = jsonDecode(response.body);
 
-      var t = DateTime.now().add(Duration(seconds: info['expires_in']*1000));
+      var t = DateTime.now().add(Duration(seconds: info['expires_in'] * 1000));
 
       print(t);
 
       saveInforUser(info['access_token'], info['userUid'], info['username']);
-
     } else if (response.statusCode == 400) {
       throw AuthenticationException(message: 'Wrong username or password');
     } else {
@@ -71,9 +70,8 @@ class AuthenticationServiceImpl extends AuthenticationService {
     if (accessToken != null) {
       saveLogoutInfo();
       final response = await http.post(
-          Uri.parse(authApiUrl +
-              '/api/logout/logout.do?access_token=' +
-              accessToken),
+          Uri.parse(
+              authApiUrl + '/api/logout/logout.do?access_token=' + accessToken),
           headers: {
             'Authorization': 'Bearer ' + accessToken,
             'Content-type': 'application/json',
@@ -99,9 +97,10 @@ class AuthenticationServiceImpl extends AuthenticationService {
         });
 
     if (response.statusCode == 200) {
+
     } else {
       print(response.body);
-      throw Exception('Error');
+      // throw Exception('Error');
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -109,7 +108,6 @@ class AuthenticationServiceImpl extends AuthenticationService {
     await prefs.setString("userUid", userUid);
     await prefs.setString("username", username);
     print(prefs.getString("userUid").toString());
-
   }
 
   saveLogoutInfo() async {
