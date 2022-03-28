@@ -9,15 +9,16 @@ class Employee {
   String DEPT_CD;
   int DEPT_LEV;
   String ROOM_OPEN_CHECK;
-  String ONLINE_YN;
-  String POSITION;
-  int POSITION_ORDER;
+  String? ONLINE_YN;
+  String? POSITION;
+  int? POSITION_ORDER;
   String? USER_PHONE;
   String? UP_DEPT_CODE;
   String? USER_NM_ENG;
   String USER_IMG;
   String ADDED_FRIEND;
   int IS_FRIEND;
+  String? ROOM_UID_LIST;
 
   Employee({
       required this.USER_CHECK,
@@ -30,23 +31,24 @@ class Employee {
     required this.DEPT_CD,
     required this.DEPT_LEV,
     required this.ROOM_OPEN_CHECK,
-    required this.ONLINE_YN,
-    required this.POSITION,
-    required this.POSITION_ORDER,
+    this.ONLINE_YN,
+    this.POSITION,
+    this.POSITION_ORDER,
     this.USER_PHONE,
     this.UP_DEPT_CODE,
     this.USER_NM_ENG,
     required this.USER_IMG,
     required this.ADDED_FRIEND,
-    required this.IS_FRIEND});
+    required this.IS_FRIEND,
+    this.ROOM_UID_LIST});
 
 
   @override
   String toString() {
-    return 'Employee{USER_CHECK: $USER_CHECK, USER_NM_KOR: $USER_NM_KOR, USE_CHECK: $USE_CHECK, USER_EMAIL: $USER_EMAIL, USER_ID: $USER_ID, USER_UID: $USER_UID, DEPT_NM: $DEPT_NM, DEPT_CD: $DEPT_CD, DEPT_LEV: $DEPT_LEV, ROOM_OPEN_CHECK: $ROOM_OPEN_CHECK, ONLINE_YN: $ONLINE_YN, POSITION: $POSITION, POSITION_ORDER: $POSITION_ORDER, USER_PHONE: $USER_PHONE, UP_DEPT_CODE: $UP_DEPT_CODE, USER_NM_ENG: $USER_NM_ENG, USER_IMG: $USER_IMG, ADDED_FRIEND: $ADDED_FRIEND, IS_FRIEND: $IS_FRIEND}';
+    return 'Employee{USER_CHECK: $USER_CHECK, USER_NM_KOR: $USER_NM_KOR, USE_CHECK: $USE_CHECK, USER_EMAIL: $USER_EMAIL, USER_ID: $USER_ID, USER_UID: $USER_UID, DEPT_NM: $DEPT_NM, DEPT_CD: $DEPT_CD, DEPT_LEV: $DEPT_LEV, ROOM_OPEN_CHECK: $ROOM_OPEN_CHECK, ONLINE_YN: $ONLINE_YN, POSITION: $POSITION, POSITION_ORDER: $POSITION_ORDER, USER_PHONE: $USER_PHONE, UP_DEPT_CODE: $UP_DEPT_CODE, USER_NM_ENG: $USER_NM_ENG, USER_IMG: $USER_IMG, ADDED_FRIEND: $ADDED_FRIEND, IS_FRIEND: $IS_FRIEND, ROOM_UID_LIST: $ROOM_UID_LIST}';
   }
 
-  factory Employee.fromJson(Map<String, dynamic> json) => 
+  factory Employee.fromJson(Map<String, dynamic> json) =>
     Employee(USER_CHECK: json['USER_CHECK'],
         USER_NM_KOR: json['USER_NM_KOR'],
         USE_CHECK : json['USE_CHECK'],
@@ -65,7 +67,8 @@ class Employee {
         USER_NM_ENG : json['USER_NM_ENG'],
         USER_IMG : json['USER_IMG'],
         ADDED_FRIEND : json['ADDED_FRIEND'],
-        IS_FRIEND : json['IS_FRIEND']);
+        IS_FRIEND : json['IS_FRIEND'],
+        ROOM_UID_LIST : json['ROOM_UID_LIST']);
 
   // USER_CHECK = json['USER_CHECK'];
   // USER_NM_KOR = json['USER_NM_KOR'];
@@ -107,6 +110,7 @@ class Employee {
     data['USER_IMG'] = this.USER_IMG;
     data['ADDED_FRIEND'] = this.ADDED_FRIEND;
     data['IS_FRIEND'] = this.IS_FRIEND;
+    data['ROOM_UID_LIST'] = this.ROOM_UID_LIST;
 
     return data;
   }

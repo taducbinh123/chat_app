@@ -27,9 +27,9 @@ class ContactViewProvider {
 
   getEmployee(String? userUid) async {
     final response = await http.get(Uri.parse(imwareApiHost +
-        '/chatuser/chatuser_0101/getListFrd.ajax?USER_UID=' +
+        '/chatuser/chatuser_0101/getUserFriendList?userUID=' +
         userUid.toString()));
-
+    // print(response.body);
     List<dynamic> decodeData = convert.jsonDecode(utf8convert(response.body));
 
     return decodeData.map((e) => Employee.fromJson(e)).toList();

@@ -62,41 +62,47 @@ class ChatScreenController extends GetxController {
         arguments: {"room": chatRoom, "data": listMessage});
   }
 
-  addChat(var chat) {
-    chatTempList.add(chat);
-  }
+  // addChat(var chat) {
+  //   chatTempList.add(chat);
+  // }
 
   onPress(var check) {
     state.value = check;
   }
 
   bool checkExistRoom(var employee) {
+    print("list chat");
+    print(chatTempList); // list room chat
     return true;
   }
 
-  addRoomChat(List employees) async {
-    if (employees.length == 1 && checkExistRoom(employees[0])) {
-
-    }
+  createChatroom(List employees) async {
+    // if (employees.length == 1 && checkExistRoom(employees[0])) {
+    //     return;
+    // }
+    print(employees);
+    checkExistRoom(employees[0]);
 
     employees.sort((a, b) => a.USER_NM_KOR.toString().compareTo(b.USER_NM_KOR.toString()));
+    // sx theo tên
     employees.sort((a, b) => a.POSITION_ORDER - b.POSITION_ORDER);
+    // sx theo vị trí
 
-    var memberList = employees.map((e) => e.USER_UID).toList();
+    var memberList = employees.map((e) => e.USER_UID).toList(); // get user_uid list
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final String? userUid = prefs.getString('userUid');
+    final String? userUid = prefs.getString('userUid');  // get user_uid của người tạo
     memberList.insert(0, userUid);
 
     var roomName = employees.map((e) => e.USER_NM_KOR).join(', ');
 
     var userInfo = await userProvider.getUserInfo(userUid);
+    print(userInfo);
+    // if(employees.length > 1){
+    //   roomName += ", " +  userInfo.NAME_KR;
+    // }
 
-    if(employees.length > 1){
-      roomName += ", " +  userInfo.NAME_KR;
-    }
-
-    await userProvider.createChatroom(roomName, memberList);
+    // await userProvider.createChatroom(roomName, memberList);
 
   }
 }
