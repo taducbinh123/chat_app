@@ -37,9 +37,9 @@ class RoomChatController extends GetxController {
     await roomChatProvider.leftRoom(roomUid);
   }
   // var contactTempList = chatsData.obs;
-  ContactScreenController() {
+  RoomChatController() {
     resetState();
-    initDataEmployee();
+    // initDataEmployee();
   }
 
   initDataEmployee() async {
@@ -48,7 +48,18 @@ class RoomChatController extends GetxController {
     final String? userUid = prefs.getString('userUid');
     print(userUid);
     initData = await contactViewProvider.getEmployee(userUid);
+
+    // loại bỏ những member có trong phòng ra khỏi list contact để thao tác
+    for(var element in employees){
+      for(Employee e in initData) {
+        if(element.USER_UID == e.USER_UID) {
+          initData.remove(e); break;
+        }
+      }
+    }
+
     contactList.value = initData;
+    resetState();
     print(contactList.value);
   }
 
@@ -74,24 +85,10 @@ class RoomChatController extends GetxController {
           height: screenWidth * 0.12,
           width: screenHeight * 0.06,
           text: e.USER_NM_KOR));
-      // for (var value in listContactChoose) {
-      //   print(value.USER_NM_ENG);
-      //   listNameChoose.value += value.USER_NM_ENG + ", ";
-      // }
-      // listNameChoose.value = listNameChoose.substring(0, listNameChoose.value.length -2);
-      // print(listNameChoose);
     } else {
       listContactChoose.remove(e);
       listAvatarChoose =
           listAvatarChoose.where((element) => element.chat != e).toList();
-      // if(listContactChoose.length !=0) {
-      //   for (var value in listContactChoose) {
-      //     print(value.name);
-      //     listNameChoose.value += value.name + ", ";
-      //   }
-      //   listNameChoose.value = listNameChoose.substring(0, listNameChoose.value.length -2);
-      // }
-      // print(listNameChoose);
     }
   }
 
@@ -109,7 +106,7 @@ class RoomChatController extends GetxController {
 
   resetState() {
     state.clear();
-    initData.forEach((element) {
+    contactList.forEach((element) {
       state.add(State(employee: element, state: false.obs));
     });
   }

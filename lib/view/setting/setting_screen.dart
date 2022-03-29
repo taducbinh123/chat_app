@@ -9,6 +9,7 @@ import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/view/Dashboard.dart';
+import 'package:hello_world_flutter/view/add_room_member/add_room_member_screen.dart';
 import 'package:hello_world_flutter/view/room_member/room_member_screen.dart';
 import 'package:confirm_dialog/confirm_dialog.dart';
 
@@ -93,7 +94,7 @@ class SettingScreen extends StatelessWidget {
                     child: ListTile(
                       title: Text(element['name']),
                       trailing: Icon(Icons.arrow_forward),
-                      onTap: () => {
+                      onTap: () async => {
                         if (element['name'].toString() == 'Room Member')
                           {
                             roomChatController.getListMemberRoom(
@@ -103,6 +104,11 @@ class SettingScreen extends StatelessWidget {
                           }
                         else if (element['name'].toString() == 'Leave Room')
                           {showAlertDialog(context)}
+                        else if(element['name'].toString() == 'Add Member'){
+                          await roomChatController.getListMemberRoom(roomUid),
+                          await roomChatController.initDataEmployee(),
+                          Get.to(() => AddRoomMemberScreen())
+                        }
                       },
                     ),
                   ),

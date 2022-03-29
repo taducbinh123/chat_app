@@ -29,6 +29,7 @@ class ContactScreenController extends GetxController {
     print(userUid);
     initData = await contactViewProvider.getEmployee(userUid);
     contactList.value = initData;
+    resetState();
     print(contactList.value);
   }
 

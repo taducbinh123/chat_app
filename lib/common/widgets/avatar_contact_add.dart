@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
+import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 
 class CustomAvatarContactAdd extends StatelessWidget {
@@ -11,20 +12,26 @@ class CustomAvatarContactAdd extends StatelessWidget {
     required this.employee,
     required this.press,
     required this.check,
-    required this.index
+    required this.index,
+    this.screen
   }) : super(key: key);
 
   final Employee employee;
   final VoidCallback press;
   final bool check;
   final int index;
+  final String? screen;
   @override
   Widget build(BuildContext context) {
     ContactScreenController contactController = Get.find<ContactScreenController>();
+    RoomChatController roomChatController = Get.find();
     // TODO: implement build
     return Container(
         child: Obx(()=>Card(
-          color:  check ? (contactController.state.firstWhere((element) => element.employee == employee).state.value ? Colors.grey : colorCard) : colorCard,
+          color:  check ? screen == 'add' ?
+          ((roomChatController.state.firstWhere((element) => element.employee.USER_UID == employee.USER_UID).state.value ? Colors.grey : colorCard) ) :
+          ( (contactController.state.firstWhere((element) => element.employee.USER_UID == employee.USER_UID).state.value ? Colors.grey : colorCard)) :
+          colorCard ,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
