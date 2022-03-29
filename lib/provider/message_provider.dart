@@ -11,22 +11,30 @@ class MessageProvider {
     return utf8.decode(bytes);
   }
 
-  getMessageByRoomId(String roomUid,String page) async {
+  getMessageByRoomId(String roomUid, String page) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? access_token=prefs.getString('access_token');
+    String? access_token = prefs.getString('access_token');
 
     final response = await http.get(
-        Uri.parse(
-            chatApiHost + '/api/chat/getmessageByRoomId?roomId=' + roomUid+"&page="+page),
-        headers: {
-          "Authorization": "Bearer " + access_token!
-        });
+        Uri.parse(chatApiHost +
+            '/api/chat/getmessageByRoomId?roomId=' +
+            roomUid +
+            "&page=" +
+            page),
+        headers: {"Authorization": "Bearer " + access_token!});
+    print(chatApiHost +
+        '/api/chat/getmessageByRoomId?roomId=' +
+        roomUid +
+        "&page=" +
+        page);
     List<dynamic> decodeData;
 
     if (response.statusCode == 200) {
       print(response.body.toString());
       Map<String, dynamic> map = json.decode(response.body);
       decodeData = map["rows"];
+      print(map["pageState"]);
+      prefs.setString("pageState", map["pageState"].toString());
     } else {
       print(response.body.toString());
       throw Exception('Failed to load message');
