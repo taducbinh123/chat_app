@@ -13,6 +13,7 @@ class Room {
   String? notifyType;
   int lastMsgUid;
   MessageModel messageModel;
+  List memberUidList;
 
   Room({
     required this.roomUid,
@@ -27,6 +28,7 @@ class Room {
     this.notifyType,
     required this.lastMsgUid,
     required this.messageModel,
+    required this.memberUidList,
   });
 
   Room.fromJson(Map<dynamic, dynamic> json)
@@ -41,6 +43,7 @@ class Room {
         roomImg = json['ROOM_IMG'],
         notifyType = json['NOTIFY_TYPE'],
         lastMsgUid = json['LAST_MSG_UID'],
+        memberUidList = json['MEMBER_UID_LIST'] as List,
         messageModel = MessageModel.fromJson(json['LAST_MSG']);
 
   Map<dynamic, dynamic> toJson() {
@@ -56,13 +59,14 @@ class Room {
       'ROOM_IMG': roomImg,
       'NOTIFY_TYPE': notifyType,
       'LAST_MSG_UID': lastMsgUid,
-      'LAST_MSG':messageModel
+      'LAST_MSG':messageModel,
+      'MEMBER_UID_LIST':memberUidList
     };
   }
 
   @override
   String toString() {
-    return 'Room{roomUid: $roomUid, regDate: $regDate, modiDate: $modiDate, regUserUid: $regUserUid, modiUserUid: $modiUserUid, roomDefaultName: $roomDefaultName, roomType: $roomType, keyRoom: $keyRoom, roomImg: $roomImg, notifyType: $notifyType}';
+    return 'Room{roomUid: $roomUid, regDate: $regDate, modiDate: $modiDate, regUserUid: $regUserUid, modiUserUid: $modiUserUid, roomDefaultName: $roomDefaultName, roomType: $roomType, keyRoom: $keyRoom, roomImg: $roomImg, notifyType: $notifyType, lastMsgUid: $lastMsgUid, messageModel: $messageModel, memberUidList: $memberUidList}';
   }
 }
 

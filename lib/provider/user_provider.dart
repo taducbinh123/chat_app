@@ -7,6 +7,12 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class UserProvider {
 
+  static String utf8convert(String text) {
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
+  }
+
+
   getUserInfo(String? userUid) async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -18,9 +24,12 @@ class UserProvider {
           'Authorization': 'Bearer ' + accessToken!,
           'Content-type': 'application/json',
         });
-    final Map<String, dynamic> data = jsonDecode(response.body);
+    final Map<String, dynamic> data = jsonDecode(utf8convert(response.body));
     if(response.statusCode == 200) return data;
-    else throw Exception("Failed to load userInfo");
+    else {
+      print(response.body);
+      throw Exception("Failed to load userInfo");
+    }
   }
 
   createChatroom(var roomName, var memberList)async {
@@ -42,8 +51,17 @@ class UserProvider {
       roomSocket.onConnect((_) {
         print(prefs.getString('access_token'));
         print("room socket " + roomSocket.connected.toString());
-        roomSocket.emit("createChatroom", [roomName,memberList,{"type": 'IN_CHATROOM'}]);
+        var data = new Data(roomName, memberList);
+        roomSocket.emit("createChatroom", {"roomName":roomName,"memberList":memberList,"type": 'IN_CHATROOM'});
     });
   }
 
+}
+
+
+class Data {
+  String roomName;
+  List memberList;
+
+  Data(this.roomName, this.memberList);
 }

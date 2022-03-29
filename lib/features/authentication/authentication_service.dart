@@ -16,6 +16,10 @@ abstract class AuthenticationService extends GetxService {
 
 class AuthenticationServiceImpl extends AuthenticationService {
   // final prefs = SharedPreferences.getInstance();
+  static String utf8convert(String text) {
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
+  }
 
   @override
   Future<User?> getCurrentUser() async {
@@ -46,7 +50,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
     print(response.body);
     if (response.statusCode == 200) {
       print("đăng nhập thành công");
-      var info = jsonDecode(response.body);
+      var info = jsonDecode(utf8convert(response.body));
 
       var t = DateTime.now().add(Duration(seconds: info['expires_in'] * 1000));
 
@@ -66,7 +70,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
   Future<void> signOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('access_token');
-
+    print(accessToken);
     if (accessToken != null) {
       saveLogoutInfo();
       final response = await http.post(
@@ -79,6 +83,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
       if (response.statusCode == 200) {
       } else {
+        print(response.body);
         throw Exception('Error');
       }
     }
@@ -105,6 +110,10 @@ class AuthenticationServiceImpl extends AuthenticationService {
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("access_token");
+    await prefs.remove("userUid");
+    await prefs.remove("username");
+
     await prefs.setString("access_token", token);
     await prefs.setString("userUid", userUid);
     await prefs.setString("username", username);
