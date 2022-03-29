@@ -22,6 +22,11 @@ class MessageProvider {
             "&page=" +
             page),
         headers: {"Authorization": "Bearer " + access_token!});
+    print(chatApiHost +
+        '/api/chat/getmessageByRoomId?roomId=' +
+        roomUid +
+        "&page=" +
+        page);
     List<dynamic> decodeData;
 
     if (response.statusCode == 200) {

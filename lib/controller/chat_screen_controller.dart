@@ -21,7 +21,7 @@ class ChatScreenController extends GetxController {
   String access_token = "";
   var state = false.obs;
   var test = "".obs;
-  var page = "";
+  var page = "null";
   var chatsData = [];
   TextEditingController searchController = TextEditingController();
   var chatTempList = [].obs;
