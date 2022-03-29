@@ -51,17 +51,8 @@ class UserProvider {
       roomSocket.onConnect((_) {
         print(prefs.getString('access_token'));
         print("room socket " + roomSocket.connected.toString());
-        var data = new Data(roomName, memberList);
         roomSocket.emit("createChatroom", {"roomName":roomName,"memberList":memberList,"type": 'IN_CHATROOM'});
     });
   }
 
-}
-
-
-class Data {
-  String roomName;
-  List memberList;
-
-  Data(this.roomName, this.memberList);
 }

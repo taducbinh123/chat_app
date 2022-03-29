@@ -1,5 +1,5 @@
 class Employee {
-  String USER_CHECK;
+  String? USER_CHECK;
   String USER_NM_KOR;
   String USE_CHECK;
   String? USER_EMAIL;
@@ -7,21 +7,23 @@ class Employee {
   String USER_UID;
   String DEPT_NM;
   String DEPT_CD;
-  int DEPT_LEV;
-  String ROOM_OPEN_CHECK;
+  int? DEPT_LEV;
+  String? ROOM_OPEN_CHECK;
   String? ONLINE_YN;
   String? POSITION;
   int? POSITION_ORDER;
   String? USER_PHONE;
   String? UP_DEPT_CODE;
   String? USER_NM_ENG;
-  String USER_IMG;
-  String ADDED_FRIEND;
-  int IS_FRIEND;
+  String? USER_IMG;
+  String? ADDED_FRIEND;
+  int? IS_FRIEND;
   String? ROOM_UID_LIST;
+  String? NAME_KR;
+  String? NAME_EN;
 
   Employee({
-      required this.USER_CHECK,
+    this.USER_CHECK,
     required this.USER_NM_KOR,
     required this.USE_CHECK,
     this.USER_EMAIL,
@@ -29,34 +31,37 @@ class Employee {
     required this.USER_UID,
     required this.DEPT_NM,
     required this.DEPT_CD,
-    required this.DEPT_LEV,
-    required this.ROOM_OPEN_CHECK,
+    this.DEPT_LEV,
+    this.ROOM_OPEN_CHECK,
     this.ONLINE_YN,
     this.POSITION,
     this.POSITION_ORDER,
     this.USER_PHONE,
     this.UP_DEPT_CODE,
     this.USER_NM_ENG,
-    required this.USER_IMG,
-    required this.ADDED_FRIEND,
-    required this.IS_FRIEND,
-    this.ROOM_UID_LIST});
+    this.USER_IMG,
+    this.ADDED_FRIEND,
+    this.IS_FRIEND,
+    this.ROOM_UID_LIST,
+    // this.NAME_KR,
+    // this.NAME_EN
+  });
 
 
   @override
   String toString() {
-    return 'Employee{USER_CHECK: $USER_CHECK, USER_NM_KOR: $USER_NM_KOR, USE_CHECK: $USE_CHECK, USER_EMAIL: $USER_EMAIL, USER_ID: $USER_ID, USER_UID: $USER_UID, DEPT_NM: $DEPT_NM, DEPT_CD: $DEPT_CD, DEPT_LEV: $DEPT_LEV, ROOM_OPEN_CHECK: $ROOM_OPEN_CHECK, ONLINE_YN: $ONLINE_YN, POSITION: $POSITION, POSITION_ORDER: $POSITION_ORDER, USER_PHONE: $USER_PHONE, UP_DEPT_CODE: $UP_DEPT_CODE, USER_NM_ENG: $USER_NM_ENG, USER_IMG: $USER_IMG, ADDED_FRIEND: $ADDED_FRIEND, IS_FRIEND: $IS_FRIEND, ROOM_UID_LIST: $ROOM_UID_LIST}';
+    return 'Employee{USER_CHECK: $USER_CHECK, USER_NM_KOR: $USER_NM_KOR, USE_CHECK: $USE_CHECK, USER_EMAIL: $USER_EMAIL, USER_ID: $USER_ID, USER_UID: $USER_UID, DEPT_NM: $DEPT_NM, DEPT_CD: $DEPT_CD, DEPT_LEV: $DEPT_LEV, ROOM_OPEN_CHECK: $ROOM_OPEN_CHECK, ONLINE_YN: $ONLINE_YN, POSITION: $POSITION, POSITION_ORDER: $POSITION_ORDER, USER_PHONE: $USER_PHONE, UP_DEPT_CODE: $UP_DEPT_CODE, USER_NM_ENG: $USER_NM_ENG, USER_IMG: $USER_IMG, ADDED_FRIEND: $ADDED_FRIEND, IS_FRIEND: $IS_FRIEND, ROOM_UID_LIST: $ROOM_UID_LIST, NAME_KR: $NAME_KR, NAME_EN: $NAME_EN}';
   }
 
   factory Employee.fromJson(Map<String, dynamic> json) =>
     Employee(USER_CHECK: json['USER_CHECK'],
-        USER_NM_KOR: json['USER_NM_KOR'],
-        USE_CHECK : json['USE_CHECK'],
+        USER_NM_KOR: json['USER_NM_KOR'] ?? json['NAME_KR'],
+        USE_CHECK : json['USE_CHECK'] ?? json['USE_YN'],
         USER_EMAIL : json['USER_EMAIL'],
         USER_ID : json['USER_ID'],
         USER_UID : json['USER_UID'],
         DEPT_NM : json['DEPT_NM'],
-        DEPT_CD : json['DEPT_CD'],
+        DEPT_CD : json['DEPT_CD'] ?? json['DEPT_CODE'],
         DEPT_LEV : json['DEPT_LEV'],
         ROOM_OPEN_CHECK : json['ROOM_OPEN_CHECK'],
         ONLINE_YN : json['ONLINE_YN'],
@@ -64,11 +69,14 @@ class Employee {
         POSITION_ORDER : json['POSITION_ORDER'],
         USER_PHONE : json['USER_PHONE'],
         UP_DEPT_CODE : json['UP_DEPT_CODE'],
-        USER_NM_ENG : json['USER_NM_ENG'],
-        USER_IMG : json['USER_IMG'],
+        USER_NM_ENG : json['USER_NM_ENG'] ?? json['NAME_EN'],
+        USER_IMG : json['USER_IMG'] ?? json['IMG_PATH'],
         ADDED_FRIEND : json['ADDED_FRIEND'],
         IS_FRIEND : json['IS_FRIEND'],
-        ROOM_UID_LIST : json['ROOM_UID_LIST']);
+        ROOM_UID_LIST : json['ROOM_UID_LIST']
+        // NAME_KR : json['NAME_KR'],
+        // NAME_EN : json['NAME_EN']
+        );
 
   // USER_CHECK = json['USER_CHECK'];
   // USER_NM_KOR = json['USER_NM_KOR'];
@@ -111,6 +119,8 @@ class Employee {
     data['ADDED_FRIEND'] = this.ADDED_FRIEND;
     data['IS_FRIEND'] = this.IS_FRIEND;
     data['ROOM_UID_LIST'] = this.ROOM_UID_LIST;
+    // data['NAME_KR'] = this.NAME_KR;
+    // data['NAME_EN'] = this.NAME_EN;
 
     return data;
   }

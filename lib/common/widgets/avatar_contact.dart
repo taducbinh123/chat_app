@@ -58,14 +58,12 @@ class CustomAvatarContact extends StatelessWidget {
                           style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                         ),
-                        // SizedBox(height: 8),
-                        // Opacity(
-                        //   opacity: 0.64,
-                        //   child: Text(
-                        //     chat.lastMessage,
-                        //     maxLines: 1,
-                        //     overflow: TextOverflow.ellipsis,
-                        //   ),
+                        SizedBox(height: 8),
+                        Text(
+                          employee.DEPT_NM,
+                          style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                          ),
                         // ),
                       ],
                     ),

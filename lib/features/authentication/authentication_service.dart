@@ -84,7 +84,8 @@ class AuthenticationServiceImpl extends AuthenticationService {
       if (response.statusCode == 200) {
       } else {
         print(response.body);
-        throw Exception('Error');
+        // throw Exception('Error');
+
       }
     }
 

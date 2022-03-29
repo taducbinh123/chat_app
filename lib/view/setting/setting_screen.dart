@@ -4,7 +4,13 @@ import 'package:get/get.dart';
 
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
+import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
+import 'package:hello_world_flutter/controller/room_chat_controller.dart';
+import 'package:hello_world_flutter/view/Dashboard.dart';
+import 'package:hello_world_flutter/view/room_member/room_member_screen.dart';
+import 'package:confirm_dialog/confirm_dialog.dart';
 
 List _elements = [
   {'name': 'Add Member', 'group': 'Room Info'},
@@ -12,6 +18,9 @@ List _elements = [
   {'name': 'Room Member', 'group': 'Room Info'},
 ];
 
+final roomChatController = Get.put(RoomChatController());
+ChatScreenController chatScreenController = Get.find();
+var roomUid = Get.arguments['room'].roomUid;
 class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -85,11 +94,15 @@ class SettingScreen extends StatelessWidget {
                       title: Text(element['name']),
                       trailing: Icon(Icons.arrow_forward),
                       onTap: () => {
-                        // if(element['name'].toString() == 'Room Member'){
-                        //   Get.to(() => RoomMemberScreen(room: roomsData[0])),
-                        // }else{
-                        //
-                        // }
+                        if (element['name'].toString() == 'Room Member')
+                          {
+                            roomChatController.getListMemberRoom(
+                                Get.arguments['room'].roomUid),
+                            Get.to(() => RoomMemberScreen(
+                                employees: roomChatController.employees)),
+                          }
+                        else if (element['name'].toString() == 'Leave Room')
+                          {showAlertDialog(context)}
                       },
                     ),
                   ),
@@ -99,6 +112,45 @@ class SettingScreen extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+// set up the buttons
+
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget launchButton = TextButton(
+      child: Text("Ok"),
+      onPressed: () async {
+        print(roomUid);
+        await roomChatController.leaveRoom(roomUid);
+        await chatScreenController.initDataRoom();
+        Get.to(() => Dashboard());
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirm"),
+      content: Text(
+          "Would you like to leave the room?"),
+      actions: [
+        cancelButton,
+        launchButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
