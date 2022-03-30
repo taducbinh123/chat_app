@@ -39,7 +39,7 @@ class ChatScreenController extends GetxController {
     print("load room");
     chatsData = await _socketProvider.connect();
     chatTempList.value = chatsData;
-    print(chatTempList.value);
+    // print(chatTempList.value);
   }
 
   chatNameSearch(String name) {
@@ -61,7 +61,7 @@ class ChatScreenController extends GetxController {
     await getLastMessage(chatRoom);
     var listMessage =
         await messageProvider.getMessageByRoomId(chatRoom.roomUid, page);
-
+    print("roomUid    " + chatRoom.roomUid);
     Get.toNamed(messagescreen,
         arguments: {"room": chatRoom, "data": listMessage});
   }

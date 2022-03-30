@@ -24,7 +24,7 @@ class CustomAvatarContactAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ContactScreenController contactController = Get.find<ContactScreenController>();
-    RoomChatController roomChatController = Get.find();
+    final roomChatController = Get.put(RoomChatController());
     // TODO: implement build
     return Container(
         child: Obx(()=>Card(
@@ -76,6 +76,12 @@ class CustomAvatarContactAdd extends StatelessWidget {
                             employee.USER_NM_KOR,
                             style:
                             TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            employee.DEPT_NM,
+                            style:
+                            TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                           ),
                           // SizedBox(height: 8),
                           // Opacity(

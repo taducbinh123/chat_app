@@ -8,6 +8,7 @@ import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
+import 'package:hello_world_flutter/model/room.dart';
 import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:hello_world_flutter/view/add_room_member/add_room_member_screen.dart';
 import 'package:hello_world_flutter/view/room_member/room_member_screen.dart';
@@ -19,9 +20,9 @@ List _elements = [
   {'name': 'Room Member', 'group': 'Room Info'},
 ];
 
-final roomChatController = Get.put(RoomChatController());
+RoomChatController roomChatController = Get.find();
 ChatScreenController chatScreenController = Get.find();
-var roomUid = Get.arguments['room'].roomUid;
+
 class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -94,20 +95,16 @@ class SettingScreen extends StatelessWidget {
                     child: ListTile(
                       title: Text(element['name']),
                       trailing: Icon(Icons.arrow_forward),
-                      onTap: () async => {
+                      onTap: () => {
                         if (element['name'].toString() == 'Room Member')
                           {
-                            roomChatController.getListMemberRoom(
-                                Get.arguments['room'].roomUid),
-                            Get.to(() => RoomMemberScreen(
-                                employees: roomChatController.employees)),
+                            print("setting" + Get.arguments['room'].roomUid),
+                            Get.to(() => RoomMemberScreen(),arguments: {"room": Get.arguments['room']}),
                           }
                         else if (element['name'].toString() == 'Leave Room')
                           {showAlertDialog(context)}
                         else if(element['name'].toString() == 'Add Member'){
-                          await roomChatController.getListMemberRoom(roomUid),
-                          await roomChatController.initDataEmployee(),
-                          Get.to(() => AddRoomMemberScreen())
+                          Get.to(() => AddRoomMemberScreen(),arguments: {"room": Get.arguments['room']})
                         }
                       },
                     ),
@@ -133,8 +130,8 @@ class SettingScreen extends StatelessWidget {
     Widget launchButton = TextButton(
       child: Text("Ok"),
       onPressed: () async {
-        print(roomUid);
-        await roomChatController.leaveRoom(roomUid);
+        // print(room.roomUid);
+        await roomChatController.leaveRoom(Get.arguments['room'].roomUid);
         await chatScreenController.initDataRoom();
         Get.to(() => Dashboard());
       },

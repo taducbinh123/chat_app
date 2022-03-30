@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
+import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 
 class SelectCircle extends StatelessWidget {
   SelectCircle(
@@ -9,15 +10,18 @@ class SelectCircle extends StatelessWidget {
       required this.height,
       required this.width,
       required this.text,
-      required this.chat})
+      required this.chat,
+      this.screen})
       : super(key: key);
   var height;
   var width;
   var text;
   var chat;
+  var screen;
   @override
   Widget build(BuildContext context) {
     ContactScreenController contactController = Get.find();
+    final roomChatController = Get.put(RoomChatController());
     var textName = text.toString().split(" ");
     return Stack(
       children: [
@@ -71,7 +75,11 @@ class SelectCircle extends StatelessWidget {
                   ),
                   onTap: () {
                     print("tapped");
-                    contactController.changeState(chat, 0, 0);
+                    if(screen == 'add'){
+                      roomChatController.changeState(chat, 0, 0);
+                    }else{
+                      contactController.changeState(chat, 0, 0);
+                    }
                   },
                 ),
               ),

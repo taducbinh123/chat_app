@@ -21,6 +21,7 @@ class ChatScreen extends GetView<ContactScreenController> {
     final contactController = Get.put(ContactScreenController());
     final chatController = Get.put(ChatScreenController());
 
+
     bool check = false;
     return Scaffold(
       body: Column(

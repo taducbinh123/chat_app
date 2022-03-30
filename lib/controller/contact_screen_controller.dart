@@ -30,7 +30,7 @@ class ContactScreenController extends GetxController {
     initData = await contactViewProvider.getEmployee(userUid);
     contactList.value = initData;
     resetState();
-    print(contactList.value);
+    // print(contactList.value);
   }
 
   var listContactChoose = [].obs;
@@ -84,7 +84,7 @@ class ContactScreenController extends GetxController {
           .where((element) =>
               element.USER_NM_KOR.toLowerCase().contains(name.toLowerCase()))
           .toList();
-      print(contactList.value.toString());
+      // print(contactList.value.toString());
     }
   }
 

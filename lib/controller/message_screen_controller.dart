@@ -17,10 +17,10 @@ class MessageScreenController extends GetxController {
   }
 
   LoadMessage() async {
-    print(listMessage);
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String? page = await prefs.getString("pageState");
-    // result.value+=listMessage;
-    // result.value+= await messageProvider.getMessageByRoomId(Get.arguments['room'].roomUid, page.toString()) as List;
+    // print(listMessage);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? page = await prefs.getString("pageState");
+    result.value+=listMessage;
+    result.value+= await messageProvider.getMessageByRoomId(Get.arguments['room'].roomUid, page.toString()) as List;
   }
 }

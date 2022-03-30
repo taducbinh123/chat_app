@@ -7,12 +7,12 @@ import 'package:hello_world_flutter/model/employee.dart';
 import 'package:hello_world_flutter/model/room.dart';
 
 class RoomMemberScreen extends StatelessWidget {
-  RoomChatController roomChatController = Get.find();
-  RoomMemberScreen({Key? key, required this.employees}) : super(key: key);
-  List employees;
-
+  RoomMemberScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    RoomChatController roomChatController = Get.find();
+    print("member " + Get.arguments['room'].roomUid);
+    roomChatController.getListMemberRoom(Get.arguments['room'].roomUid);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

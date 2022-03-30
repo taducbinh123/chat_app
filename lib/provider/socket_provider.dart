@@ -25,7 +25,7 @@ class SocketProvider {
 
     roomSocket.emitWithAck("getRoomsByUserUid", {"userUid": userUid},
         ack: (data) {
-      print(data);
+      // print(data);
       var result = data as List;
       for (int i = 0; i < result.length; i++) {
         Room rm = Room.fromJson(result[i] as Map<dynamic, dynamic>);

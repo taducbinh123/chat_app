@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -13,6 +15,9 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
   @override
   Widget build(BuildContext context) {
     RoomChatController roomChatController = Get.find();
+
+    roomChatController.getListMemberRoom(Get.arguments['room'].roomUid);
+    roomChatController.initDataEmployee();
     // ChatScreenController chatController = Get.find();
     var _mediaQueryData = MediaQuery.of(context);
     double screenWidth = _mediaQueryData.size.width;
@@ -47,8 +52,9 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
                       child: Text("Add"),
                       onPressed: () {
                         roomChatController.listAvatarChoose.clear();
+                        roomChatController.inviteMember(Get.arguments['room'].roomUid, Get.arguments['room'].roomDefaultName);
                         // chatController.createChatroom(contactController.listContactChoose);
-                        // Get.back();
+                        Get.back();
                       }),
                 ],
               ),
@@ -111,7 +117,7 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => {
             Get.back(),
-            roomChatController.contactList.value = roomChatController.initData,
+            // roomChatController.contactList.value = roomChatController.initData,
             roomChatController.listContactChoose.value = [],
             roomChatController.resetState(),
             roomChatController.listAvatarChoose.clear(),

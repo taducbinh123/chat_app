@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class RoomChatController extends GetxController {
+
   final RoomChatProvider roomChatProvider = RoomChatProvider();
 
   final ContactViewProvider contactViewProvider = ContactViewProvider();
@@ -37,10 +38,16 @@ class RoomChatController extends GetxController {
     await roomChatProvider.leftRoom(roomUid);
   }
   // var contactTempList = chatsData.obs;
-  RoomChatController() {
-    resetState();
+  // RoomChatController() {
+    // resetState();
     // initDataEmployee();
+  // }
+
+  inviteMember(var roomUid, var roomName)async{
+    await roomChatProvider.inviteRoom(roomUid, roomName, listContactChoose);
+    getListMemberRoom(roomUid);
   }
+
 
   initDataEmployee() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -60,7 +67,7 @@ class RoomChatController extends GetxController {
 
     contactList.value = initData;
     resetState();
-    print(contactList.value);
+    // print(contactList.value);
   }
 
   var listContactChoose = [].obs;
@@ -84,7 +91,8 @@ class RoomChatController extends GetxController {
           chat: e,
           height: screenWidth * 0.12,
           width: screenHeight * 0.06,
-          text: e.USER_NM_KOR));
+          text: e.USER_NM_KOR,
+          screen: "add",));
     } else {
       listContactChoose.remove(e);
       listAvatarChoose =
@@ -100,7 +108,7 @@ class RoomChatController extends GetxController {
           .where((element) =>
           element.USER_NM_KOR.toLowerCase().contains(name.toLowerCase()))
           .toList();
-      print(contactList.value.toString());
+      // print(contactList.value.toString());
     }
   }
 
