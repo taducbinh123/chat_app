@@ -37,10 +37,20 @@ class AuthenticationController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? accessToken = prefs.getString('access_token');
-    // if (accessToken == null) {
+    if (accessToken == null) {
       _authenticationStateStream.value = UnAuthenticated();
-    // } else {
-    //   _authenticationStateStream.value = Authenticated(user: new User(name: "", email: ""));
-    // }
+    } else {
+      String? expires_in = prefs.getString('expires_in');
+      DateTime dateTime = DateTime.parse(expires_in!);
+
+      DateTime timeCompare = DateTime.now().add(new Duration(days:0, hours : 0,minutes:10, seconds:0, milliseconds : 0));
+
+      if(timeCompare.compareTo(dateTime) < 0) {
+        _authenticationStateStream.value =
+            Authenticated(user: new User(name: "", email: ""));
+      }else{
+        _authenticationStateStream.value = UnAuthenticated();
+      }
+    }
   }
 }

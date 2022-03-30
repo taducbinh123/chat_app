@@ -56,7 +56,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
       print(t);
 
-      saveInforUser(info['access_token'], info['userUid'], info['username']);
+      saveInforUser(info['access_token'], info['userUid'], info['username'], info['expires_in']);
     } else if (response.statusCode == 400) {
       throw AuthenticationException(message: 'Wrong username or password');
     } else {
@@ -89,12 +89,10 @@ class AuthenticationServiceImpl extends AuthenticationService {
       }
     }
 
-    await prefs.remove("access_token");
-    await prefs.remove("userUid");
-    await prefs.remove("username");
+    await prefs.clear();
   }
 
-  saveInforUser(String token, String userUid, String username) async {
+  saveInforUser(String token, String userUid, String username, var expires_in) async {
     final response = await http.post(
         Uri.parse(imwareApiHost + '/api/userInfo/saveLoginInfo'),
         headers: {
@@ -108,15 +106,17 @@ class AuthenticationServiceImpl extends AuthenticationService {
       print(response.body);
       // throw Exception('Error');
     }
-
+    DateTime now = DateTime.now();
+    print(now);
+    now = now.add(new Duration(days:0, hours : 0,minutes:0, seconds:0, milliseconds : expires_in*1000));
+    print(now);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove("access_token");
-    await prefs.remove("userUid");
-    await prefs.remove("username");
+    await prefs.clear();
 
     await prefs.setString("access_token", token);
     await prefs.setString("userUid", userUid);
     await prefs.setString("username", username);
+    await prefs.setString("expires_in", now.toString());
     print(prefs.getString("userUid").toString());
   }
 
