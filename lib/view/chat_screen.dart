@@ -17,9 +17,9 @@ class ChatScreen extends GetView<ContactScreenController> {
     var _mediaQueryData = MediaQuery.of(context);
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
-
     final contactController = Get.put(ContactScreenController());
     final chatController = Get.put(ChatScreenController());
+
 
 
     bool check = false;

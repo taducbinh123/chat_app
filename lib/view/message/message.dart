@@ -55,7 +55,7 @@ class Message extends StatelessWidget {
                   Container(
                     constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
                     child: AutoSizeText(
-                      DateFormat('hh:mm')
+                      DateFormat('dd/MM/yyyy hh:mm')
                           .format(DateTime.parse(message.SEND_DATE.toString()))
                           .toString(),
                       style: TextStyle(

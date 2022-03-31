@@ -10,10 +10,11 @@ import 'package:hello_world_flutter/model/room.dart';
 
 import 'message/message.dart';
 
-final messageController = Get.put(MessageScreenController());
+
 class MessagesScreen extends GetView<MessageScreenController> {
   @override
   Widget build(BuildContext context) {
+    final messageController = Get.put(MessageScreenController());
     var _mediaQueryData = MediaQuery.of(context);
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
