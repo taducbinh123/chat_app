@@ -113,6 +113,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
+
     await prefs.setString("access_token", token);
     await prefs.setString("userUid", userUid);
     await prefs.setString("username", username);

@@ -1,6 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
+import 'package:hello_world_flutter/common/ulti/sharedPrefUlti.dart';
+import 'package:hello_world_flutter/controller/message_screen_controller.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/view/message/center_text_message.dart';
@@ -15,6 +18,7 @@ class Message extends StatelessWidget {
   }) : super(key: key);
 
   final MessageModel message;
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class Message extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Row(
-        mainAxisAlignment: message.MSG_TYPE_CODE != "TEXT"
+        mainAxisAlignment: message.USER_UID != SharedPrefUtils.readPrefStr("userUid")
             ? MainAxisAlignment.end
             : MainAxisAlignment.start,
         children: [
@@ -55,7 +59,7 @@ class Message extends StatelessWidget {
                   Container(
                     constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
                     child: AutoSizeText(
-                      DateFormat('dd/MM/yyyy hh:mm')
+                      DateFormat('hh:mm aa')
                           .format(DateTime.parse(message.SEND_DATE.toString()))
                           .toString(),
                       style: TextStyle(

@@ -33,16 +33,15 @@ class RoomMemberScreen extends StatelessWidget {
               height: 20,
             ),
             Expanded(
-              child: Obx(
-                      () => ListView.builder(
-                        itemCount: roomChatController.employees.length,
-                        itemBuilder: (context, index) => CustomAvatarContact(
-                          employee: roomChatController.employees[index],
-                          press: () => {
-                          },
-                        ),
-                      ),)
-            )
+                child: Obx(
+              () => ListView.builder(
+                itemCount: roomChatController.employees.length,
+                itemBuilder: (context, index) => CustomAvatarContact(
+                  employee: roomChatController.employees[index],
+                  press: () => {},
+                ),
+              ),
+            ))
           ],
         ));
   }

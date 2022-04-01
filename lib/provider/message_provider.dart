@@ -11,6 +11,8 @@ class MessageProvider {
     return utf8.decode(bytes);
   }
 
+  var page = "";
+
   getMessageByRoomId(String roomUid, String page) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? access_token = prefs.getString('access_token');
@@ -33,7 +35,6 @@ class MessageProvider {
       print(response.body.toString());
       Map<String, dynamic> map = json.decode(response.body);
       decodeData = map["rows"];
-      print(map["pageState"]);
       prefs.setString("pageState", map["pageState"].toString());
     } else {
       print(response.body.toString());
@@ -65,6 +66,8 @@ class MessageProvider {
         "MSG_CONT": msgContent,
         "MSG_TYPE_CODE": "TEXT",
       });
+
+      getMessageByRoomId(roomUid, "null");
     });
   }
 }
