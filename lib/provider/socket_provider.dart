@@ -11,7 +11,7 @@ class SocketProvider {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userUid = prefs.getString("userUid");
     String? access_token = prefs.getString('access_token');
-    print(access_token);
+    // print(access_token);
     IO.Socket roomSocket = IO.io(chatApiHost + "/chat", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
@@ -24,13 +24,14 @@ class SocketProvider {
 
     roomSocket.emitWithAck("getRoomsByUserUid", {"userUid": userUid},
         ack: (data) {
-      print(data);
+      // print(data);
       var result = data as List;
       for (int i = 0; i < result.length; i++) {
         Room rm = Room.fromJson(result[i] as Map<dynamic, dynamic>);
         chatsData.add(rm);
       }
     });
+    // roomSocket.disconnect();
     return chatsData;
   }
 

@@ -39,7 +39,10 @@ class ChatScreenController extends GetxController {
     print("load room");
     chatsData = await _socketProvider.connect();
     chatTempList.value = chatsData;
-    // print(chatTempList.value);
+    chatTempList.refresh();
+    print(chatsData);
+    print("jiojdv");
+    print(chatTempList.value);
   }
 
   chatNameSearch(String name) {
