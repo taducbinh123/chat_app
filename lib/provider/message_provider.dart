@@ -66,7 +66,6 @@ class MessageProvider {
         "MSG_CONT": msgContent,
         "MSG_TYPE_CODE": "TEXT",
       });
-
       getMessageByRoomId(roomUid, "null");
     });
   }

@@ -1,11 +1,13 @@
 
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/model/room.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class SocketProvider {
-  List<Room> chatsData = [];
+class SocketProvider extends GetxController  {
+  var chatsDatas =List<Room>.empty().obs;
 
   connect() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -28,10 +30,10 @@ class SocketProvider {
       var result = data as List;
       for (int i = 0; i < result.length; i++) {
         Room rm = Room.fromJson(result[i] as Map<dynamic, dynamic>);
-        chatsData.add(rm);
+        chatsDatas.add(rm);
       }
     });
-    return chatsData;
+    return chatsDatas;
   }
 
   getLastMessage(var roomUid, var lastReadMsgId) async {

@@ -1,9 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/ulti/sharedPrefUlti.dart';
-import 'package:hello_world_flutter/controller/message_screen_controller.dart';
 import 'package:hello_world_flutter/model/ChatMessage.dart';
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/view/message/center_text_message.dart';
@@ -18,7 +16,6 @@ class Message extends StatelessWidget {
   }) : super(key: key);
 
   final MessageModel message;
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,23 +38,29 @@ class Message extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Row(
-        mainAxisAlignment: message.USER_UID != SharedPrefUtils.readPrefStr("userUid")
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
+        mainAxisAlignment:
+            message.USER_UID != SharedPrefUtils.readPrefStr("userUid")
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
         children: [
           if (message.MSG_TYPE_CODE == "TEXT") ...[
             // !message.isSender - phải check xem có phải do client gửi tin nhắn ko
-            CircleAvatar(
-              radius: 16,
-              backgroundImage: AssetImage("images/default_avatar.png"),
+            Visibility(
+              child: CircleAvatar(
+                radius: 16,
+                backgroundImage: AssetImage("images/default_avatar.png"),
+              ),
+              visible:
+                  message.USER_UID == SharedPrefUtils.readPrefStr("userUid"),
             ),
-            SizedBox(width: kDefaultPadding / 2),
+            // SizedBox(width: kDefaultPadding / 2),
             Container(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:  message.USER_UID != SharedPrefUtils.readPrefStr("userUid")
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
                 children: [
                   Container(
-                    constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
                     child: AutoSizeText(
                       DateFormat('hh:mm aa')
                           .format(DateTime.parse(message.SEND_DATE.toString()))
@@ -67,7 +70,6 @@ class Message extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5),
                   messageContaint(message),
                 ],
               ),

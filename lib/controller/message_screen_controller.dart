@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hello_world_flutter/common/ulti/sharedPrefUlti.dart';
+
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/provider/message_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +32,8 @@ class MessageScreenController extends GetxController {
   }
 
   LoadMessage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? pageState = prefs.getString("pageState");
     result = [].obs;
     for (MessageModel m in await messageProvider.getMessageByRoomId(
         Get.arguments['room'].roomUid, "null") as List) {
@@ -39,16 +41,15 @@ class MessageScreenController extends GetxController {
     }
     for (MessageModel m in await messageProvider.getMessageByRoomId(
         Get.arguments['room'].roomUid,
-        SharedPrefUtils.readPrefStr("pageState")) as List) {
+        pageState!) as List) {
       result.value.add(m);
     }
-    print("result is " + result.value.length.toString());
     result.refresh();
   }
 
   sendMessage(String msgContent) {
     messageProvider.sendMessage(Get.arguments['room'].roomUid, msgContent);
     myController.value.text = "";
-    result = [].obs;
+
   }
 }

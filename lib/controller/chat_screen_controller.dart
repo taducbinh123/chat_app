@@ -3,12 +3,11 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
-import 'package:hello_world_flutter/model/room.dart';
 import 'package:hello_world_flutter/provider/message_provider.dart';
 import 'package:hello_world_flutter/provider/socket_provider.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+
 
 class ChatScreenController extends GetxController {
   final MessageProvider messageProvider = MessageProvider();
@@ -36,10 +35,9 @@ class ChatScreenController extends GetxController {
   }
 
   initDataRoom() async {
-    print("load room");
-    chatsData = await _socketProvider.connect();
-    chatTempList.value = chatsData;
-    // print(chatTempList.value);
+    _socketProvider.connect();
+    chatTempList.value = await _socketProvider.chatsDatas;
+    print(chatTempList.value);
   }
 
   chatNameSearch(String name) {
@@ -53,12 +51,12 @@ class ChatScreenController extends GetxController {
     }
   }
 
-  getLastMessage(var chatRoom) async {
+  getLastMessage(var chatRoom)  {
     _socketProvider.getLastMessage(chatRoom.roomUid, chatRoom.lastMsgUid);
   }
 
   getMessageByRoomId(var chatRoom) async {
-    await getLastMessage(chatRoom);
+    getLastMessage(chatRoom);
     var listMessage =
         await messageProvider.getMessageByRoomId(chatRoom.roomUid, page);
     print("roomUid    " + chatRoom.roomUid);
