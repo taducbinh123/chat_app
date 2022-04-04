@@ -30,7 +30,7 @@ class CustomAvatar extends StatelessWidget {
                   radius: 24,
                   backgroundImage: AssetImage("images/default_avatar.png"),
                 ),
-                // if (true)
+                if (chat.isOnline == true)
                 Positioned(
                   right: 0,
                   bottom: 0,

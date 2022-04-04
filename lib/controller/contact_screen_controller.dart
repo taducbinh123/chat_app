@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 import 'package:hello_world_flutter/provider/contact_view_provider.dart';
+import 'package:hello_world_flutter/provider/socket_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ContactScreenController extends GetxController {
 
   final ContactViewProvider contactViewProvider = ContactViewProvider();
+  final SocketProvider socketProvider = SocketProvider();
   TextEditingController searchController = TextEditingController();
 
   List<SelectCircle> listAvatarChoose = [];
@@ -28,6 +30,7 @@ class ContactScreenController extends GetxController {
     final String? userUid = prefs.getString('userUid');
     print(userUid);
     initData = await contactViewProvider.getEmployee(userUid);
+    await socketProvider.getOnlineMember(initData);
     contactList.value = initData;
     resetState();
     // print(contactList.value);

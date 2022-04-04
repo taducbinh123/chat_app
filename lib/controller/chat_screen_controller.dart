@@ -117,6 +117,6 @@ class ChatScreenController extends GetxController {
     }
 
     await userProvider.createChatroom(roomName, memberList);
-    initDataRoom();
+    await initDataRoom();
   }
 }

@@ -14,6 +14,7 @@ class Room {
   int lastMsgUid;
   MessageModel messageModel;
   List memberUidList;
+  bool? isOnline;
 
   Room({
     required this.roomUid,
@@ -29,6 +30,7 @@ class Room {
     required this.lastMsgUid,
     required this.messageModel,
     required this.memberUidList,
+    this.isOnline,
   });
 
   Room.fromJson(Map<dynamic, dynamic> json)
@@ -44,7 +46,8 @@ class Room {
         notifyType = json['NOTIFY_TYPE'],
         lastMsgUid = json['LAST_MSG_UID'],
         memberUidList = json['MEMBER_UID_LIST'] as List,
-        messageModel = MessageModel.fromJson(json['LAST_MSG']);
+        messageModel = MessageModel.fromJson(json['LAST_MSG']),
+        isOnline = json['isOnline'];
 
   Map<dynamic, dynamic> toJson() {
     return {
@@ -60,13 +63,14 @@ class Room {
       'NOTIFY_TYPE': notifyType,
       'LAST_MSG_UID': lastMsgUid,
       'LAST_MSG':messageModel,
-      'MEMBER_UID_LIST':memberUidList
+      'MEMBER_UID_LIST':memberUidList,
+      'isOnline':isOnline
     };
   }
 
   @override
   String toString() {
-    return 'Room{roomUid: $roomUid, regDate: $regDate, modiDate: $modiDate, regUserUid: $regUserUid, modiUserUid: $modiUserUid, roomDefaultName: $roomDefaultName, roomType: $roomType, keyRoom: $keyRoom, roomImg: $roomImg, notifyType: $notifyType, lastMsgUid: $lastMsgUid, messageModel: $messageModel, memberUidList: $memberUidList}';
+    return 'Room{roomUid: $roomUid, regDate: $regDate, modiDate: $modiDate, regUserUid: $regUserUid, modiUserUid: $modiUserUid, roomDefaultName: $roomDefaultName, roomType: $roomType, keyRoom: $keyRoom, roomImg: $roomImg, notifyType: $notifyType, lastMsgUid: $lastMsgUid, messageModel: $messageModel, memberUidList: $memberUidList, isOnline: $isOnline}';
   }
 }
 

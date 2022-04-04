@@ -24,7 +24,7 @@ class SocketProvider {
 
     roomSocket.emitWithAck("getRoomsByUserUid", {"userUid": userUid},
         ack: (data) {
-      // print(data);
+      print(data);
       var result = data as List;
       for (int i = 0; i < result.length; i++) {
         Room rm = Room.fromJson(result[i] as Map<dynamic, dynamic>);
@@ -39,5 +39,35 @@ class SocketProvider {
     roomSocket.emit("updateLastReadMsg",
         {"roomUid": roomUid, "lastReadMsgId": lastReadMsgId});
     roomSocket.on("updateLastReadMsg", (data) => print("done"));
+  }
+
+  getOnlineMember(var listMember)async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? access_token = prefs.getString('access_token');
+
+    IO.Socket roomSocket = IO.io(chatApiHost + "/chat", <String, dynamic>{
+      "transports": ["websocket"],
+      "autoConnect": false,
+      "auth": {"token": access_token}
+    });
+    roomSocket.io.options['extraHeaders'] = {
+      "Content-Type": "application/json"
+    };
+    roomSocket.connect();
+    roomSocket.emit("getUserOnline");
+    roomSocket.on("onlineMember", (data) => {
+      for(var i in data){
+        for(var e in listMember){
+          if(e.USER_UID == i){
+            // print(e.USER_NM_KOR),
+            e.ONLINE_YN = 'Y',
+          }
+        }
+      }
+    });
+  }
+
+  getOfflineMember(){
+
   }
 }

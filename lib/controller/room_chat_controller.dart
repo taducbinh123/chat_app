@@ -6,11 +6,13 @@ import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 import 'package:hello_world_flutter/provider/contact_view_provider.dart';
 import 'package:hello_world_flutter/provider/room_chat_provider.dart';
+import 'package:hello_world_flutter/provider/socket_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomChatController extends GetxController {
   final RoomChatProvider roomChatProvider = RoomChatProvider();
   final ContactViewProvider contactViewProvider = ContactViewProvider();
+  final SocketProvider socketProvider = SocketProvider();
   TextEditingController searchController = TextEditingController();
   List<SelectCircle> listAvatarChoose = [];
   List<Employee> initData = [];
@@ -20,6 +22,7 @@ class RoomChatController extends GetxController {
 
   getListMemberRoom(String roomUid) async {
     var list = await roomChatProvider.getMemberList(roomUid);
+    await socketProvider.getOnlineMember(list);
     employees.value = list;
   }
 
@@ -29,7 +32,8 @@ class RoomChatController extends GetxController {
 
   inviteMember(var roomUid, var roomName) async {
     await roomChatProvider.inviteRoom(roomUid, roomName, listContactChoose);
-    getListMemberRoom(roomUid);
+    await getListMemberRoom(roomUid);
+    await initDataEmployee();
   }
 
   initDataEmployee() async {
@@ -38,7 +42,6 @@ class RoomChatController extends GetxController {
     final String? userUid = prefs.getString('userUid');
     print(userUid);
     initData = await contactViewProvider.getEmployee(userUid);
-
     // loại bỏ những member có trong phòng ra khỏi list contact để thao tác
     for (var element in employees) {
       for (Employee e in initData) {
@@ -49,6 +52,7 @@ class RoomChatController extends GetxController {
       }
     }
 
+    await socketProvider.getOnlineMember(initData);
     contactList.value = initData;
     resetState();
     // print(contactList.value);
