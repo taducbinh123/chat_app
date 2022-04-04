@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
-import 'package:hello_world_flutter/model/employee.dart';
-import 'package:hello_world_flutter/model/room.dart';
+
 
 class RoomMemberScreen extends StatelessWidget {
   RoomMemberScreen({Key? key}) : super(key: key);

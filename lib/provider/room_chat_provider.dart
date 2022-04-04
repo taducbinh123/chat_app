@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:convert' as convert;
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/model/employee.dart';
-import 'package:hello_world_flutter/model/message.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
