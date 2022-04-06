@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MessageScreenController extends GetxController {
   final MessageProvider messageProvider = MessageProvider();
   ScrollController controller = ScrollController();
-  var listMessage = Get.arguments['data'];
+  // var listMessage = Get.arguments['data'];
   var result = [].obs;
   var page= box.read("pageState");
   var myController = TextEditingController().obs;
@@ -20,13 +20,13 @@ class MessageScreenController extends GetxController {
 
   @override
   void onInit() {
-    LoadMessage("null");
     controller.addListener(_onScroll);
     super.onInit();
   }
 
   @override
   void onReady() {
+    LoadMessage("null");
     super.onReady();
   }
 
@@ -44,15 +44,16 @@ class MessageScreenController extends GetxController {
   }
 
   LoadMessage(var page) async {
-    result = [].obs;
-    for (MessageModel m in await messageProvider.getMessageByRoomId(
-        Get.arguments['room'].roomUid, page) as List) {
-      result.value.add(m);
-    }
+    messageProvider.getMessageByRoomId(Get.arguments['room'].roomUid, page);
+    result.value=messageProvider.list.value;
+    await Future.delayed(const Duration(seconds: 1));
+    print("demo "+result.value.toString());
   }
 
   sendMessage(String msgContent) {
     messageProvider.sendMessage(Get.arguments['room'].roomUid, msgContent);
+    MessageModel message=MessageModel(MSG_CONT: myController.value.text,MSG_TYPE_CODE: "TEXT",MSG_UID:"1",SEND_DATE:DateTime.now().toString(),USER_UID:box.read("userUid"));
+    result.value.insert(0,message);
     myController.value.text = "";
   }
 }

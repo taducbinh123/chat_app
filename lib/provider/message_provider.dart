@@ -38,16 +38,16 @@ class MessageProvider {
       // print(response.body.toString());
       Map<String, dynamic> map = json.decode(response.body);
       decodeData = map["rows"];
-      for (int i = decodeData.length - 1; i >= 0; i--) {
-        list.add(decodeData[i]);
+      // for (int i = decodeData.length - 1; i >= 0; i--) {
+      for (int i = 0; i < decodeData.length; i++) {
+        list.value.add( MessageModel.fromJson(decodeData[i]));
       }
       box.write("pageState", map["pageState"].toString());
     } else {
       print(response.body.toString());
       throw Exception('Failed to load message');
     }
-
-    return list.map((e) => MessageModel.fromJson(e)).toList();
+    print(list.value);
   }
 
   sendMessage(String roomUid, String msgContent) async {

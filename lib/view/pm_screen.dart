@@ -26,8 +26,9 @@ class MessagesScreen extends GetView<MessageScreenController> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 child: ListView.builder(
-                  controller: messageController.controller,
+                    controller: messageController.controller,
                     itemCount: messageController.result.value.length,
+                    reverse: true,
                     itemBuilder: (context, index) {
                       if (messageController.result.value.length == index)
                         return Center(child: CircularProgressIndicator());
@@ -79,19 +80,23 @@ class MessagesScreen extends GetView<MessageScreenController> {
                           //           .withOpacity(0.64),
                           //     )),
                           SizedBox(width: kDefaultPadding / 4),
-                          Expanded(
-                            child: TextField(
-                              controller: messageController.myController.value,
-                              enabled:
-                                  messageController.myController.value == null
-                                      ? false
-                                      : true,
-                              decoration: InputDecoration(
-                                hintText: "Type message",
-                                border: InputBorder.none,
+                          Obx(
+                            () => Expanded(
+                              child: TextField(
+                                controller:
+                                    messageController.myController.value,
+                                enabled:
+                                    messageController.myController.value == null
+                                        ? false
+                                        : true,
+                                decoration: InputDecoration(
+                                  hintText: "Type message",
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
                           ),
+
                           Icon(
                             Icons.attach_file,
                             color: Theme.of(context)
