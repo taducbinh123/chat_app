@@ -45,6 +45,7 @@ class RoomChatProvider {
       print("room socket " + roomSocket.connected.toString());
       roomSocket.emit("leaveRoom", {"ROOM_UID":roomUid, "USER_UID":userUid});
     });
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   inviteRoom(String roomUid,String roomName, var memberList) async{

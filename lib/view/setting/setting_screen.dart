@@ -102,7 +102,7 @@ class SettingScreen extends StatelessWidget {
                             Get.to(() => RoomMemberScreen(),arguments: {"room": Get.arguments['room']}),
                           }
                         else if (element['name'].toString() == 'Leave Room')
-                          {showAlertDialog(context)}
+                          {showAlertDialog(context,Get.arguments['room'].roomUid)}
                         else if(element['name'].toString() == 'Add Member'){
                           Get.to(() => AddRoomMemberScreen(),arguments: {"room": Get.arguments['room']})
                         }
@@ -118,7 +118,7 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
-  showAlertDialog(BuildContext context) {
+  showAlertDialog(BuildContext context, var roomUid) {
 // set up the buttons
 
     Widget cancelButton = TextButton(
@@ -130,10 +130,11 @@ class SettingScreen extends StatelessWidget {
     Widget launchButton = TextButton(
       child: Text("Ok"),
       onPressed: () async {
-        // print(room.roomUid);
-        await roomChatController.leaveRoom(Get.arguments['room'].roomUid);
-        await chatScreenController.initDataRoom();
+        print(roomUid);
+        await roomChatController.leaveRoom(roomUid);
+        chatScreenController.initDataRoom();
         Get.to(() => Dashboard());
+        // Get.back();
       },
     );
 

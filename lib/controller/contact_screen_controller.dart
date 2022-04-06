@@ -38,6 +38,10 @@ class ContactScreenController extends GetxController {
     print(userUid);
     initData = await contactViewProvider.getEmployee(userUid);
     await socketProvider.getOnlineMember(initData);
+
+    // loại bỏ user ra khỏi danh sách
+
+    initData = initData.where((element) => element.USER_UID != userUid).toList();
     contactList.value = initData;
     resetState();
     // print(contactList.value);
