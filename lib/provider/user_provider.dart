@@ -53,6 +53,7 @@ class UserProvider {
         print("room socket " + roomSocket.connected.toString());
         roomSocket.emit("createChatroom", {"roomName":roomName,"memberList":memberList,"type": 'IN_CHATROOM'});
     });
+      await Future.delayed(const Duration(seconds: 1));
   }
 
 }

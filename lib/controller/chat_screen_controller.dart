@@ -102,7 +102,7 @@ class ChatScreenController extends GetxController {
     employees.sort(
         (a, b) => a.USER_NM_KOR.toString().compareTo(b.USER_NM_KOR.toString()));
     // sx theo tên
-    employees.sort((a, b) => a.POSITION_ORDER - b.POSITION_ORDER);
+    employees.sort((a, b) => a.POSITION_ORDER ?? 0 - b.POSITION_ORDER ?? 0);
     // sx theo vị trí
 
     var memberList =
@@ -120,6 +120,7 @@ class ChatScreenController extends GetxController {
     }
 
     await userProvider.createChatroom(roomName, memberList);
+    await Future.delayed(const Duration(seconds: 1));
     await initDataRoom();
   }
 }

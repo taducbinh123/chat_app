@@ -6,6 +6,7 @@ import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact_add.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
+import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddContactScreen extends GetView<ContactScreenController> {
@@ -48,6 +49,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                             contactController.listAvatarChoose.clear();
                             chatController.createChatroom(contactController.listContactChoose);
                             Get.back();
+                            // Get.to(() => Dashboard());
                           }),
                     ],
                   ),
