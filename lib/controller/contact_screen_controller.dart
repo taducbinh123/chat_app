@@ -20,8 +20,15 @@ class ContactScreenController extends GetxController {
   var state = [].obs;
   // var contactTempList = chatsData.obs;
   ContactScreenController() {
+    // resetState();
+    // initDataEmployee();
+  }
+
+  @override
+  void onInit() {
     resetState();
     initDataEmployee();
+    super.onInit();
   }
 
   initDataEmployee() async {

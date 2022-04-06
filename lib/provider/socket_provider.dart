@@ -10,7 +10,7 @@ class SocketProvider extends GetxController {
   var chatsDatas = List<Room>.empty().obs;
   final box = GetStorage();
 
-  connect() {
+  connect() async {
     chatsDatas = List<Room>.empty().obs;
     IO.Socket roomSocket = IO.io(chatApiHost + "/chat", <String, dynamic>{
       "transports": ["websocket"],
@@ -23,15 +23,20 @@ class SocketProvider extends GetxController {
     roomSocket.connect();
 
     roomSocket.emitWithAck(
-        "getRoomsByUserUid", {"userUid": box.read('userUid')}, ack: (data) {
+        "getRoomsByUserUid", {"userUid": box.read('userUid')},  ack: (data) {
       var result = data as List;
       for (int i = 0; i < result.length; i++) {
         Room rm = Room.fromJson(result[i] as Map<dynamic, dynamic>);
         chatsDatas.value.add(rm);
       }
+      print("1 ");
       print(chatsDatas.value);
     });
-    print(chatsDatas);
+    Future.delayed(const Duration(seconds: 1));
+    // roomSocket.disconnect();
+    // print(chatsDatas);
+    // roomSocket.onDisconnect((_) => print('disconnect'));
+    print("2 ");
     print(chatsDatas.value);
     return chatsDatas;
   }

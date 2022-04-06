@@ -26,8 +26,8 @@ class ChatScreenController extends GetxController {
   @override
   void onInit() {
     initDataRoom();
-    _socketProvider.connect();
-    chatTempList.value = _socketProvider.chatsDatas.value;
+    // _socketProvider.connect();
+    // chatTempList.value = _socketProvider.chatsDatas.value;
     super.onInit();
   }
 
@@ -45,9 +45,10 @@ class ChatScreenController extends GetxController {
   //   chatTempList.value = _socketProvider.chatsDatas.value;
   //   print(chatTempList.value);
 
-  initDataRoom() {
+  initDataRoom() async {
     _socketProvider.connect();
-    chatTempList.value = _socketProvider.chatsDatas.value;
+    Future.delayed(const Duration(seconds: 1));
+    chatTempList.value = _socketProvider.chatsDatas;
     print("abc" + _socketProvider.chatsDatas.value.toString());
   }
 
