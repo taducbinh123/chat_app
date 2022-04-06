@@ -26,28 +26,20 @@ class ChatScreenController extends GetxController {
   @override
   void onInit() {
     initDataRoom();
-    // _socketProvider.connect();
-    // chatTempList.value = _socketProvider.chatsDatas.value;
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    initDataRoom();
+    super.onReady();
   }
 
   ChatScreenController() {}
 
-  // initDataRoom() async {
-  //   print("load room");
-  // chatsData = await _socketProvider.connect();
-  // chatTempList.value = chatsData;
-  // chatTempList.refresh();
-  // print(chatsData);
-  // print("jiojdv");
-  //   await _socketProvider.connect();
-  //   print(_socketProvider.chatsDatas);
-  //   chatTempList.value = _socketProvider.chatsDatas.value;
-  //   print(chatTempList.value);
-
   initDataRoom() async {
     _socketProvider.connect();
-    Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     chatTempList.value = _socketProvider.chatsDatas;
     print("abc" + _socketProvider.chatsDatas.value.toString());
   }
