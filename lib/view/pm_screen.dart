@@ -26,10 +26,14 @@ class MessagesScreen extends GetView<MessageScreenController> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                 child: ListView.builder(
-                  itemCount: messageController.result.value.length,
-                  itemBuilder: (context, index) =>
-                      Message(message: messageController.result.value[index]),
-                ),
+                  controller: messageController.controller,
+                    itemCount: messageController.result.value.length,
+                    itemBuilder: (context, index) {
+                      if (messageController.result.value.length == index)
+                        return Center(child: CircularProgressIndicator());
+                      return Message(
+                          message: messageController.result.value[index]);
+                    }),
               ),
             ),
           ),
@@ -117,7 +121,6 @@ class MessagesScreen extends GetView<MessageScreenController> {
                     onPressed: () => {
                       messageController.sendMessage(
                           messageController.myController.value.text),
-                      messageController.LoadMessage()
                     },
                   )
                 ],

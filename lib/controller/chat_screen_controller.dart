@@ -25,24 +25,30 @@ class ChatScreenController extends GetxController {
 
   @override
   void onInit() {
+    initDataRoom();
+    _socketProvider.connect();
+    chatTempList.value = _socketProvider.chatsDatas.value;
     super.onInit();
   }
 
-  ChatScreenController() {
-    initDataRoom();
-  }
+  ChatScreenController() {}
 
-  initDataRoom() async {
-    print("load room");
-    // chatsData = await _socketProvider.connect();
-    // chatTempList.value = chatsData;
-    // chatTempList.refresh();
-    // print(chatsData);
-    // print("jiojdv");
-    await _socketProvider.connect();
-    print(_socketProvider.chatsDatas);
+  // initDataRoom() async {
+  //   print("load room");
+  // chatsData = await _socketProvider.connect();
+  // chatTempList.value = chatsData;
+  // chatTempList.refresh();
+  // print(chatsData);
+  // print("jiojdv");
+  //   await _socketProvider.connect();
+  //   print(_socketProvider.chatsDatas);
+  //   chatTempList.value = _socketProvider.chatsDatas.value;
+  //   print(chatTempList.value);
+
+  initDataRoom() {
+    _socketProvider.connect();
     chatTempList.value = _socketProvider.chatsDatas.value;
-    print(chatTempList.value);
+    print("abc" + _socketProvider.chatsDatas.value.toString());
   }
 
   chatNameSearch(String name) {
@@ -78,8 +84,6 @@ class ChatScreenController extends GetxController {
   }
 
   bool checkExistRoom(var employee, var userUid) {
-    print("list chat");
-    print(chatTempList); // list room chat
     bool flag = false;
     chatTempList.forEach((element) {
       if (element.memberUidList.length == 2) {

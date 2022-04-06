@@ -24,6 +24,7 @@ void main() async {
 
 
 void initialize() {
+
   Get.lazyPut(() => AuthenticationController(Get.put(AuthenticationServiceImpl())),);
 }
 
