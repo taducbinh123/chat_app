@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:get_storage/get_storage.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -113,7 +114,9 @@ class AuthenticationServiceImpl extends AuthenticationService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
-
+    final box = GetStorage();
+    box.write("access_token", token);
+    box.write("userUid", userUid);
     await prefs.setString("access_token", token);
     await prefs.setString("userUid", userUid);
     await prefs.setString("username", username);

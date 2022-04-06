@@ -27,20 +27,27 @@ class ChatScreenController extends GetxController {
 
   @override
   void onInit() {
+    initDataRoom();
+    _socketProvider.connect();
+    chatTempList.value = _socketProvider.chatsDatas.value;
     super.onInit();
   }
 
   ChatScreenController() {
-    initDataRoom();
+
   }
 
-  initDataRoom() async {
+  initDataRoom()  {
     _socketProvider.connect();
-    chatTempList.value = await _socketProvider.chatsDatas;
-    print(chatTempList.value);
+    chatTempList.value = _socketProvider.chatsDatas.value;
+    print("abc"+_socketProvider.chatsDatas.value.toString());
+
+
+
   }
 
   chatNameSearch(String name) {
+
     if (name.isEmpty) {
       chatTempList.value = chatsData;
     } else {
@@ -73,8 +80,7 @@ class ChatScreenController extends GetxController {
   }
 
   bool checkExistRoom(var employee, var userUid) {
-    print("list chat");
-    print(chatTempList); // list room chat
+
     bool flag = false;
     chatTempList.forEach((element) {
       if(element.memberUidList.length == 2){

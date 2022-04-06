@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:http/http.dart' as http;
@@ -12,11 +14,13 @@ class MessageProvider {
   }
 
   var page = "";
+  final box = GetStorage();
+  var list = [].obs;
 
   getMessageByRoomId(String roomUid, String page) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? access_token = prefs.getString('access_token');
-
+    List<dynamic> decodeData;
     final response = await http.get(
         Uri.parse(chatApiHost +
             '/api/chat/getmessageByRoomId?roomId=' +
@@ -29,19 +33,21 @@ class MessageProvider {
         roomUid +
         "&page=" +
         page);
-    List<dynamic> decodeData;
 
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      // print(response.body.toString());
       Map<String, dynamic> map = json.decode(response.body);
       decodeData = map["rows"];
-      prefs.setString("pageState", map["pageState"].toString());
+      for (int i = decodeData.length - 1; i >= 0; i--) {
+        list.add(decodeData[i]);
+      }
+      box.write("pageState", map["pageState"].toString());
     } else {
       print(response.body.toString());
       throw Exception('Failed to load message');
     }
 
-    return decodeData.map((e) => MessageModel.fromJson(e)).toList();
+    return list.map((e) => MessageModel.fromJson(e)).toList();
   }
 
   sendMessage(String roomUid, String msgContent) async {
@@ -59,14 +65,13 @@ class MessageProvider {
     };
     roomSocket.connect();
     roomSocket.onConnect((_) {
-      print("room socket " + roomSocket.connected.toString());
       roomSocket.emit("sendMessage", {
         "ROOM_UID": roomUid,
         "USER_UID": userUid,
         "MSG_CONT": msgContent,
         "MSG_TYPE_CODE": "TEXT",
       });
-      getMessageByRoomId(roomUid, "null");
     });
+    print(list.value);
   }
 }

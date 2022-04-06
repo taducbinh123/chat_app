@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 const kPrimaryColor = Color(0xff19191b);
 const kDotColor = Color(0xFF00BF6D);
@@ -18,3 +19,4 @@ const Gradient fabGradient = LinearGradient(
     colors: [gradientColorStart, gradientColorEnd],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight);
+final box =GetStorage();
