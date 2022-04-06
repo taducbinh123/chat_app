@@ -8,12 +8,10 @@ import 'package:hello_world_flutter/provider/socket_provider.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class ChatScreenController extends GetxController {
   final MessageProvider messageProvider = MessageProvider();
   final SocketProvider _socketProvider = SocketProvider();
   final UserProvider userProvider = UserProvider();
-
 
   String userUid = "";
 
@@ -27,27 +25,25 @@ class ChatScreenController extends GetxController {
 
   @override
   void onInit() {
-    initDataRoom();
-    _socketProvider.connect();
-    chatTempList.value = _socketProvider.chatsDatas.value;
     super.onInit();
   }
 
-  ChatScreenController() {
-
+  @override
+  void onReady() {
+    initDataRoom();
+    super.onReady();
   }
 
-  initDataRoom()  {
+  ChatScreenController() {}
+
+  initDataRoom() async {
     _socketProvider.connect();
-    chatTempList.value = _socketProvider.chatsDatas.value;
-    print("abc"+_socketProvider.chatsDatas.value.toString());
-
-
-
+    await Future.delayed(const Duration(seconds: 1));
+    chatTempList.value = _socketProvider.chatsDatas;
+    print("abc" + _socketProvider.chatsDatas.value.toString());
   }
 
   chatNameSearch(String name) {
-
     if (name.isEmpty) {
       chatTempList.value = chatsData;
     } else {
@@ -58,7 +54,7 @@ class ChatScreenController extends GetxController {
     }
   }
 
-  getLastMessage(var chatRoom)  {
+  getLastMessage(var chatRoom) {
     _socketProvider.getLastMessage(chatRoom.roomUid, chatRoom.lastMsgUid);
   }
 
@@ -80,11 +76,12 @@ class ChatScreenController extends GetxController {
   }
 
   bool checkExistRoom(var employee, var userUid) {
-
     bool flag = false;
     chatTempList.forEach((element) {
-      if(element.memberUidList.length == 2){
-        if(element.memberUidList.indexWhere((e) => e == userUid) != -1 && element.memberUidList.indexWhere((e) => e == employee.USER_UID) != -1) {
+      if (element.memberUidList.length == 2) {
+        if (element.memberUidList.indexWhere((e) => e == userUid) != -1 &&
+            element.memberUidList.indexWhere((e) => e == employee.USER_UID) !=
+                -1) {
           flag = true;
         }
       }
@@ -93,31 +90,32 @@ class ChatScreenController extends GetxController {
   }
 
   createChatroom(List employees) async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? userUid = prefs.getString('userUid');
-    if (employees.length == 1 && checkExistRoom(employees[0],userUid)) {
-        return;
+    if (employees.length == 1 && checkExistRoom(employees[0], userUid)) {
+      return;
     }
     // print(employees);
     // checkExistRoom(employees[0]);
 
-    employees.sort((a, b) => a.USER_NM_KOR.toString().compareTo(b.USER_NM_KOR.toString()));
+    employees.sort(
+        (a, b) => a.USER_NM_KOR.toString().compareTo(b.USER_NM_KOR.toString()));
     // sx theo tên
     employees.sort((a, b) => a.POSITION_ORDER - b.POSITION_ORDER);
     // sx theo vị trí
 
-    var memberList = employees.map((e) => e.USER_UID).toList(); // get user_uid list
+    var memberList =
+        employees.map((e) => e.USER_UID).toList(); // get user_uid list
     print(memberList);
- // get user_uid của người tạo
+    // get user_uid của người tạo
     memberList.insert(0, userUid);
 
     var roomName = employees.map((e) => e.USER_NM_KOR).join(', ');
 
     var userInfo = await userProvider.getUserInfo(userUid);
     print(userInfo);
-    if(employees.length > 1){
-      roomName += ", " +  userInfo['NAME_KR'];
+    if (employees.length > 1) {
+      roomName += ", " + userInfo['NAME_KR'];
     }
 
     await userProvider.createChatroom(roomName, memberList);
