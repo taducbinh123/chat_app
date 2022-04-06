@@ -33,7 +33,6 @@ class RoomChatController extends GetxController {
   inviteMember(var roomUid, var roomName) async {
     await roomChatProvider.inviteRoom(roomUid, roomName, listContactChoose);
     await getListMemberRoom(roomUid);
-    await initDataEmployee();
   }
 
   initDataEmployee() async {
