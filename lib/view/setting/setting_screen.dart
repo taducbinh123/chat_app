@@ -11,6 +11,7 @@ import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/model/room.dart';
 import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:hello_world_flutter/view/add_room_member/add_room_member_screen.dart';
+import 'package:hello_world_flutter/view/chat_screen.dart';
 import 'package:hello_world_flutter/view/room_member/room_member_screen.dart';
 
 
@@ -133,7 +134,7 @@ class SettingScreen extends StatelessWidget {
         print(roomUid);
         await roomChatController.leaveRoom(roomUid);
         chatScreenController.initDataRoom();
-        Get.to(() => Dashboard());
+        Get.offAll(() => Dashboard());
         // Get.back();
       },
     );

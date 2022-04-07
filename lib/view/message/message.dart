@@ -15,7 +15,7 @@ class Message extends StatelessWidget {
     required this.message,
   }) : super(key: key);
 
-  final MessageModel message;
+  final message;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,9 @@ class Message extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: Row(
-        mainAxisAlignment:
-            message.USER_UID != SharedPrefUtils.readPrefStr("userUid")
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
+        mainAxisAlignment: message.USER_UID == box.read("userUid")
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         children: [
           if (message.MSG_TYPE_CODE == "TEXT") ...[
             // !message.isSender - phải check xem có phải do client gửi tin nhắn ko
@@ -50,13 +49,15 @@ class Message extends StatelessWidget {
                 radius: 16,
                 backgroundImage: AssetImage("images/default_avatar.png"),
               ),
-              visible:
-                  message.USER_UID == SharedPrefUtils.readPrefStr("userUid"),
+              visible: message.USER_UID != box.read("userUid"),
             ),
-            // SizedBox(width: kDefaultPadding / 2),
+            Visibility(
+              child: SizedBox(width: kDefaultPadding / 2),
+              visible: message.USER_UID != box.read("userUid"),
+            ),
             Container(
               child: Column(
-                crossAxisAlignment:  message.USER_UID != SharedPrefUtils.readPrefStr("userUid")
+                crossAxisAlignment: message.USER_UID == box.read("userUid")
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.start,
                 children: [

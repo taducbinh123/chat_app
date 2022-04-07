@@ -35,13 +35,17 @@ class ChatScreenController extends GetxController {
     super.onReady();
   }
 
-  ChatScreenController() {}
+  ChatScreenController() {
+    initDataRoom();
+  }
 
   initDataRoom() async {
     _socketProvider.connect();
     await Future.delayed(const Duration(seconds: 1));
+    chatTempList.refresh();
     chatTempList.value = _socketProvider.chatsDatas;
     print("abc" + _socketProvider.chatsDatas.value.toString());
+
   }
 
   chatNameSearch(String name) {
