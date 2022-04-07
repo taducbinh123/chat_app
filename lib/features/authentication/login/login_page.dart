@@ -8,30 +8,14 @@ import 'package:lottie/lottie.dart';
 import 'login_controller.dart';
 import 'login_state.dart';
 
-class LoginPage extends StatelessWidget {
-  // LoginPage(){
-  //   Get.reset();
-  // }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.purple,
-      ),
-      title: "Login Page",
-      home: _SignInForm(),
-    );
-  }
-}
 
-class _SignInForm extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
   __SignInFormState createState() => __SignInFormState();
 }
 
-class __SignInFormState extends State<_SignInForm> {
+class __SignInFormState extends State<LoginPage> {
   final _controller = Get.put(LoginController());
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
@@ -180,17 +164,7 @@ class __SignInFormState extends State<_SignInForm> {
                         const SizedBox(
                           height: 12,
                         ),
-                        if (_controller.state is LoginFailure)
-                          Text(
-                            (_controller.state as LoginFailure).error,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Get.theme.errorColor),
-                          ),
-                        if (_controller.state is LoginLoading)
-                          Center(
-                            child: CircularProgressIndicator(),
-                            // CircularProgressIndicator
-                          ),
+
                         InkWell(
                           onTap: _controller.state is LoginLoading
                               ? () {}
@@ -226,6 +200,21 @@ class __SignInFormState extends State<_SignInForm> {
                             ),
                           ),
                         ),
+
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        if (_controller.state is LoginFailure)
+                          Text(
+                            (_controller.state as LoginFailure).error,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Get.theme.errorColor),
+                          ),
+                        if (_controller.state is LoginLoading)
+                          Center(
+                            child: CircularProgressIndicator(),
+                            // CircularProgressIndicator
+                          ),
                       ],
                     ),
                   ))
@@ -236,78 +225,6 @@ class __SignInFormState extends State<_SignInForm> {
     );
   }
 
-  //   return Obx(() {
-  //     return Form(
-  //       key: _key,
-  //       autovalidateMode:
-  //           _autoValidate ? AutovalidateMode.always : AutovalidateMode.disabled,
-  //       child: SingleChildScrollView(
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.stretch,
-  //           children: <Widget>[
-  //             TextFormField(
-  //               decoration: InputDecoration(
-  //                 labelText: 'Username',
-  //                 filled: true,
-  //                 isDense: true,
-  //               ),
-  //               controller: _usernameController,
-  //               keyboardType: TextInputType.text,
-  //               autocorrect: false,
-  //               validator: (value) {
-  //                 if (value == null) {
-  //                   return 'Username is required.';
-  //                 }
-  //                 return null;
-  //               },
-  //             ),
-  //             SizedBox(
-  //               height: 12,
-  //             ),
-  //             TextFormField(
-  //               decoration: InputDecoration(
-  //                 labelText: 'Password',
-  //                 filled: true,
-  //                 isDense: true,
-  //               ),
-  //               obscureText: true,
-  //               controller: _passwordController,
-  //               validator: (value) {
-  //                 if (value == null) {
-  //                   return 'Password is required.';
-  //                 }
-  //                 return null;
-  //               },
-  //             ),
-  //             const SizedBox(
-  //               height: 16,
-  //             ),
-  //             ElevatedButton(
-  //               child: Text('LOG IN'),
-  //               onPressed: _controller.state is LoginLoading
-  //                   ? () {}
-  //                   : _onLoginButtonPressed,
-  //             ),
-  //             const SizedBox(
-  //               height: 20,
-  //             ),
-  //             if (_controller.state is LoginFailure)
-  //               Text(
-  //                 (_controller.state as LoginFailure).error,
-  //                 textAlign: TextAlign.center,
-  //                 style: TextStyle(color: Get.theme.errorColor),
-  //               ),
-  //             if (_controller.state is LoginLoading)
-  //               Center(
-  //                 child: CircularProgressIndicator(),
-  //               )
-  //           ],
-  //         ),
-  //       ),
-  //     );
-  //   });
-  // }
-  //
   _onLoginButtonPressed() {
     print(_usernameController.text + " " + _passwordController.text);
 
