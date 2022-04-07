@@ -17,15 +17,15 @@ class MessagesScreen extends GetView<MessageScreenController> {
     double screenHeight = _mediaQueryData.size.height;
     final messageController = Get.put(MessageScreenController());
     return Scaffold(
-      appBar: buildAppBar(screenWidth, screenHeight),
+      appBar: buildAppBar(screenWidth, screenHeight,Get.arguments['room'].roomDefaultName),
       body: Column(
         children: [
-          Obx(
-            () => Expanded(
+           Expanded(
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                child: ListView.builder(
+                child:Obx(
+                      () => ListView.builder(
                   controller: messageController.controller,
                     itemCount: messageController.result.value.length,
                     itemBuilder: (context, index) {
@@ -132,7 +132,7 @@ class MessagesScreen extends GetView<MessageScreenController> {
     );
   }
 
-  AppBar buildAppBar(screenWidth, screenHeight) {
+  AppBar buildAppBar(screenWidth, screenHeight, roomDefaultName) {
     RoomChatController roomChatController = Get.put(RoomChatController());
     return AppBar(
       backgroundColor: kPrimaryColor,
@@ -151,7 +151,7 @@ class MessagesScreen extends GetView<MessageScreenController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Get.arguments['room'].roomDefaultName,
+                  roomDefaultName,
                   style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                 ),

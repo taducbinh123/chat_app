@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MessageScreenController extends GetxController {
   final MessageProvider messageProvider = MessageProvider();
   ScrollController controller = ScrollController();
-  var listMessage = Get.arguments['data'];
+  // var listMessage = Get.arguments['data'];
   var result = [].obs;
   var page= box.read("pageState");
   var myController = TextEditingController().obs;
@@ -51,8 +51,9 @@ class MessageScreenController extends GetxController {
     }
   }
 
-  sendMessage(String msgContent) {
-    messageProvider.sendMessage(Get.arguments['room'].roomUid, msgContent);
+  sendMessage(String msgContent) async {
+    await messageProvider.sendMessage(Get.arguments['room'].roomUid, msgContent);
     myController.value.text = "";
+    LoadMessage(page);
   }
 }

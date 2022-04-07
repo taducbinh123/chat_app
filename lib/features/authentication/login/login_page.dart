@@ -6,6 +6,12 @@ import 'login_controller.dart';
 import 'login_state.dart';
 
 class LoginPage extends StatelessWidget {
+
+  // LoginPage(){
+  //   Get.reset();
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +23,7 @@ class LoginPage extends StatelessWidget {
           child: _SignInForm(),
         ));
   }
+
 }
 
 class _SignInForm extends StatefulWidget {

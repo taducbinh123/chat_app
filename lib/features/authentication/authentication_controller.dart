@@ -11,7 +11,7 @@ class AuthenticationController extends GetxController {
   AuthenticationState get state => _authenticationStateStream.value;
 
   AuthenticationController(this._authenticationService);
-
+  bool flag = false;
   @override
   void onInit() {
     _getAuthenticatedUser();
@@ -26,7 +26,10 @@ class AuthenticationController extends GetxController {
 
   void signOut() async {
     await _authenticationService.signOut();
+    // flag = true;
     _authenticationStateStream.value = UnAuthenticated();
+    // Get.to(LoginPage());
+    // Get.reset();
   }
 
   void _getAuthenticatedUser() async {

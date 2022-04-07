@@ -39,6 +39,7 @@ class MyApp extends GetWidget<AuthenticationController> {
       // initialRoute: contactView,
       home: Obx(() {
         if (controller.state is UnAuthenticated) {
+          // Get.deleteAll();
           return LoginPage();
         }
 
@@ -55,7 +56,7 @@ class MyApp extends GetWidget<AuthenticationController> {
         GetPage(name: callscreen, page: () => CallScreen()),
         GetPage(name: messagescreen, page: () => MessagesScreen()),
         GetPage(name: settingScreen, page: () => SettingScreen()),
-        // GetPage(name: roomMemberScreen, page: () => RoomMemberScreen())
+        // GetPage(name: loginScreen, page: () => LoginPage())
       ],
     );
   }

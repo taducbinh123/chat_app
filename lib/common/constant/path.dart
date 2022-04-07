@@ -10,6 +10,7 @@ const contactView = '/Contact_View';
 const messagescreen = '/message_screen';
 const settingScreen = '/Setting_screen';
 const roomMemberScreen = '/room_member_screen';
+const loginScreen = '/login';
 
 
 const chatApiHost= 'http://10.0.2.2:8800';
