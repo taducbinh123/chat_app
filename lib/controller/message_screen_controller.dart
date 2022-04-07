@@ -58,7 +58,8 @@ class MessageScreenController extends GetxController {
         SEND_DATE: DateTime.now().toString(),
         USER_UID: box.read("userUid"));
     result.value.insert(0, message);
+    result.refresh();
     myController.value.text = "";
-    LoadMessage(page);
+    // LoadMessage(page);
   }
 }
