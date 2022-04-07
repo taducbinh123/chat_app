@@ -185,9 +185,13 @@ class __SignInFormState extends State<_SignInForm> {
                           ),
                         if (_controller.state is LoginLoading)
                           Center(
-                            child: Loading(),
+                            child: CircularProgressIndicator(),
+                            // CircularProgressIndicator
                           ),
-                        GestureDetector(
+                        InkWell(
+                          onTap: _controller.state is LoginLoading
+                              ? () {}
+                              : _onLoginButtonPressed,
                           child: Container(
                             alignment: Alignment.center,
                             width: 250,
@@ -203,8 +207,8 @@ class __SignInFormState extends State<_SignInForm> {
                                       Color(0xFFF27121),
                                     ])),
                             child: Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: TextButton(
+                              padding: EdgeInsets.all(12.0),
+                              child: Container(
                                 child: Text(
                                   'LOG IN',
                                   style: TextStyle(
@@ -212,9 +216,9 @@ class __SignInFormState extends State<_SignInForm> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                onPressed: _controller.state is LoginLoading
-                                    ? () {}
-                                    : _onLoginButtonPressed,
+                                // onPressed: _controller.state is LoginLoading
+                                //     ? () {}
+                                //     : _onLoginButtonPressed,
                               ),
                             ),
                           ),
@@ -229,7 +233,6 @@ class __SignInFormState extends State<_SignInForm> {
                         const SizedBox(
                           height: 15,
                         ),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

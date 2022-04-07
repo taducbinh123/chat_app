@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:collection/collection.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
@@ -20,6 +21,7 @@ class MessageProvider {
   getMessageByRoomId(String roomUid, String page) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? access_token = prefs.getString('access_token');
+    String temp = "";
     List<dynamic> decodeData;
     final response = await http.get(
         Uri.parse(chatApiHost +
@@ -33,6 +35,11 @@ class MessageProvider {
         roomUid +
         "&page=" +
         page);
+    temp = chatApiHost +
+        '/api/chat/getmessageByRoomId?roomId=' +
+        roomUid +
+        "&page=" +
+        page;
 
     if (response.statusCode == 200) {
       // print(response.body.toString());
@@ -40,7 +47,7 @@ class MessageProvider {
       decodeData = map["rows"];
       // for (int i = decodeData.length - 1; i >= 0; i--) {
       for (int i = 0; i < decodeData.length; i++) {
-        list.value.add( MessageModel.fromJson(decodeData[i]));
+        list.value.add(MessageModel.fromJson(decodeData[i]));
       }
       box.write("pageState", map["pageState"].toString());
     } else {

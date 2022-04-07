@@ -41,9 +41,9 @@ class ChatScreenController extends GetxController {
 
   initDataRoom() async {
     _socketProvider.connect();
-    await Future.delayed(const Duration(seconds: 1));
-    chatTempList.refresh();
+    await Future.delayed(const Duration(milliseconds: 500 ));
     chatTempList.value = _socketProvider.chatsDatas;
+    chatTempList.refresh();
     print("abc" + _socketProvider.chatsDatas.value.toString());
 
   }
