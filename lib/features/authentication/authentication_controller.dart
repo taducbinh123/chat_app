@@ -2,11 +2,13 @@
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/features/authentication/authentication.dart';
 import 'package:hello_world_flutter/model/models.dart';
+import 'package:hello_world_flutter/provider/user_provider.dart';
 import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationController extends GetxController {
   final AuthenticationService _authenticationService;
+  final UserProvider userProvider = UserProvider();
   final _authenticationStateStream = AuthenticationState().obs;
 
   AuthenticationState get state => _authenticationStateStream.value;
@@ -41,20 +43,23 @@ class AuthenticationController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? accessToken = prefs.getString('access_token');
-    // if (accessToken == null) {
+    if (accessToken == null) {
       _authenticationStateStream.value = UnAuthenticated();
-    // } else {
-    //   String? expires_in = prefs.getString('expires_in');
-    //   DateTime dateTime = DateTime.parse(expires_in!);
-    //
-    //   DateTime timeCompare = DateTime.now().add(new Duration(days:0, hours : 0,minutes:10, seconds:0, milliseconds : 0));
-    //
-    //   if(timeCompare.compareTo(dateTime) < 0) {
-    //     _authenticationStateStream.value =
-    //         Authenticated(user: new User(name: "", email: ""));
-    //   }else{
-    //     _authenticationStateStream.value = UnAuthenticated();
-    //   }
-    // }
+    } else {
+      String? expires_in = prefs.getString('expires_in');
+      DateTime dateTime = DateTime.parse(expires_in!);
+
+      DateTime timeCompare = DateTime.now().add(new Duration(days:0, hours : 0,minutes:10, seconds:0, milliseconds : 0));
+
+      if(timeCompare.compareTo(dateTime) < 0) {
+
+        String? username = prefs.getString("username");
+
+        _authenticationStateStream.value =
+            Authenticated(user: new User(name: username!, email: ""));
+      }else{
+        _authenticationStateStream.value = UnAuthenticated();
+      }
+    }
   }
 }

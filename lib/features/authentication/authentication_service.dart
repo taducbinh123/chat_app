@@ -64,7 +64,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
       throw AuthenticationException(message: 'Error');
     }
 
-    return User(name: 'Test User', email: username);
+    return User(name: username, email: "");
   }
 
   @override
