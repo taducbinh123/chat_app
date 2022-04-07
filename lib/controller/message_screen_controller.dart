@@ -34,7 +34,7 @@ class MessageScreenController extends GetxController {
   }
 
   _onScroll() {
-    if (controller.offset <= controller.position.minScrollExtent &&
+    if (controller.offset >= controller.position.maxScrollExtent &&
         !controller.position.outOfRange) {
       print(page);
       LoadMessage(box.read("pageState"));
@@ -45,6 +45,7 @@ class MessageScreenController extends GetxController {
     messageProvider.getMessageByRoomId(Get.arguments['room'].roomUid, page);
     result.value = messageProvider.list.value;
     await Future.delayed(const Duration(seconds: 1));
+    result.refresh();
     print("demo " + result.value.toString());
   }
 
