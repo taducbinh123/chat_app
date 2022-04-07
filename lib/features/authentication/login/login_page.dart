@@ -72,7 +72,7 @@ class __SignInFormState extends State<_SignInForm> {
               ),
               Container(
                   width: 325,
-                  height: 470,
+                  height: 400,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -112,7 +112,7 @@ class __SignInFormState extends State<_SignInForm> {
                           child: TextFormField(
                             decoration: const InputDecoration(
                                 suffix: Icon(
-                                  FontAwesomeIcons.envelope,
+                                  FontAwesomeIcons.user,
                                   color: Colors.red,
                                 ),
                                 labelText: "Username",
@@ -162,20 +162,23 @@ class __SignInFormState extends State<_SignInForm> {
                             },
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 30, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                onPressed: click,
-                                child: const Text(
-                                  "Forget Password",
-                                  style: TextStyle(color: Colors.deepOrange),
-                                ),
-                              )
-                            ],
-                          ),
+                        // Padding(
+                        //   padding: const EdgeInsets.fromLTRB(20, 0, 30, 0),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.end,
+                        //     children: [
+                        //       TextButton(
+                        //         onPressed: click,
+                        //         child: const Text(
+                        //           "Forget Password",
+                        //           style: TextStyle(color: Colors.deepOrange),
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+                        const SizedBox(
+                          height: 12,
                         ),
                         if (_controller.state is LoginFailure)
                           Text(
@@ -223,43 +226,6 @@ class __SignInFormState extends State<_SignInForm> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 17,
-                        ),
-                        const Text(
-                          "Or Login using Social Media Account",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                                onPressed: click,
-                                icon: const Icon(FontAwesomeIcons.facebook,
-                                    color: Colors.blue)),
-                            IconButton(
-                                onPressed: click,
-                                icon: const Icon(
-                                  FontAwesomeIcons.google,
-                                  color: Colors.redAccent,
-                                )),
-                            IconButton(
-                                onPressed: click,
-                                icon: const Icon(
-                                  FontAwesomeIcons.twitter,
-                                  color: Colors.orangeAccent,
-                                )),
-                            IconButton(
-                                onPressed: click,
-                                icon: const Icon(
-                                  FontAwesomeIcons.linkedinIn,
-                                  color: Colors.green,
-                                ))
-                          ],
-                        )
                       ],
                     ),
                   ))
