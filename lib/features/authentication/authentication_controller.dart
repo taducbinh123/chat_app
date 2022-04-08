@@ -1,24 +1,18 @@
-
 import 'package:get/get.dart';
-import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
-import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
-import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/features/authentication/authentication.dart';
 import 'package:hello_world_flutter/model/models.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
-import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationController extends GetxController {
-   final AuthenticationService _authenticationService;
-   UserProvider userProvider = UserProvider();
-   var _authenticationStateStream = AuthenticationState().obs;
+  final AuthenticationService _authenticationService;
+  final UserProvider userProvider = UserProvider();
+  final _authenticationStateStream = AuthenticationState().obs;
 
   AuthenticationState get state => _authenticationStateStream.value;
 
   AuthenticationController(this._authenticationService);
-  bool flag = false;
+  // var flag = false.obs;
   @override
   void onInit() {
     _getAuthenticatedUser();
@@ -29,22 +23,21 @@ class AuthenticationController extends GetxController {
     final user = await _authenticationService.signInWithUsernameAndPassword(
         username, password);
     _authenticationStateStream.value = Authenticated(user: user);
+    // flag.value = false;
   }
 
   void signOut() async {
     await _authenticationService.signOut();
-    Get.delete<NavBarController>();
-    Get.delete<ChatScreenController>();
+    // flag.value = true;
     _authenticationStateStream.value = UnAuthenticated();
-
-    // Get.to(LoginPage());
-    // Get.reset();
+    _authenticationStateStream.refresh();
+    // Get.offAll(LoginPage());
   }
 
   void _getAuthenticatedUser() async {
     _authenticationStateStream.value = AuthenticationLoading();
 
-    final user = await _authenticationService.getCurrentUser();
+    // final user = await _authenticationService.getCurrentUser();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

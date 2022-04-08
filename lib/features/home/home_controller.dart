@@ -5,11 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HomeController extends GetxController {
   final AuthenticationController _authenticationController = Get.find();
 
-  @override
-  void onInit() {
-    // getUser();
-    super.onInit();
-  }
 
   var username = "";
 
