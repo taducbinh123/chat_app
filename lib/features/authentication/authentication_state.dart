@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hello_world_flutter/model/user.dart';
 
 class AuthenticationState extends Equatable {
@@ -10,7 +11,8 @@ class AuthenticationState extends Equatable {
 
 class AuthenticationLoading extends AuthenticationState {}
 
-class UnAuthenticated extends AuthenticationState {}
+class UnAuthenticated extends AuthenticationState {
+}
 
 class Authenticated extends AuthenticationState {
   final User user;

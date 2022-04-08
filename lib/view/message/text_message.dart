@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/model/ChatMessage.dart';
 import 'package:hello_world_flutter/model/message.dart';
 
 class TextMessage extends StatelessWidget {

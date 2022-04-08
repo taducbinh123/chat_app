@@ -1,5 +1,9 @@
 
 import 'package:get/get.dart';
+import 'package:hello_world_flutter/common/constant/ulti.dart';
+import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
+import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
+import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/features/authentication/authentication.dart';
 import 'package:hello_world_flutter/model/models.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
@@ -7,9 +11,9 @@ import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationController extends GetxController {
-  final AuthenticationService _authenticationService;
-  final UserProvider userProvider = UserProvider();
-  final _authenticationStateStream = AuthenticationState().obs;
+   final AuthenticationService _authenticationService;
+   UserProvider userProvider = UserProvider();
+   var _authenticationStateStream = AuthenticationState().obs;
 
   AuthenticationState get state => _authenticationStateStream.value;
 
@@ -29,10 +33,11 @@ class AuthenticationController extends GetxController {
 
   void signOut() async {
     await _authenticationService.signOut();
-    flag = true;
+    Get.delete<NavBarController>();
+    Get.delete<ChatScreenController>();
     _authenticationStateStream.value = UnAuthenticated();
-    _authenticationStateStream.refresh();
-    Get.to(LoginPage());
+
+    // Get.to(LoginPage());
     // Get.reset();
   }
 

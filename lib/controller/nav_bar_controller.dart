@@ -14,6 +14,12 @@ class NavBarController extends GetxController {
     super.onInit();
   }
 
+  @override
+  onClose() {
+    _selectedIndex = 0.obs;
+    super.onClose();
+  }
+
   onItemTapped(int index) {
     this.selectedIndex =
         index; // The set method is accessed this way, you have confused it with methods.
