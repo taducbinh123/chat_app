@@ -72,23 +72,23 @@ class AuthenticationServiceImpl extends AuthenticationService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('access_token');
     print(accessToken);
-    if (accessToken != null) {
-      saveLogoutInfo();
-      final response = await http.post(
-          Uri.parse(
-              authApiUrl + '/api/logout/logout.do?access_token=' + accessToken),
-          headers: {
-            'Authorization': 'Bearer ' + accessToken,
-            'Content-type': 'application/json',
-          });
-
-      if (response.statusCode == 200) {
-      } else {
-        print(response.body);
-        // throw Exception('Error');
-
-      }
-    }
+    // if (accessToken != null) {
+    //   // saveLogoutInfo();
+    //   final response = await http.post(
+    //       Uri.parse(
+    //           authApiUrl + '/api/logout/logout.do?access_token=' + accessToken),
+    //       headers: {
+    //         'Authorization': 'Bearer ' + accessToken,
+    //         'Content-type': 'application/json',
+    //       });
+    //
+    //   if (response.statusCode == 200) {
+    //   } else {
+    //     print(response.body);
+    //     // throw Exception('Error');
+    //
+    //   }
+    // }
 
     await prefs.clear();
   }
@@ -138,7 +138,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
       if (response.statusCode == 200) {
       } else {
-        throw Exception('Error');
+        print(response.body);
       }
     } else {
       final response = await http.post(
@@ -149,7 +149,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
       if (response.statusCode == 200) {
       } else {
-        throw Exception('Error');
+        print(response.body);
       }
     }
   }

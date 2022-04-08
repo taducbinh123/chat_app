@@ -22,7 +22,7 @@ class Dashboard extends StatelessWidget {
                 ChatScreen(),
                 CallScreen(),
                 ContactView(),
-                HomePage(user: (controller.state as Authenticated).user)
+                HomePage(),
               ],
             ),
           ),

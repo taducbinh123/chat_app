@@ -120,7 +120,7 @@ class ChatScreenController extends GetxController {
     var userInfo = await userProvider.getUserInfo(userUid);
     print(userInfo);
     if (employees.length > 1) {
-      roomName += ", " + userInfo['NAME_KR'];
+      roomName += ", " + userInfo.USER_NM_KOR;
     }
 
     await userProvider.createChatroom(roomName, memberList);

@@ -1,7 +1,7 @@
 class Employee {
   String? USER_CHECK;
   String USER_NM_KOR;
-  String USE_CHECK;
+  String? USE_CHECK;
   String? USER_EMAIL;
   String USER_ID;
   String USER_UID;
@@ -25,7 +25,7 @@ class Employee {
   Employee({
     this.USER_CHECK,
     required this.USER_NM_KOR,
-    required this.USE_CHECK,
+    this.USE_CHECK,
     this.USER_EMAIL,
     required this.USER_ID,
     required this.USER_UID,
@@ -56,7 +56,7 @@ class Employee {
   factory Employee.fromJson(Map<String, dynamic> json) =>
     Employee(USER_CHECK: json['USER_CHECK'],
         USER_NM_KOR: json['USER_NM_KOR'] ?? json['NAME_KR'],
-        USE_CHECK : json['USE_CHECK'] ?? json['USE_YN'],
+        USE_CHECK : json['USE_CHECK'] ?? json['USE_YN'] ?? "",
         USER_EMAIL : json['USER_EMAIL'],
         USER_ID : json['USER_ID'],
         USER_UID : json['USER_UID'],

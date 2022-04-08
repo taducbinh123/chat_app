@@ -29,9 +29,10 @@ class AuthenticationController extends GetxController {
 
   void signOut() async {
     await _authenticationService.signOut();
-    // flag = true;
+    flag = true;
     _authenticationStateStream.value = UnAuthenticated();
-    // Get.to(LoginPage());
+    _authenticationStateStream.refresh();
+    Get.to(LoginPage());
     // Get.reset();
   }
 
