@@ -3,17 +3,20 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
 import 'package:hello_world_flutter/features/features.dart';
+import 'package:hello_world_flutter/model/models.dart';
 
 class HomePage extends StatelessWidget {
 
-  HomePage({Key? key}) : super(key: key);
+  final User user;
+  final _controller = Get.put(HomeController());
+
+  HomePage({Key? key, required this.user}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
-
-    final _controller = Get.put(HomeController());
-
+    // final _controller = Get.put(HomeController());
+    // _controller.getUser();
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // var userName = prefs.getString("username");
     return Scaffold(
@@ -30,7 +33,7 @@ class HomePage extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                'Welcome, ' + _controller.username ,
+                'Welcome, ${user.name}',
                 style: TextStyle(fontSize: 24),
               ),
               const SizedBox(

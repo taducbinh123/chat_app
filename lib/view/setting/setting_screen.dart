@@ -135,7 +135,7 @@ class SettingScreen extends StatelessWidget {
         await roomChatController.leaveRoom(roomUid);
         chatScreenController.initDataRoom();
         Get.offAll(() => Dashboard());
-        // Get.back();
+        // Get.back();Get.back();Get.back();
       },
     );
 

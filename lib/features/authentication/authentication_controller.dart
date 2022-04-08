@@ -1,9 +1,7 @@
-
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/features/authentication/authentication.dart';
 import 'package:hello_world_flutter/model/models.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
-import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationController extends GetxController {
@@ -14,7 +12,7 @@ class AuthenticationController extends GetxController {
   AuthenticationState get state => _authenticationStateStream.value;
 
   AuthenticationController(this._authenticationService);
-  bool flag = false;
+  // var flag = false.obs;
   @override
   void onInit() {
     _getAuthenticatedUser();
@@ -25,21 +23,21 @@ class AuthenticationController extends GetxController {
     final user = await _authenticationService.signInWithUsernameAndPassword(
         username, password);
     _authenticationStateStream.value = Authenticated(user: user);
+    // flag.value = false;
   }
 
   void signOut() async {
     await _authenticationService.signOut();
-    flag = true;
+    // flag.value = true;
     _authenticationStateStream.value = UnAuthenticated();
     _authenticationStateStream.refresh();
-    Get.to(LoginPage());
-    // Get.reset();
+    // Get.offAll(LoginPage());
   }
 
   void _getAuthenticatedUser() async {
     _authenticationStateStream.value = AuthenticationLoading();
 
-    final user = await _authenticationService.getCurrentUser();
+    // final user = await _authenticationService.getCurrentUser();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
