@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/provider/message_provider.dart';
@@ -13,6 +14,8 @@ class MessageScreenController extends GetxController {
   var result = [].obs;
   var page = box.read("pageState");
   var myController = TextEditingController().obs;
+
+  final ClientSocketController clientSocketController = Get.find();
 
   MessageScreenController() {}
 
@@ -43,10 +46,11 @@ class MessageScreenController extends GetxController {
 
   LoadMessage(var page) async {
     messageProvider.getMessageByRoomId(Get.arguments['room'].roomUid, page);
-    result.value = messageProvider.list.value;
-    await Future.delayed(const Duration(seconds: 1));
-    result.refresh();
-    print("demo " + result.value.toString());
+    clientSocketController.messenger.chatList.value = messageProvider.list.value;
+    // result.value = messageProvider.list.value;
+    await Future.delayed(const Duration(milliseconds: 500));
+    clientSocketController.messenger.chatList.refresh();
+    print("demo " + clientSocketController.messenger.chatList.value.toString());
   }
 
   sendMessage(String msgContent) {
@@ -57,8 +61,8 @@ class MessageScreenController extends GetxController {
         MSG_UID: "1",
         SEND_DATE: DateTime.now().toString(),
         USER_UID: box.read("userUid"));
-    result.value.insert(0, message);
-    result.refresh();
+    clientSocketController.messenger.chatList.value.insert(0, message);
+    clientSocketController.messenger.chatList.refresh();
     myController.value.text = "";
     // LoadMessage(page);
   }

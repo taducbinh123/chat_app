@@ -7,11 +7,11 @@ import 'package:grouped_list/grouped_list.dart';
 
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
+import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
-import 'package:hello_world_flutter/model/room.dart';
 import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:hello_world_flutter/view/add_room_member/add_room_member_screen.dart';
-import 'package:hello_world_flutter/view/chat_screen.dart';
 import 'package:hello_world_flutter/view/room_member/room_member_screen.dart';
 
 
@@ -23,6 +23,7 @@ List _elements = [
 
 RoomChatController roomChatController = Get.find();
 ChatScreenController chatScreenController = Get.find();
+final ClientSocketController clientSocketController = Get.find();
 
 class SettingScreen extends StatelessWidget {
   @override
@@ -62,7 +63,7 @@ class SettingScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: AutoSizeText(
-              Get.arguments['room'].roomDefaultName,
+              clientSocketController.messenger.selectedRoom?.roomDefaultName ?? "",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
@@ -100,12 +101,12 @@ class SettingScreen extends StatelessWidget {
                         if (element['name'].toString() == 'Room Member')
                           {
                             print("setting" + Get.arguments['room'].roomUid),
-                            Get.to(() => RoomMemberScreen(),arguments: {"room": Get.arguments['room']}),
+                            Get.to(() => RoomMemberScreen()),
                           }
                         else if (element['name'].toString() == 'Leave Room')
-                          {showAlertDialog(context,Get.arguments['room'].roomUid)}
+                          {showAlertDialog(context,clientSocketController.messenger.selectedRoom?.roomUid)}
                         else if(element['name'].toString() == 'Add Member'){
-                          Get.to(() => AddRoomMemberScreen(),arguments: {"room": Get.arguments['room']})
+                          Get.to(() => AddRoomMemberScreen())
                         }
                       },
                     ),
@@ -121,6 +122,7 @@ class SettingScreen extends StatelessWidget {
 
   showAlertDialog(BuildContext context, var roomUid) {
 // set up the buttons
+  final NavBarController navBarController = Get.find();
 
     Widget cancelButton = TextButton(
       child: Text("Cancel"),
@@ -134,6 +136,8 @@ class SettingScreen extends StatelessWidget {
         print(roomUid);
         await roomChatController.leaveRoom(roomUid);
         chatScreenController.initDataRoom();
+        // navBarController.selectedIndex = 0;
+        // Get.to(() => Dashboard());   /dashboard_screen
         Get.offAll(() => Dashboard());
         // Get.back();Get.back();Get.back();
       },

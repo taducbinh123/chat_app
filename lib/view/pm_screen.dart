@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/controller/message_screen_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/model/room.dart';
@@ -16,9 +17,11 @@ class MessagesScreen extends GetView<MessageScreenController> {
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
     final messageController = Get.put(MessageScreenController());
+    final ClientSocketController clientSocketController = Get.find();
+
     return Scaffold(
       appBar: buildAppBar(
-          screenWidth, screenHeight, Get.arguments['room'].roomDefaultName),
+          screenWidth, screenHeight),
       body: Column(
         children: [
           Expanded(
@@ -27,13 +30,13 @@ class MessagesScreen extends GetView<MessageScreenController> {
               child: Obx(
                 () => ListView.builder(
                     controller: messageController.controller,
-                    itemCount: messageController.result.value.length,
+                    itemCount: clientSocketController.messenger.chatList.value.length,
                     reverse: true,
                     itemBuilder: (context, index) {
-                      if (messageController.result.value.length == index)
+                      if (clientSocketController.messenger.chatList.value.length == index)
                         return Center(child: CircularProgressIndicator());
                       return Message(
-                          message: messageController.result.value[index]);
+                          message: clientSocketController.messenger.chatList.value[index]);
                     }),
               ),
             ),
@@ -137,8 +140,9 @@ class MessagesScreen extends GetView<MessageScreenController> {
     );
   }
 
-  AppBar buildAppBar(screenWidth, screenHeight, roomDefaultName) {
+  AppBar buildAppBar(screenWidth, screenHeight) {
     RoomChatController roomChatController = Get.put(RoomChatController());
+    final ClientSocketController clientSocketController = Get.find();
     return AppBar(
       backgroundColor: kPrimaryColor,
       automaticallyImplyLeading: false,
@@ -146,7 +150,13 @@ class MessagesScreen extends GetView<MessageScreenController> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            BackButton(),
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Get.back();
+                clientSocketController.messenger.selectedRoom = null;
+              },
+            ),
             UserCircle(
               height: screenWidth * 0.1,
               width: screenHeight * 0.05,
@@ -156,7 +166,7 @@ class MessagesScreen extends GetView<MessageScreenController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  roomDefaultName,
+                  clientSocketController.messenger.selectedRoom?.roomDefaultName ?? "",
                   style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -184,10 +194,9 @@ class MessagesScreen extends GetView<MessageScreenController> {
           icon: Icon(Icons.settings),
           onPressed: () {
             Room room = Get.arguments['room'];
-            var listMessage = Get.arguments['data'];
             roomChatController.getListMemberRoom(room.roomUid);
             Get.toNamed(settingScreen,
-                arguments: {"room": room, "data": listMessage});
+                arguments: {"room": room});
           },
         ),
         SizedBox(width: kDefaultPadding / 2),

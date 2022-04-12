@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/provider/message_provider.dart';
 import 'package:hello_world_flutter/provider/socket_provider.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
@@ -12,6 +13,8 @@ class ChatScreenController extends GetxController {
   final MessageProvider messageProvider = MessageProvider();
   final SocketProvider _socketProvider = SocketProvider();
   final UserProvider userProvider = UserProvider();
+
+  final ClientSocketController clientSocketController = Get.find();
 
   String userUid = "";
 
@@ -42,8 +45,11 @@ class ChatScreenController extends GetxController {
   initDataRoom() async {
     _socketProvider.connect();
     await Future.delayed(const Duration(milliseconds: 500 ));
-    chatTempList.value = _socketProvider.chatsDatas;
-    chatTempList.refresh();
+    // chatTempList.value = _socketProvider.chatsDatas;
+    // chatTempList.refresh();
+
+    clientSocketController.messenger.listRoom.value = _socketProvider.chatsDatas;
+    clientSocketController.messenger.listRoom.refresh();
     print("abc" + _socketProvider.chatsDatas.value.toString());
 
   }
@@ -82,7 +88,7 @@ class ChatScreenController extends GetxController {
 
   bool checkExistRoom(var employee, var userUid) {
     bool flag = false;
-    chatTempList.forEach((element) {
+    clientSocketController.messenger.listRoom.forEach((element) {
       if (element.memberUidList.length == 2) {
         if (element.memberUidList.indexWhere((e) => e == userUid) != -1 &&
             element.memberUidList.indexWhere((e) => e == employee.USER_UID) !=
@@ -117,10 +123,11 @@ class ChatScreenController extends GetxController {
 
     var roomName = employees.map((e) => e.USER_NM_KOR).join(', ');
 
-    var userInfo = await userProvider.getUserInfo(userUid);
+    var userInfo = clientSocketController.messenger.currentUser;
     print(userInfo);
     if (employees.length > 1) {
-      roomName += ", " + userInfo.USER_NM_KOR;
+      var name = userInfo?.USER_NM_KOR ?? "";
+      roomName += ", " + name;
     }
 
     await userProvider.createChatroom(roomName, memberList);

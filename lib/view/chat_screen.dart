@@ -7,6 +7,7 @@ import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
 import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/view/contact/add_contact_screen.dart';
@@ -20,7 +21,7 @@ class ChatScreen extends GetView<ContactScreenController> {
     final contactController = Get.put(ContactScreenController());
     final chatController = Get.put(ChatScreenController());
 
-
+    final ClientSocketController clientSocketController = Get.find();
 
     bool check = false;
     return Scaffold(
@@ -65,14 +66,15 @@ class ChatScreen extends GetView<ContactScreenController> {
           Expanded(
             child: Obx(
               () => ListView.builder(
-                itemCount: chatController.chatTempList.length,
+                itemCount: clientSocketController.messenger.listRoom.value.length,
                 itemBuilder: (context, index) => CustomAvatar(
-                  chat: chatController.chatTempList.value[index],
+                  chat: clientSocketController.messenger.listRoom.value[index],
                   press: () => {
                     // Get.toNamed(messagescreen, arguments: {
                     //   "data": chatController.chatTempList.value[index]
                     // }),
-                    chatController.getMessageByRoomId(chatController.chatTempList.value[index]),
+                    chatController.getMessageByRoomId(clientSocketController.messenger.listRoom.value[index]),
+                    clientSocketController.messenger.selectedRoom = clientSocketController.messenger.listRoom.value[index],
                   },
                 ),
               ),

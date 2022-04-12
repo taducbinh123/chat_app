@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/features/authentication/authentication.dart';
 import 'package:hello_world_flutter/features/features.dart';
 import 'package:hello_world_flutter/view/Call/call_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends GetWidget<AuthenticationController> {
         }
 
         if (controller.state is Authenticated) {
+          Get.put(ClientSocketController());
           return Dashboard();
         }
         return SplashScreen();
