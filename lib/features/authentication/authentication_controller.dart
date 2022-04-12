@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/features/authentication/authentication.dart';
 import 'package:hello_world_flutter/model/models.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
@@ -23,6 +24,15 @@ class AuthenticationController extends GetxController {
     final user = await _authenticationService.signInWithUsernameAndPassword(
         username, password);
     _authenticationStateStream.value = Authenticated(user: user);
+    final ClientSocketController clientSocketController = Get.find();
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userUid = prefs.getString('userUid');
+
+    var userInfo = await userProvider.getUserInfo(userUid);
+
+    clientSocketController.messenger.currentUser = userInfo;
+
     // flag.value = false;
   }
 

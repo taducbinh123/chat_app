@@ -33,7 +33,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
   @override
   Future<User> signInWithUsernameAndPassword(
       String username, String password) async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
     password = md5.convert(utf8.encode(password)).toString();
 
     var map = new Map<String, dynamic>();
@@ -124,6 +124,8 @@ class AuthenticationServiceImpl extends AuthenticationService {
     await prefs.setString("username", username);
     await prefs.setString("expires_in", now.toString());
     print(prefs.getString("userUid").toString());
+
+
   }
 
   saveLogoutInfo() async {

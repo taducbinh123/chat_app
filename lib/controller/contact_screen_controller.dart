@@ -69,24 +69,10 @@ class ContactScreenController extends GetxController {
           height: screenWidth * 0.12,
           width: screenHeight * 0.06,
           text: e.USER_NM_KOR));
-      // for (var value in listContactChoose) {
-      //   print(value.USER_NM_ENG);
-      //   listNameChoose.value += value.USER_NM_ENG + ", ";
-      // }
-      // listNameChoose.value = listNameChoose.substring(0, listNameChoose.value.length -2);
-      // print(listNameChoose);
     } else {
       listContactChoose.remove(e);
       listAvatarChoose =
           listAvatarChoose.where((element) => element.chat != e).toList();
-      // if(listContactChoose.length !=0) {
-      //   for (var value in listContactChoose) {
-      //     print(value.name);
-      //     listNameChoose.value += value.name + ", ";
-      //   }
-      //   listNameChoose.value = listNameChoose.substring(0, listNameChoose.value.length -2);
-      // }
-      // print(listNameChoose);
     }
   }
 

@@ -7,16 +7,19 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact_add.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class AddRoomMemberScreen extends GetView<ContactScreenController> {
+
   @override
   Widget build(BuildContext context) {
     RoomChatController roomChatController = Get.find();
+    final ClientSocketController clientSocketController = Get.find();
 
-    roomChatController.getListMemberRoom(Get.arguments['room'].roomUid);
+    roomChatController.getListMemberRoom(clientSocketController.messenger.selectedRoom?.roomUid ?? "");
     roomChatController.initDataEmployee();
     // ChatScreenController chatController = Get.find();
     var _mediaQueryData = MediaQuery.of(context);
@@ -52,7 +55,7 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
                       child: Text("Add"),
                       onPressed: () {
                         roomChatController.listAvatarChoose.clear();
-                        roomChatController.inviteMember(Get.arguments['room'].roomUid, Get.arguments['room'].roomDefaultName);
+                        roomChatController.inviteMember(clientSocketController.messenger.selectedRoom?.roomUid, clientSocketController.messenger.selectedRoom?.roomDefaultName);
                         // chatController.createChatroom(contactController.listContactChoose);
                         Get.back();
                       }),
