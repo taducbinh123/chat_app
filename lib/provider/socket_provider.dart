@@ -2,6 +2,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
+import 'package:hello_world_flutter/common/constant/socket.dart';
 import 'package:hello_world_flutter/model/room.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -11,16 +12,13 @@ class SocketProvider extends GetxController {
   final box = GetStorage();
 
   connect() async {
+
+
     chatsDatas = List<Room>.empty().obs;
-    IO.Socket roomSocket = IO.io(chatApiHost + "/chat", <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-      "auth": {"token": box.read('access_token')}
-    });
     roomSocket.io.options['extraHeaders'] = {
       "Content-Type": "application/json"
     };
-    roomSocket.connect();
+    // roomSocket.connect();
     // getData(roomSocket);
     // await Future.delayed(const Duration(seconds: 1));
 
@@ -43,7 +41,7 @@ class SocketProvider extends GetxController {
   }
 
   getLastMessage(var roomUid, var lastReadMsgId) async {
-    IO.Socket roomSocket = IO.io(chatApiHost + "/chat");
+    roomSocket.connect();
     roomSocket.emit("updateLastReadMsg",
         {"roomUid": roomUid, "lastReadMsgId": lastReadMsgId});
     roomSocket.on("updateLastReadMsg", (data) => print("done"));
@@ -53,15 +51,10 @@ class SocketProvider extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? access_token = prefs.getString('access_token');
 
-    IO.Socket roomSocket = IO.io(chatApiHost + "/chat", <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-      "auth": {"token": access_token}
-    });
     roomSocket.io.options['extraHeaders'] = {
       "Content-Type": "application/json"
     };
-    roomSocket.connect();
+    // roomSocket.connect();
     roomSocket.emit("getUserOnline");
     roomSocket.on(
         "onlineMember",
@@ -83,6 +76,7 @@ class SocketProvider extends GetxController {
   getOfflineMember() {}
 
   getData(IO.Socket socket) {
+    // roomSocket.connect();
     socket.emitWithAck("getRoomsByUserUid", {"userUid": box.read('userUid')},
         ack: (data) {
       var result = data as List;

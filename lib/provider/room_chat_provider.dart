@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:convert' as convert;
 import 'package:hello_world_flutter/common/constant/path.dart';
+import 'package:hello_world_flutter/common/constant/socket.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,20 +32,14 @@ class RoomChatProvider {
     String? userUid = prefs.getString("userUid");
     String? access_token = prefs.getString('access_token');
 
-    IO.Socket roomSocket = IO.io(chatApiHost + "/chat", <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-      "auth": {"token": access_token}
-
-    });
     roomSocket.io.options['extraHeaders'] = {
       "Content-Type": "application/json"
     };
-    roomSocket.connect();
-    roomSocket.onConnect((_) {
+    // roomSocket.connect();
+    // roomSocket.onConnect((_) {
       print("room socket " + roomSocket.connected.toString());
       roomSocket.emit("leaveRoom", {"ROOM_UID":roomUid, "USER_UID":userUid});
-    });
+    // });
     await Future.delayed(const Duration(seconds: 1));
   }
 
@@ -53,20 +48,14 @@ class RoomChatProvider {
     String? userUid = prefs.getString("userUid");
     String? access_token = prefs.getString('access_token');
 
-    IO.Socket roomSocket = IO.io(chatApiHost + "/chat", <String, dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-      "auth": {"token": access_token}
-
-    });
     roomSocket.io.options['extraHeaders'] = {
       "Content-Type": "application/json"
     };
-    roomSocket.connect();
-    roomSocket.onConnect((_) {
+    // roomSocket.connect();
+    // roomSocket.onConnect((_) {
       print("room socket " + roomSocket.connected.toString());
       roomSocket.emit("inviteMember", {"ROOM_UID":roomUid, "userUid":userUid, "roomName": roomName, "memberList":memberList});
-    });
+    // });
   }
 
 }
