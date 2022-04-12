@@ -61,8 +61,8 @@ class MessageScreenController extends GetxController {
         MSG_UID: "1",
         SEND_DATE: DateTime.now().toString(),
         USER_UID: box.read("userUid"));
-    clientSocketController.messenger.chatList.value.insert(0, message);
-    clientSocketController.messenger.chatList.refresh();
+    // clientSocketController.messenger.chatList.value.insert(0, message);
+    // clientSocketController.messenger.chatList.refresh();
     myController.value.text = "";
     // LoadMessage(page);
   }
