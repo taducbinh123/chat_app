@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
@@ -6,6 +5,8 @@ import 'package:hello_world_flutter/common/constant/socket.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/messenger.dart';
 import 'package:hello_world_flutter/model/room.dart';
+import 'package:hello_world_flutter/provider/contact_view_provider.dart';
+import 'package:hello_world_flutter/provider/socket_provider.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -13,11 +14,16 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 class ClientSocketController extends GetxController {
   final Messenger messenger = new Messenger();
   final UserProvider userProvider = UserProvider();
+  final ContactViewProvider contactViewProvider = ContactViewProvider();
+  final SocketProvider socketProvider = SocketProvider();
+
   var isTyping = false.obs;
 
   @override
-  void onInit() {
-    initUser();
+  Future<void> onInit() async {
+    await Future.delayed(Duration(seconds: 1));
+    await initUser();
+    await getContactList();
     clientSocketIO();
     super.onInit();
   }
@@ -30,10 +36,16 @@ class ClientSocketController extends GetxController {
   initUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? userUid = prefs.getString('userUid');
-
+    print(userUid);
     var userInfo = await userProvider.getUserInfo(userUid);
 
     messenger.currentUser = userInfo;
+  }
+
+  getContactList() async {
+    messenger.contactList.value =
+        await contactViewProvider.getEmployee(messenger.currentUser?.USER_UID);
+    socketProvider.getOnlineMember(messenger.contactList.value);
   }
 
   clientSocketIO() {
@@ -50,7 +62,7 @@ class ClientSocketController extends GetxController {
     roomSocket.on(
         "server_send_message",
         (data) => {
-          rm = Room.fromJson(data as Map<dynamic, dynamic>),
+              rm = Room.fromJson(data as Map<dynamic, dynamic>),
               roomMessage = messenger.listRoom.value
                   .firstWhere((element) => element.roomUid == rm.roomUid),
               if (roomMessage != null)
@@ -64,7 +76,7 @@ class ClientSocketController extends GetxController {
                     },
                   if (rm.roomUid == messenger.selectedRoom?.roomUid)
                     {
-                      messenger.chatList.insert(0,rm.messageModel),
+                      messenger.chatList.insert(0, rm.messageModel),
                       messenger.chatList.refresh(),
                       print("ok ---------------------"),
                       print(data),
@@ -80,23 +92,62 @@ class ClientSocketController extends GetxController {
     roomSocket.on(
         "memberJoinRoom",
         (data) => {
-          print("memberJoinRoom----------------------"),
-          rm = Room.fromJson(data as Map<dynamic, dynamic>),
+              print("memberJoinRoom----------------------"),
+              rm = Room.fromJson(data as Map<dynamic, dynamic>),
               messenger.listRoom.value.insert(0, rm),
               messenger.listRoom.refresh(),
             });
     // });
 
-    roomSocket.on("typing_check", (data) => {
-      if(data && data["isTyping"] && messenger.selectedRoom?.roomUid == data["ROOM_UID"]){
-        isTyping.value = true,
-      }else{
-        isTyping.value = false,
-      }
-    });
+    roomSocket.on(
+        "typing_check",
+        (data) => {
+              if (data &&
+                  data["isTyping"] &&
+                  messenger.selectedRoom?.roomUid == data["ROOM_UID"])
+                {
+                  isTyping.value = true,
+                }
+              else
+                {
+                  isTyping.value = false,
+                }
+            });
 
+    roomSocket.on(
+        "onlineMember",
+        (data) => {
+              for (var i in data)
+                {
+                  for (var e in messenger.contactList.value)
+                    {
+                      if (e.USER_UID == i)
+                        {
+                          // print(e.USER_NM_KOR),
+                          e.ONLINE_YN = 'Y',
+                        }
+                    }
+                },
+              messenger.contactList.refresh(),
+            });
 
-    roomSocket.on("onlineMember", (data) => null);
+    roomSocket.on(
+        "offlineMember",
+            (data) => {
+          for (var i in data)
+            {
+              for (var e in messenger.contactList.value)
+                {
+                  if (e.USER_UID == i)
+                    {
+                      // print(e.USER_NM_KOR),
+                      e.ONLINE_YN = 'N',
+                    }
+                }
+            },
+          messenger.contactList.refresh(),
+        });
+
 
     roomSocket.on("exception", (data) => print("event exception"));
     roomSocket.on("disconnect", (data) => print("Disconnect"));

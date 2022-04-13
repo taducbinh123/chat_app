@@ -24,6 +24,7 @@ class AuthenticationController extends GetxController {
     final user = await _authenticationService.signInWithUsernameAndPassword(
         username, password);
     _authenticationStateStream.value = Authenticated(user: user);
+    await Future.delayed(Duration(seconds: 1));
     final ClientSocketController clientSocketController = Get.find();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();

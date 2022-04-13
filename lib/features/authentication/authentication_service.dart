@@ -57,7 +57,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
       print(t);
 
-      saveInforUser(info['access_token'], info['userUid'], info['username'], info['expires_in']);
+      await saveInforUser(info['access_token'], info['userUid'], info['username'], info['expires_in']);
     } else if (response.statusCode == 400) {
       throw AuthenticationException(message: 'Wrong username or password');
     } else {

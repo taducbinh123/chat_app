@@ -5,15 +5,18 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact_add.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/view/Dashboard.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
+final ClientSocketController clientSocketController = Get.find();
 class AddContactScreen extends GetView<ContactScreenController> {
   @override
   Widget build(BuildContext context) {
     ContactScreenController contactController = Get.find();
     ChatScreenController chatController = Get.find();
+
     var _mediaQueryData = MediaQuery.of(context);
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
@@ -61,7 +64,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
           Expanded(
             child: Obx(
               () => GroupedListView<dynamic, String>(
-                elements: contactController.contactList.value,
+                elements: clientSocketController.messenger.contactList.value,
                 groupBy: (element) => element.USER_NM_KOR[0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
                 itemComparator: (item1, item2) =>
@@ -98,8 +101,10 @@ class AddContactScreen extends GetView<ContactScreenController> {
   }
 
   searchAppBar(BuildContext context) {
+
     TextEditingController searchController = TextEditingController();
     ContactScreenController contactController = Get.find();
+
     return NewGradientAppBar(
       gradient: LinearGradient(
         colors: [
@@ -111,7 +116,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => {
                 Get.back(),
-                contactController.contactList.value = contactController.initData,
+                clientSocketController.getContactList(),
                 contactController.listContactChoose.value = [],
                 contactController.resetState(),
                 contactController.listAvatarChoose.clear(),
@@ -137,7 +142,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                 onPressed: () {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
-                  contactController.contactList.value = contactController.initData;
+                  clientSocketController.getContactList();
                 },
               ),
               border: InputBorder.none,
