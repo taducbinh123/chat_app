@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/socket.dart';
@@ -11,6 +13,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 class ClientSocketController extends GetxController {
   final Messenger messenger = new Messenger();
   final UserProvider userProvider = UserProvider();
+  var isTyping = false.obs;
 
   @override
   void onInit() {
@@ -83,6 +86,17 @@ class ClientSocketController extends GetxController {
               messenger.listRoom.refresh(),
             });
     // });
+
+    roomSocket.on("typing_check", (data) => {
+      if(data && data["isTyping"] && messenger.selectedRoom?.roomUid == data["ROOM_UID"]){
+        isTyping.value = true,
+      }else{
+        isTyping.value = false,
+      }
+    });
+
+
+    roomSocket.on("onlineMember", (data) => null);
 
     roomSocket.on("exception", (data) => print("event exception"));
     roomSocket.on("disconnect", (data) => print("Disconnect"));
