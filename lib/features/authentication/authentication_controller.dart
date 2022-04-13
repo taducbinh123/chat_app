@@ -5,6 +5,9 @@ import 'package:hello_world_flutter/model/models.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controller/chat_screen_controller.dart';
+import '../../controller/nav_bar_controller.dart';
+
 class AuthenticationController extends GetxController {
   final AuthenticationService _authenticationService;
   final UserProvider userProvider = UserProvider();
@@ -41,6 +44,8 @@ class AuthenticationController extends GetxController {
     await _authenticationService.signOut();
     // flag.value = true;
     _authenticationStateStream.value = UnAuthenticated();
+    Get.delete<NavBarController>();
+    Get.delete<ChatScreenController>();
     _authenticationStateStream.refresh();
     // Get.offAll(LoginPage());
   }

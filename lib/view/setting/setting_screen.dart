@@ -138,8 +138,8 @@ class SettingScreen extends StatelessWidget {
         chatScreenController.initDataRoom();
         // navBarController.selectedIndex = 0;
         // Get.to(() => Dashboard());   /dashboard_screen
-        Get.offAll(() => Dashboard());
-        // Get.back();Get.back();Get.back();
+        // Get.offAll(() => Dashboard());
+        Get.back();Get.back();Get.back();
       },
     );
 

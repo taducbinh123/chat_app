@@ -1,15 +1,12 @@
 
 import 'package:get/get.dart';
-import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/socket.dart';
-import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/messenger.dart';
 import 'package:hello_world_flutter/model/room.dart';
 import 'package:hello_world_flutter/provider/contact_view_provider.dart';
 import 'package:hello_world_flutter/provider/socket_provider.dart';
 import 'package:hello_world_flutter/provider/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ClientSocketController extends GetxController {
   final Messenger messenger = new Messenger();

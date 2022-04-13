@@ -9,6 +9,8 @@ import 'package:crypto/crypto.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../common/constant/ulti.dart';
+
 abstract class AuthenticationService extends GetxService {
   Future<User?> getCurrentUser();
   Future<User> signInWithUsernameAndPassword(String email, String password);
@@ -91,6 +93,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
     // }
 
     await prefs.clear();
+    await box.erase();
   }
 
   saveInforUser(String token, String userUid, String username, var expires_in) async {

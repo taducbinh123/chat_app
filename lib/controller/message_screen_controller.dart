@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/controller/client_socket_controller.dart';
-
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/provider/message_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MessageScreenController extends GetxController {
   final MessageProvider messageProvider = MessageProvider();

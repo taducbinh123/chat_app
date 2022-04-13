@@ -1,9 +1,11 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/client_socket_controller.dart';
+import 'package:hello_world_flutter/controller/file_controller.dart';
 import 'package:hello_world_flutter/controller/message_screen_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/model/room.dart';
@@ -17,11 +19,11 @@ class MessagesScreen extends GetView<MessageScreenController> {
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
     final messageController = Get.put(MessageScreenController());
+    final fileController = Get.put(FileController());
     final ClientSocketController clientSocketController = Get.find();
 
     return Scaffold(
-      appBar: buildAppBar(
-          screenWidth, screenHeight),
+      appBar: buildAppBar(screenWidth, screenHeight),
       body: Column(
         children: [
           Expanded(
@@ -30,13 +32,17 @@ class MessagesScreen extends GetView<MessageScreenController> {
               child: Obx(
                 () => ListView.builder(
                     controller: messageController.controller,
-                    itemCount: clientSocketController.messenger.chatList.value.length,
+                    itemCount:
+                        clientSocketController.messenger.chatList.value.length,
                     reverse: true,
                     itemBuilder: (context, index) {
-                      if (clientSocketController.messenger.chatList.value.length == index)
+                      if (clientSocketController
+                              .messenger.chatList.value.length ==
+                          index)
                         return Center(child: CircularProgressIndicator());
                       return Message(
-                          message: clientSocketController.messenger.chatList.value[index]);
+                          message: clientSocketController
+                              .messenger.chatList.value[index]);
                     }),
               ),
             ),
@@ -99,15 +105,23 @@ class MessagesScreen extends GetView<MessageScreenController> {
                               ),
                             ),
                           ),
-
-                          Icon(
-                            Icons.attach_file,
-                            color: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .color!
-                                .withOpacity(0.64),
+                          IconButton(
+                            onPressed: () async {
+                              final result = await FilePicker.platform
+                                  .pickFiles(allowMultiple: true);
+                              fileController.listFiles.value = result!.files;
+                              if (result == null) return;
+                            },
+                            icon: Icon(
+                              Icons.attach_file,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color!
+                                  .withOpacity(0.64),
+                            ),
                           ),
+
                           SizedBox(width: kDefaultPadding / 4),
                           Icon(
                             Icons.camera_alt_outlined,
@@ -166,7 +180,9 @@ class MessagesScreen extends GetView<MessageScreenController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  clientSocketController.messenger.selectedRoom?.roomDefaultName ?? "",
+                  clientSocketController
+                          .messenger.selectedRoom?.roomDefaultName ??
+                      "",
                   style: TextStyle(fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -195,8 +211,7 @@ class MessagesScreen extends GetView<MessageScreenController> {
           onPressed: () {
             Room room = Get.arguments['room'];
             roomChatController.getListMemberRoom(room.roomUid);
-            Get.toNamed(settingScreen,
-                arguments: {"room": room});
+            Get.toNamed(settingScreen, arguments: {"room": room});
           },
         ),
         SizedBox(width: kDefaultPadding / 2),

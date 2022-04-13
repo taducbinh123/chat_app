@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:collection/collection.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
@@ -7,7 +6,7 @@ import 'package:hello_world_flutter/common/constant/socket.dart';
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+
 
 class MessageProvider {
   static String utf8convert(String text) {

@@ -5,7 +5,6 @@ import 'package:hello_world_flutter/common/constant/socket.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class RoomChatProvider {
   static String utf8convert(String text) {
@@ -57,5 +56,4 @@ class RoomChatProvider {
       roomSocket.emit("inviteMember", {"ROOM_UID":roomUid, "userUid":userUid, "roomName": roomName, "memberList":memberList});
     // });
   }
-
 }
