@@ -108,9 +108,13 @@ class MessagesScreen extends GetView<MessageScreenController> {
                           IconButton(
                             onPressed: () async {
                               final result = await FilePicker.platform
-                                  .pickFiles(allowMultiple: true);
-                              fileController.listFiles.value = result!.files;
+                                  .pickFiles(
+                                      allowMultiple: true,
+                                      withData: true,
+                                      allowCompression: true);
                               if (result == null) return;
+                              fileController.listFiles.value = result!.files;
+                              fileController.uploadFile();
                             },
                             icon: Icon(
                               Icons.attach_file,
