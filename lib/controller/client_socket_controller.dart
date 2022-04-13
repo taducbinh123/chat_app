@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/constant/socket.dart';
 import 'package:hello_world_flutter/model/messenger.dart';
@@ -14,6 +13,7 @@ class ClientSocketController extends GetxController {
   final ContactViewProvider contactViewProvider = ContactViewProvider();
   final SocketProvider socketProvider = SocketProvider();
 
+  // var listContact = [].obs;
   var isTyping = false.obs;
 
   @override
@@ -42,7 +42,7 @@ class ClientSocketController extends GetxController {
   getContactList() async {
     messenger.contactList.value =
         await contactViewProvider.getEmployee(messenger.currentUser?.USER_UID);
-    socketProvider.getOnlineMember(messenger.contactList.value);
+    await socketProvider.getOnlineMember(messenger.contactList.value);
   }
 
   clientSocketIO() {
@@ -99,7 +99,7 @@ class ClientSocketController extends GetxController {
     roomSocket.on(
         "typing_check",
         (data) => {
-              if (data &&
+              if (data != null &&
                   data["isTyping"] &&
                   messenger.selectedRoom?.roomUid == data["ROOM_UID"])
                 {
@@ -110,41 +110,39 @@ class ClientSocketController extends GetxController {
                   isTyping.value = false,
                 }
             });
-
+    var list;
     roomSocket.on(
         "onlineMember",
         (data) => {
-              for (var i in data)
+              if (data != null)
                 {
-                  for (var e in messenger.contactList.value)
+                  print(data),
+                  for (var i in data)
                     {
-                      if (e.USER_UID == i)
-                        {
-                          // print(e.USER_NM_KOR),
-                          e.ONLINE_YN = 'Y',
+                      if(i != messenger.currentUser?.USER_UID){
+                        list = messenger.listRoom.value.where((element) => element.memberUidList.contains(i)).toList(),
+                        if( list!=null && list.length>0){
+                          for(var item in list){
+                            messenger.listRoom.value.firstWhere((element) => element.roomUid == item.roomUid).isOnline = true,
+                          }
                         }
-                    }
+                      },
+                      messenger.contactList.value.firstWhere((element) => element.USER_UID == i).ONLINE_YN = 'Y',
+                    },
                 },
               messenger.contactList.refresh(),
             });
 
     roomSocket.on(
         "offlineMember",
-            (data) => {
-          for (var i in data)
-            {
-              for (var e in messenger.contactList.value)
+        (data) => {
+              if (data != null)
                 {
-                  if (e.USER_UID == i)
-                    {
-                      // print(e.USER_NM_KOR),
-                      e.ONLINE_YN = 'N',
-                    }
-                }
-            },
-          messenger.contactList.refresh(),
-        });
-
+                  print(data),
+                  messenger.contactList.value.firstWhere((element) => element.USER_UID == data).ONLINE_YN = 'N',
+                },
+              messenger.contactList.refresh(),
+            });
 
     roomSocket.on("exception", (data) => print("event exception"));
     roomSocket.on("disconnect", (data) => print("Disconnect"));

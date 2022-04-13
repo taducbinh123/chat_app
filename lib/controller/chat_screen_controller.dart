@@ -38,10 +38,6 @@ class ChatScreenController extends GetxController {
     super.onReady();
   }
 
-  ChatScreenController() {
-
-  }
-
   initDataRoom() async {
     _socketProvider.connect();
     await Future.delayed(const Duration(seconds: 1));

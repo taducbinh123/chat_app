@@ -85,7 +85,29 @@ class AddContactScreen extends GetView<ContactScreenController> {
                   employee: element,
                   press: () => {
                     print("contact with ${element.USER_NM_ENG}"),
-                    contactController.changeState(element, screenWidth, screenHeight),
+                    if(!contactController.changeState(element, screenWidth, screenHeight)){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          action: SnackBarAction(
+                            label: 'OK',
+                            onPressed: () {
+                              // Code to execute.
+                            },
+                          ),
+                          content: const Text('Can'+ "'" +'t chat with myself!'),
+                          duration: const Duration(milliseconds: 1500),
+                          // width: 280.0, // Width of the SnackBar.
+                          padding: const EdgeInsets.symmetric(
+                            horizontal:
+                            8.0, // Inner padding for SnackBar content.
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      )
+                    }
                     // print(contactController.getStateByChat(element)),
                     // Get.to(() => MessagesScreen()),
                   },
@@ -115,11 +137,11 @@ class AddContactScreen extends GetView<ContactScreenController> {
       leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => {
-                Get.back(),
                 clientSocketController.getContactList(),
                 contactController.listContactChoose.value = [],
                 contactController.resetState(),
                 contactController.listAvatarChoose.clear(),
+                Get.back(),
               }),
       elevation: 0,
       bottom: PreferredSize(

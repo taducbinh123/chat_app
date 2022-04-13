@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 final ClientSocketController clientSocketController = Get.find();
 
 class AddRoomMemberScreen extends GetView<ContactScreenController> {
-
   @override
   Widget build(BuildContext context) {
     RoomChatController roomChatController = Get.find();
@@ -34,46 +32,50 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
             height: 20,
           ),
           Obx(() => Visibility(
-            visible: roomChatController.listContactChoose.value.length != 0,
-            child: Container(
-              padding: EdgeInsets.fromLTRB(25.0, 0.0, 8.0, 0.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child:
-                    // Obx(() =>
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                          children:
-                          roomChatController.listAvatarChoose
+                visible: roomChatController.listContactChoose.value.length != 0,
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(25.0, 0.0, 8.0, 0.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child:
+                            // Obx(() =>
+                            SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                              children: roomChatController.listAvatarChoose),
+                          // )
+                        ),
                       ),
-                      // )
-                    ),
+                      ElevatedButton(
+                          child: Text("Add"),
+                          onPressed: () {
+                            roomChatController.listAvatarChoose.clear();
+                            roomChatController.inviteMember(
+                                clientSocketController
+                                    .messenger.selectedRoom?.roomUid,
+                                clientSocketController
+                                    .messenger.selectedRoom?.roomDefaultName);
+                            // chatController.createChatroom(contactController.listContactChoose);
+                            Get.back();
+                          }),
+                    ],
                   ),
-                  ElevatedButton(
-                      child: Text("Add"),
-                      onPressed: () {
-                        roomChatController.listAvatarChoose.clear();
-                        roomChatController.inviteMember(clientSocketController.messenger.selectedRoom?.roomUid, clientSocketController.messenger.selectedRoom?.roomDefaultName);
-                        // chatController.createChatroom(contactController.listContactChoose);
-                        Get.back();
-                      }),
-                ],
-              ),
-            ),
-          )),
+                ),
+              )),
           SizedBox(
             height: 20,
           ),
           Expanded(
             child: Obx(
-                  () => GroupedListView<dynamic, String>(
+              () => GroupedListView<dynamic, String>(
                 elements: clientSocketController.messenger.contactList.value,
-                groupBy: (element) => element.USER_NM_KOR[0].toString().toUpperCase(),
+                groupBy: (element) =>
+                    element.USER_NM_KOR[0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
-                itemComparator: (item1, item2) =>
-                    item1.USER_NM_KOR.toString().compareTo(item2.USER_NM_KOR.toString()),
+                itemComparator: (item1, item2) => item1.USER_NM_KOR
+                    .toString()
+                    .compareTo(item2.USER_NM_KOR.toString()),
                 order: GroupedListOrder.DESC,
                 useStickyGroupSeparators: true,
                 groupSeparatorBuilder: (String value) => Padding(
@@ -87,17 +89,39 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
                 // showPreview: true,
                 indexedItemBuilder: (context, element, index) =>
                     CustomAvatarContactAdd(
-                      employee: element,
-                      screen: "add",
-                      press: () => {
-                        print("contact with ${element.USER_NM_ENG}"),
-                        roomChatController.changeState(element, screenWidth, screenHeight),
-                        // print(contactController.getStateByChat(element)),
-                        // Get.to(() => MessagesScreen()),
-                      },
-                      check: true,
-                      index: index,
-                    ),
+                  employee: element,
+                  screen: "add",
+                  press: () => {
+                    print("contact with ${element.USER_NM_ENG}"),
+                    if (!roomChatController.changeState(
+                        element, screenWidth, screenHeight))
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            action: SnackBarAction(
+                              label: 'OK',
+                              onPressed: () {
+                                // Code to execute.
+                              },
+                            ),
+                            content: const Text('Member was in the room!'),
+                            duration: const Duration(milliseconds: 1500),
+                            // width: 280.0, // Width of the SnackBar.
+                            padding: const EdgeInsets.symmetric(
+                              horizontal:
+                                  8.0, // Inner padding for SnackBar content.
+                            ),
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        )
+                      }
+                  },
+                  check: true,
+                  index: index,
+                ),
               ),
             ),
           ),
@@ -119,13 +143,13 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
       leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => {
-            Get.back(),
-            // roomChatController.contactList.value = roomChatController.initData,
-          clientSocketController.getContactList(),
-            roomChatController.listContactChoose.value = [],
-            roomChatController.resetState(),
-            roomChatController.listAvatarChoose.clear(),
-          }),
+                // roomChatController.contactList.value = roomChatController.initData,
+                clientSocketController.getContactList(),
+                roomChatController.listContactChoose.value = [],
+                roomChatController.resetState(),
+                roomChatController.listAvatarChoose.clear(),
+                Get.back(),
+              }),
       elevation: 0,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight + 20),

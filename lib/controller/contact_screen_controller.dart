@@ -56,7 +56,9 @@ class ContactScreenController extends GetxController {
 
   changeState(Employee e, double screenWidth, double screenHeight) {
     // change state
+    bool result = true;
     var stateChange;
+    if(e.USER_UID == clientSocketController.messenger.currentUser?.USER_UID) return false;
     for (State element in state) {
       if (element.employee.USER_UID == e.USER_UID && e.USER_UID != clientSocketController.messenger.currentUser?.USER_UID) {
         element.state.value = !element.state.value;
@@ -78,9 +80,11 @@ class ContactScreenController extends GetxController {
       listAvatarChoose =
           listAvatarChoose.where((element) => element.chat != e).toList();
     }
+    return result;
   }
 
-  contactNameSearch(String name) {
+  contactNameSearch(String name) async {
+    await clientSocketController.getContactList();
     if (name.isEmpty) {
       clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value;
     } else {

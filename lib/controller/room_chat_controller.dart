@@ -73,6 +73,7 @@ class RoomChatController extends GetxController {
 
   changeState(Employee e, double screenWidth, double screenHeight) {
     // change state
+    bool result = true;
     var stateChange;
     for (State element in state) {
       if (element.employee.USER_UID == e.USER_UID) {
@@ -80,6 +81,7 @@ class RoomChatController extends GetxController {
         for(Employee emp in employees){
           if(e.USER_UID == emp.USER_UID){
             flag = false;
+            result = false;
             break;
           }
         }
@@ -106,9 +108,12 @@ class RoomChatController extends GetxController {
       listAvatarChoose =
           listAvatarChoose.where((element) => element.chat != e).toList();
     }
+
+    return result;
   }
 
-  contactNameSearch(String name) {
+  contactNameSearch(String name) async {
+    await clientSocketController.getContactList();
     if (name.isEmpty) {
       clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value;
     } else {
