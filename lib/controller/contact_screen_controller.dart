@@ -37,6 +37,7 @@ class ContactScreenController extends GetxController {
     final String? userUid = prefs.getString('userUid');
     print(userUid);
     initData = await contactViewProvider.getEmployee(userUid);
+    resetOnline(initData);
     await socketProvider.getOnlineMember(initData);
 
     // loại bỏ user ra khỏi danh sách
@@ -93,6 +94,12 @@ class ContactScreenController extends GetxController {
     initData.forEach((element) {
       state.add(State(employee: element, state: false.obs));
     });
+  }
+
+  resetOnline(var data){
+    for(var e in data){
+      e.ONLINE_YN = "N";
+    }
   }
 }
 
