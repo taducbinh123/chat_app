@@ -10,6 +10,7 @@ class Messenger {
   var listRoom = [].obs;
   var memberList = [].obs; // list member in selected room
   var chatList = [].obs; // list message in selected room
+  var contactList = [].obs;
 
   // Messenger({
   //   this.currentUser,

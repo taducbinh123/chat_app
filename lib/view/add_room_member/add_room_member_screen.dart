@@ -12,6 +12,8 @@ import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
+final ClientSocketController clientSocketController = Get.find();
+
 class AddRoomMemberScreen extends GetView<ContactScreenController> {
 
   @override
@@ -19,8 +21,6 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
     RoomChatController roomChatController = Get.find();
     final ClientSocketController clientSocketController = Get.find();
 
-    roomChatController.getListMemberRoom(clientSocketController.messenger.selectedRoom?.roomUid ?? "");
-    roomChatController.initDataEmployee();
     // ChatScreenController chatController = Get.find();
     var _mediaQueryData = MediaQuery.of(context);
     double screenWidth = _mediaQueryData.size.width;
@@ -69,7 +69,7 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
           Expanded(
             child: Obx(
                   () => GroupedListView<dynamic, String>(
-                elements: roomChatController.contactList.value,
+                elements: clientSocketController.messenger.contactList.value,
                 groupBy: (element) => element.USER_NM_KOR[0].toString().toUpperCase(),
                 groupComparator: (value1, value2) => value2.compareTo(value1),
                 itemComparator: (item1, item2) =>
@@ -121,6 +121,7 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
           onPressed: () => {
             Get.back(),
             // roomChatController.contactList.value = roomChatController.initData,
+          clientSocketController.getContactList(),
             roomChatController.listContactChoose.value = [],
             roomChatController.resetState(),
             roomChatController.listAvatarChoose.clear(),
@@ -146,7 +147,7 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
                 onPressed: () {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
-                  roomChatController.contactList.value = roomChatController.initData;
+                  clientSocketController.getContactList();
                 },
               ),
               border: InputBorder.none,

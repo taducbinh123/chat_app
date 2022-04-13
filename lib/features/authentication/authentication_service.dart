@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:get_storage/get_storage.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
-import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/model/user.dart';
@@ -58,7 +57,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
       print(t);
 
-     await saveInforUser(info['access_token'], info['userUid'], info['username'], info['expires_in']);
+      await saveInforUser(info['access_token'], info['userUid'], info['username'], info['expires_in']);
     } else if (response.statusCode == 400) {
       throw AuthenticationException(message: 'Wrong username or password');
     } else {
@@ -92,7 +91,6 @@ class AuthenticationServiceImpl extends AuthenticationService {
     // }
 
     await prefs.clear();
-    await box.erase();
   }
 
   saveInforUser(String token, String userUid, String username, var expires_in) async {

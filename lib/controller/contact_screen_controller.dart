@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
+import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/model/employee.dart';
 import 'package:hello_world_flutter/provider/contact_view_provider.dart';
 import 'package:hello_world_flutter/provider/socket_provider.dart';
@@ -11,11 +12,13 @@ class ContactScreenController extends GetxController {
 
   final ContactViewProvider contactViewProvider = ContactViewProvider();
   final SocketProvider socketProvider = SocketProvider();
+  final ClientSocketController clientSocketController = Get.find();
+
   TextEditingController searchController = TextEditingController();
 
   List<SelectCircle> listAvatarChoose = [];
-  List<Employee> initData = [];
-  var contactList = <Employee>[].obs;
+  // List<Employee> initData = [];
+  // var contactList = [].obs;
 
   var state = [].obs;
   // var contactTempList = chatsData.obs;
@@ -27,26 +30,26 @@ class ContactScreenController extends GetxController {
   @override
   void onInit() {
     resetState();
-    initDataEmployee();
+    // initDataEmployee();
     super.onInit();
   }
 
-  initDataEmployee() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final String? userUid = prefs.getString('userUid');
-    print(userUid);
-    initData = await contactViewProvider.getEmployee(userUid);
-    resetOnline(initData);
-    await socketProvider.getOnlineMember(initData);
-
-    // loại bỏ user ra khỏi danh sách
-
-    initData = initData.where((element) => element.USER_UID != userUid).toList();
-    contactList.value = initData;
-    resetState();
-    // print(contactList.value);
-  }
+  // initDataEmployee() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //
+  //   final String? userUid = prefs.getString('userUid');
+  //   print(userUid);
+  //   initData = await contactViewProvider.getEmployee(userUid);
+  //   resetOnline(initData);
+  //   await socketProvider.getOnlineMember(initData);
+  //
+  //   // loại bỏ user ra khỏi danh sách
+  //
+  //   initData = initData.where((element) => element.USER_UID != userUid).toList();
+  //   contactList.value = initData;
+  //   resetState();
+  //   // print(contactList.value);
+  // }
 
   var listContactChoose = [].obs;
   // var listNameChoose = "".obs;
@@ -55,7 +58,7 @@ class ContactScreenController extends GetxController {
     // change state
     var stateChange;
     for (State element in state) {
-      if (element.employee == e) {
+      if (element.employee.USER_UID == e.USER_UID && e.USER_UID != clientSocketController.messenger.currentUser?.USER_UID) {
         element.state.value = !element.state.value;
         stateChange = element;
         break;
@@ -63,7 +66,7 @@ class ContactScreenController extends GetxController {
     }
     // format string name
     // listNameChoose.value = "";
-    if (stateChange.state.value) {
+    if (stateChange!= null &&  stateChange.state.value) {
       listContactChoose.add(e);
       listAvatarChoose.add(new SelectCircle(
           chat: e,
@@ -79,9 +82,9 @@ class ContactScreenController extends GetxController {
 
   contactNameSearch(String name) {
     if (name.isEmpty) {
-      contactList.value = initData;
+      clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value;
     } else {
-      contactList.value = initData
+      clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value
           .where((element) =>
               element.USER_NM_KOR.toLowerCase().contains(name.toLowerCase()))
           .toList();
@@ -91,7 +94,7 @@ class ContactScreenController extends GetxController {
 
   resetState() {
     state.clear();
-    initData.forEach((element) {
+    clientSocketController.messenger.contactList.value.forEach((element) {
       state.add(State(employee: element, state: false.obs));
     });
   }
