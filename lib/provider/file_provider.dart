@@ -39,13 +39,16 @@ class FileProvider {
     request.headers.addAll(headers);
     request.fields['ROOM_UID'] = data['ROOM_UID'];
     request.fields['USER_UID'] = data['USER_UID'];
-    print(file.toString());
-    print(file.path);
+    print(data['ROOM_UID']);
+    print(data['USER_UID']);
+    print("------------------------------------------------");
+    print(request.url);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
       return true;
     } else {
+      print("--------------------------/////----------------------");
       print(response.statusCode);
       return false;
     }

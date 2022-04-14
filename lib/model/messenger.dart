@@ -12,6 +12,8 @@ class Messenger {
   var chatList = [].obs; // list message in selected room
   var contactList = [].obs;
 
+  var listRoomFlag = [].obs;
+  var contactListFlag = [].obs;
   // Messenger({
   //   this.currentUser,
   //   this.selectedRoom,

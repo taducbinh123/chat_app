@@ -68,7 +68,7 @@ class CustomAvatar extends StatelessWidget {
                         Opacity(
                           opacity: 0.64,
                           child: Text(
-                            chat.messageModel.MSG_CONT.toString(),
+                            chat.messageModel.MSG_CONT != null ? chat.messageModel.MSG_CONT.toString() : "",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),

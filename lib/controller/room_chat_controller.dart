@@ -32,7 +32,7 @@ class RoomChatController extends GetxController {
 
   getListMemberRoom(String roomUid) async {
     var list = await roomChatProvider.getMemberList(roomUid);
-    resetOnline(list);
+    // resetOnline(list);
     await socketProvider.getOnlineMember(list);
     employees.value = list;
   }
@@ -113,7 +113,8 @@ class RoomChatController extends GetxController {
   }
 
   contactNameSearch(String name) async {
-    await clientSocketController.getContactList();
+    // await clientSocketController.getContactList();
+    clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactListFlag.value;
     if (name.isEmpty) {
       clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value;
     } else {
@@ -132,11 +133,11 @@ class RoomChatController extends GetxController {
     });
   }
 
-  resetOnline(var data){
-    for(var e in data){
-      e.ONLINE_YN = "N";
-    }
-  }
+  // resetOnline(var data){
+  //   for(var e in data){
+  //     e.ONLINE_YN = "N";
+  //   }
+  // }
 }
 
 class State {

@@ -84,7 +84,8 @@ class ContactScreenController extends GetxController {
   }
 
   contactNameSearch(String name) async {
-    await clientSocketController.getContactList();
+    // await clientSocketController.getContactList();
+    clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactListFlag.value;
     if (name.isEmpty) {
       clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value;
     } else {

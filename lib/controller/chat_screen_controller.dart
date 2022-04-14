@@ -34,29 +34,33 @@ class ChatScreenController extends GetxController {
 
   @override
   void onReady() {
-
+    initDataRoom();
     super.onReady();
   }
 
+  ChatScreenController() {
+    // initDataRoom();
+  }
+
   initDataRoom() async {
-    _socketProvider.connect();
+    await _socketProvider.connect();
     await Future.delayed(const Duration(seconds: 1));
-    // chatTempList.value = _socketProvider.chatsDatas;
-    // chatTempList.refresh();
 
     clientSocketController.messenger.listRoom.value = _socketProvider.chatsDatas;
     clientSocketController.messenger.listRoom.refresh();
+    clientSocketController.messenger.listRoomFlag.value = clientSocketController.messenger.listRoom.value;
     print("abc" + _socketProvider.chatsDatas.value.toString());
 
   }
 
-  chatNameSearch(String name) {
+  chatNameSearch(String name) async {
+    clientSocketController.messenger.listRoom.value = clientSocketController.messenger.listRoomFlag.value;
     if (name.isEmpty) {
-      chatTempList.value = chatsData;
+      clientSocketController.messenger.listRoom.value = clientSocketController.messenger.listRoom.value;
     } else {
-      chatTempList.value = chatsData
+      clientSocketController.messenger.listRoom.value = clientSocketController.messenger.listRoom.value
           .where((element) =>
-              element.name.toLowerCase().contains(name.toLowerCase()))
+              element.roomDefaultName.toLowerCase().contains(name.toLowerCase()))
           .toList();
     }
   }

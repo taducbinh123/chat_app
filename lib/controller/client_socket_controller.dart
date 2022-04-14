@@ -43,6 +43,8 @@ class ClientSocketController extends GetxController {
     messenger.contactList.value =
         await contactViewProvider.getEmployee(messenger.currentUser?.USER_UID);
     await socketProvider.getOnlineMember(messenger.contactList.value);
+
+    messenger.contactListFlag.value = messenger.contactList.value;
   }
 
   clientSocketIO() {
@@ -70,20 +72,22 @@ class ClientSocketController extends GetxController {
                       messenger.listRoom.value.removeAt(index),
                       messenger.listRoom.value.insert(0, rm),
                       messenger.listRoom.refresh(),
+                      messenger.listRoomFlag.value = messenger.listRoom.value,
                     },
                   if (rm.roomUid == messenger.selectedRoom?.roomUid)
                     {
                       messenger.chatList.insert(0, rm.messageModel),
                       messenger.chatList.refresh(),
-                      print("ok ---------------------"),
-                      print(data),
-                      print(messenger.chatList),
+                      // print("ok ---------------------"),
+                      // print(data),
+                      // print(messenger.chatList),
                     }
                 }
               else
                 {
                   messenger.listRoom.value.add(rm),
                   messenger.listRoom.refresh(),
+                  messenger.listRoomFlag.value = messenger.listRoom.value,
                 }
             });
     roomSocket.on(
@@ -93,6 +97,7 @@ class ClientSocketController extends GetxController {
               rm = Room.fromJson(data as Map<dynamic, dynamic>),
               messenger.listRoom.value.insert(0, rm),
               messenger.listRoom.refresh(),
+              messenger.listRoomFlag.value = messenger.listRoom.value,
             });
     // });
 
@@ -111,6 +116,7 @@ class ClientSocketController extends GetxController {
                 }
             });
     var list;
+    var empContact;
     roomSocket.on(
         "onlineMember",
         (data) => {
@@ -127,10 +133,14 @@ class ClientSocketController extends GetxController {
                           }
                         }
                       },
-                      messenger.contactList.value.firstWhere((element) => element.USER_UID == i).ONLINE_YN = 'Y',
+                      empContact = messenger.contactList.value.firstWhereOrNull((element) => element.USER_UID == i),
+                      if(empContact != null){
+                        empContact.ONLINE_YN = 'Y',
+                      }
                     },
                 },
               messenger.contactList.refresh(),
+              messenger.contactListFlag.value = messenger.contactList.value,
             });
 
     roomSocket.on(
@@ -142,6 +152,7 @@ class ClientSocketController extends GetxController {
                   messenger.contactList.value.firstWhere((element) => element.USER_UID == data).ONLINE_YN = 'N',
                 },
               messenger.contactList.refresh(),
+              messenger.contactListFlag.value = messenger.contactList.value,
             });
 
     roomSocket.on("exception", (data) => print("event exception"));
