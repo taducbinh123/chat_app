@@ -15,23 +15,25 @@ class TextMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
     return Container(
-      constraints:
-          BoxConstraints(minWidth: queryData.size.width * 0.1, maxWidth: queryData.size.width * 0.5),
+      constraints: BoxConstraints(
+          minWidth: queryData.size.width * 0.1,
+          maxWidth: queryData.size.width * 0.5),
       padding: EdgeInsets.symmetric(
         horizontal: kDefaultPadding * 0.75,
         vertical: kDefaultPadding / 2,
       ),
       decoration: BoxDecoration(
-        color: kPrimaryColor.withOpacity(message!.USER_UID != "" ? 1 : 0.1),
-        borderRadius: BorderRadius.circular(20),
+        color: message!.USER_UID == box.read("userUid")
+            ? Colors.blue
+            : Colors.grey[300],
+        borderRadius: BorderRadius.circular(16),
       ),
       child: AutoSizeText(
         message!.MSG_CONT.toString(),
-        style: TextStyle(
-          color: message!.USER_UID != ""
-              ? Colors.white
-              : Theme.of(context).textTheme.bodyText1!.color,
-        ),
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            color: message!.USER_UID == box.read("userUid")
+                ? Colors.white
+                : Colors.black87),
       ),
     );
   }

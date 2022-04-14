@@ -12,27 +12,14 @@ class SocketProvider extends GetxController {
   final box = GetStorage();
 
   connect() async {
-
-
     chatsDatas = List<Room>.empty().obs;
     roomSocket.io.options['extraHeaders'] = {
       "Content-Type": "application/json"
     };
     // roomSocket.connect();
-    // getData(roomSocket);
-    // await Future.delayed(const Duration(seconds: 1));
+    await getData(roomSocket);
 
-    roomSocket.emitWithAck(
-        "getRoomsByUserUid", {"userUid": box.read('userUid')},  ack: (data) {
-      var result = data as List;
-      for (int i = 0; i < result.length; i++) {
-        Room rm = Room.fromJson(result[i] as Map<dynamic, dynamic>);
-        chatsDatas.value.add(rm);
-      }
-      print("1 ");
-      print(chatsDatas.value);
-    });
-    Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     print("2 ");
     print(chatsDatas.value);
 
