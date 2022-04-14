@@ -14,6 +14,7 @@ import 'package:hello_world_flutter/view/setting/setting_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/constant/path.dart';
+import 'controller/qr_controller.dart';
 
 void main() async {
   // SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -46,6 +47,7 @@ class MyApp extends GetWidget<AuthenticationController> {
 
         if (controller.state is Authenticated) {
           Get.put(ClientSocketController());
+
           return Dashboard();
         }
         return SplashScreen();
