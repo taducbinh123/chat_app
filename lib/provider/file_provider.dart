@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart';
 import '../common/constant/path.dart';
 import '../common/constant/socket.dart';
+import 'package:mime/mime.dart';
 
 class FileProvider {
   static String utf8convert(String text) {
@@ -34,8 +36,13 @@ class FileProvider {
       'Authorization': 'Bearer ' + access_token!
     }; // remove headers if not wanted
     var request = http.MultipartRequest(
-        'POST', Uri.parse(chatApiHost + '/api/chat/upload')); // your server url
-    request.files.add(await http.MultipartFile('file', stream, length,
+        'POST', Uri.parse(chatApiHost + '/api/chat/upload'));
+    var mimeType = lookupMimeType(file.path);
+    var parts = mimeType!.split('/');
+    var prefix = parts[0].trim();                 // prefix: "date"
+    var dat = parts.sublist(1).join('/').trim();
+    print(prefix+dat);
+    request.files.add(await http.MultipartFile('file', stream, length, contentType: new MediaType(prefix, dat),
         filename: basename(file.path))); // file you want to upload
     request.headers.addAll(headers);
     request.fields['ROOM_UID'] = data['ROOM_UID'];
