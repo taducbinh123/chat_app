@@ -137,9 +137,10 @@ class SettingScreen extends StatelessWidget {
         await roomChatController.leaveRoom(roomUid);
         chatScreenController.initDataRoom();
         // navBarController.selectedIndex = 0;
-        // Get.to(() => Dashboard());   /dashboard_screen
+        // Get.to(() => Dashboard());   //dashboard_screen
         // Get.offAll(() => Dashboard());
         Get.back();Get.back();Get.back();
+        navBarController.selectedIndex = 0;
       },
     );
 
