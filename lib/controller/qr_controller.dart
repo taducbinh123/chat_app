@@ -19,7 +19,6 @@ class QRController extends GetxController{
   var msg = "".obs;
 
 
-
   @override
   Future<void> onInit() async {
     await getId();
