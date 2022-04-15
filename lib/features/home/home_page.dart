@@ -35,7 +35,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         body: Container(
       width: double.infinity,
@@ -170,26 +169,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     ],
                                   ),
                                   child: Column(children: [
-                                    Container(
-                                      height: 50,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 50),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          color: Colors.green[800]),
-                                      child: Center(
-                                          child: InkWell(
-                                        child: Text(
-                                          "Logout",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        onTap: () {
-                                          _controller.signOut();
-                                        },
-                                      )),
+                                    InkWell(
+                                      onTap: () {
+                                        _controller.signOut();
+                                      },
+                                      child: Container(
+                                          height: 50,
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 50),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: Colors.green[800]),
+                                          child: Center(
+                                            child: Text(
+                                              "Logout",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )),
                                     ),
                                   ]),
                                 ),
@@ -212,24 +211,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           // )
         ],
       ),
-    )
-        // SafeArea(
-        // child:
-        // Center(
-
-        // ),
-        // ),
-        );
+    ));
   }
 
   final snackBar = SnackBar(
-    // elevation: 6.0,
-    // backgroundColor: Colors.blue,
-    // behavior: SnackBarBehavior.floating,
-    // content: Text(
-    //   "Device ID copied to clipboard",
-    //   style: TextStyle(color: Colors.black),
-    // ),
     action: SnackBarAction(
       label: 'OK',
       onPressed: () {
@@ -249,54 +234,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   );
 
   Widget appBar() {
-    return SizedBox(
-        // height: AppBar().preferredSize.height,
-        // child: Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: <Widget>[
-        //     Padding(
-        //       padding: const EdgeInsets.only(top: 8, left: 8),
-        //       child: Container(
-        //         width: AppBar().preferredSize.height - 8,
-        //         height: AppBar().preferredSize.height - 8,
-        //       ),
-        //     ),
-        //     Expanded(
-        //       child: Center(
-        //         child: Padding(
-        //           padding: const EdgeInsets.only(top: 4),
-        //           child: Text(
-        //             'Im In',
-        //             style: TextStyle(
-        //               fontSize: 22,
-        //               color: AppTheme.darkText,
-        //               fontWeight: FontWeight.w700,
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     Padding(
-        //       padding: const EdgeInsets.only(top: 8, right: 8),
-        //       child: Container(
-        //         width: AppBar().preferredSize.height - 8,
-        //         height: AppBar().preferredSize.height - 8,
-        //         color: Colors.white,
-        //         child: Material(
-        //           color: Colors.transparent,
-        //           child: InkWell(
-        //             borderRadius:
-        //             BorderRadius.circular(AppBar().preferredSize.height),
-        //             child: Icon(
-        //               Icons.view_agenda,
-        //               color: AppTheme.dark_grey,
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        );
+    return SizedBox();
   }
 }

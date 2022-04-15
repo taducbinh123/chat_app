@@ -140,7 +140,7 @@ class SettingScreen extends StatelessWidget {
         // Get.to(() => Dashboard());   //dashboard_screen
         // Get.offAll(() => Dashboard());
         Get.back();Get.back();Get.back();
-        navBarController.selectedIndex = 0;
+        navBarController.onItemTapped(0);
       },
     );
 
