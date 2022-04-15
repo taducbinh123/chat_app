@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart';
 import '../common/constant/path.dart';
+import '../common/constant/socket.dart';
 
 class FileProvider {
   static String utf8convert(String text) {
@@ -44,8 +45,17 @@ class FileProvider {
     print("------------------------------------------------");
     print(request.url);
     http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+    if (response.statusCode == 201) {
+      var body = json.decode(await response.stream.bytesToString());
+      print(body);
+      roomSocket.io.options['extraHeaders'] = {
+        "Content-Type": "application/json"
+      };
+      // roomSocket.connect();
+      // roomSocket.onConnect((_) {
+      roomSocket
+          .emitWithAck("pingMsgAttachment", {body});
+      print(body);
       return true;
     } else {
       print("--------------------------/////----------------------");
@@ -53,24 +63,12 @@ class FileProvider {
       return false;
     }
   }
-  // var response = await request.send();
-  // if (response.statusCode == 200) {
-  //   print(response.body.toString());
-  //
-  //
-  //   roomSocket.io.options['extraHeaders'] = {
-  //     "Content-Type": "application/json"
-  //   };
-  //   // roomSocket.connect();
-  //   // roomSocket.onConnect((_) {
-  //   roomSocket.emit("pingMsgAttachment", {response.body});
-  // } else {
-  //   print(response.body.toString());
-  //   throw Exception('Failed to load message');
-  // }
-  // print(response.body.toString());
 }
-
+// var response = await request.send();
+// if (response.statusCode == 200) {
+//   print(response.body.toString());
+//
+//
 // sendMessage(String roomUid, String msgContent) async {
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
 //   String? userUid = prefs.getString("userUid");
