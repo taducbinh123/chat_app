@@ -18,9 +18,16 @@ class QRController extends GetxController{
   var pre = "0".obs;
   var msg = "".obs;
 
+
+
   @override
   Future<void> onInit() async {
-    deviceId = await getId();
+    await getId();
+    controller.text = deviceId.value;
+    getMessage();
+    // animationController = AnimationController(
+    //     duration: const Duration(milliseconds: 2000), vsync: this);
+    print("----------------------id---------------------");
     print(deviceId.value);
     super.onInit();
   }
@@ -29,10 +36,10 @@ class QRController extends GetxController{
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       var iosDeviceInfo = await deviceInfo.iosInfo;
-      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+      deviceId.value = iosDeviceInfo.identifierForVendor; // unique ID on iOS
     } else {
       var androidDeviceInfo = await deviceInfo.androidInfo;
-      return androidDeviceInfo.androidId; // unique ID on Android
+      deviceId.value = androidDeviceInfo.androidId; // unique ID on Android
     }
   }
 
