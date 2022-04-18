@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/view/message/preview_image.dart';
-
 
 class AttachMessage extends StatelessWidget {
   const AttachMessage({
@@ -74,9 +74,15 @@ class AttachMessage extends StatelessWidget {
                       child: Hero(
                         tag: message!.MSG_UID.toString(),
                         child: ClipRRect(
-                          child: Image.network(chatApiHost +
-                              "/api/chat/getFile/" +
-                              message!.FILE_PATH.toString()),
+                          child: CachedNetworkImage(
+                            imageUrl: chatApiHost +
+                                "/api/chat/getFile/" +
+                                message!.FILE_PATH.toString(),
+                            placeholder: (context, url) =>
+                                new CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                new Icon(Icons.error),
+                          ),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       )),
