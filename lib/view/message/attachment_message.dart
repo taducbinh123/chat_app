@@ -1,8 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_world_flutter/common/app_theme.dart';
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/message.dart';
+import 'package:hello_world_flutter/view/message/preview_image.dart';
+
+import '../../util.dart';
+import '../../widgets/inherited_chat_theme.dart';
+import '../../widgets/inherited_l10n.dart';
 
 class AttachMessage extends StatelessWidget {
   const AttachMessage({
@@ -21,9 +27,16 @@ class AttachMessage extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            print(chatApiHost +
-                "/api/chat/getFile/" +
-                message!.FILE_PATH.toString());
+            if (message!.FILE_EXTN!.contains("image")) {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return PreviewImage(
+                  imageUrl: chatApiHost +
+                      "/api/chat/getFile/" +
+                      message!.FILE_PATH.toString(),
+                  tag: message!.MSG_UID.toString(),
+                );
+              }));
+            }
           },
           child: Container(
               constraints: BoxConstraints(
@@ -34,9 +47,11 @@ class AttachMessage extends StatelessWidget {
                 vertical: kDefaultPadding / 2,
               ),
               decoration: BoxDecoration(
-                color: message!.USER_UID == box.read("userUid")
-                    ? Colors.blue
-                    : Colors.grey[300],
+                color: message!.FILE_EXTN!.contains("image")
+                    ? Colors.white
+                    : (message!.USER_UID == box.read("userUid")
+                        ? Colors.blue
+                        : Colors.grey[300]),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Wrap(
@@ -46,17 +61,28 @@ class AttachMessage extends StatelessWidget {
                       child: AutoSizeText(
                         message!.FILE_ORI_NM.toString(),
                         style: TextStyle(
+                            height: 1.0,
                             decoration: TextDecoration.underline,
+                            decorationColor:
+                                message!.USER_UID == box.read("userUid")
+                                    ? Colors.white
+                                    : Colors.black87,
+                            decorationThickness: 3,
                             color: message!.USER_UID == box.read("userUid")
                                 ? Colors.white
                                 : Colors.black87),
                       )),
                   Visibility(
-                    visible: message!.FILE_EXTN!.contains("image"),
-                    child: Image.network(chatApiHost +
-                        "/api/chat/getFile/" +
-                        message!.FILE_PATH.toString()),
-                  ),
+                      visible: message!.FILE_EXTN!.contains("image"),
+                      child: Hero(
+                        tag: message!.MSG_UID.toString(),
+                        child: ClipRRect(
+                          child: Image.network(chatApiHost +
+                              "/api/chat/getFile/" +
+                              message!.FILE_PATH.toString()),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      )),
                 ],
               )),
         )
