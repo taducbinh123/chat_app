@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world_flutter/chat_theme.dart';
+
 
 class AppTheme {
   AppTheme._();
@@ -22,8 +22,6 @@ class AppTheme {
   static const double messageBorderRadius = 20;
   static const double messageInsetsHorizontal = 20;
   static const double messageInsetsVertical = 16;
-  static const Color sentMessageDocumentIconColor = neutral7;
-  static const Color receivedMessageDocumentIconColor = primary;
 
 
   static const TextTheme textTheme = TextTheme(
@@ -92,29 +90,6 @@ class AppTheme {
     letterSpacing: 0.2,
     color: lightText, // was lightText
   );
-  static const TextStyle sentMessageBodyTextStyle = const TextStyle(
-    color: neutral7,
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    height: 1.5,
-  );
-  static const TextStyle receivedMessageBodyTextStyle = const TextStyle(
-    color: neutral0,
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    height: 1.5,
-  );
-  static const TextStyle sentMessageCaptionTextStyle = const TextStyle(
-    color: neutral7WithOpacity,
-    fontSize: 12,
-    fontWeight: FontWeight.w500,
-    height: 1.333,
-  );
-  static const TextStyle receivedMessageCaptionTextStyle = const TextStyle(
-    color: neutral2,
-    fontSize: 12,
-    fontWeight: FontWeight.w500,
-    height: 1.333,
-  );
+
 
 }

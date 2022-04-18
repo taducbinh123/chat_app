@@ -1,14 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_world_flutter/common/app_theme.dart';
+
 import 'package:hello_world_flutter/common/constant/path.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/view/message/preview_image.dart';
 
-import '../../util.dart';
-import '../../widgets/inherited_chat_theme.dart';
-import '../../widgets/inherited_l10n.dart';
 
 class AttachMessage extends StatelessWidget {
   const AttachMessage({
