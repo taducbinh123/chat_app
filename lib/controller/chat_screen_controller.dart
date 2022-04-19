@@ -51,7 +51,7 @@ class ChatScreenController extends GetxController {
     clientSocketController.messenger.listRoomFlag.value = clientSocketController.messenger.listRoom.value;
     print("abc" + _socketProvider.chatsDatas.value.toString());
 
-  }
+   }
 
   chatNameSearch(String name) async {
     clientSocketController.messenger.listRoom.value = clientSocketController.messenger.listRoomFlag.value;

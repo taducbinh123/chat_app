@@ -10,10 +10,12 @@ class NavBarController extends GetxController {
 
   set selectedIndex(value) => this._selectedIndex.value = value;
   get selectedIndex => this._selectedIndex.value;
+  final qrController = Get.put(QRController());
 
   @override
   void onInit() {
     _selectedIndex = 0.obs;
+    qrController.controllerCountdown.pause();
     super.onInit();
   }
 
@@ -26,7 +28,7 @@ class NavBarController extends GetxController {
   onItemTapped(int index) {
     this.selectedIndex =
         index;// The set method is accessed this way, you have confused it with methods.
-    final QRController qrController = Get.find();
+    // final QRController qrController = Get.find();
     if(index!=3) qrController.controllerCountdown.pause();
 
     if(index==3) qrController.controllerCountdown.restart();

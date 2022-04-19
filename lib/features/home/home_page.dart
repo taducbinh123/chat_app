@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   final _controller = Get.put(HomeController());
   final ClientSocketController clientSocketController = Get.find();
-  final qrController = Get.put(QRController());
+  final QRController qrController = Get.find();
 
   @override
   initState() {
