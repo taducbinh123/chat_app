@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:hello_world_flutter/controller/client_socket_controller.dart';
@@ -21,6 +22,7 @@ void main() async {
   // await prefs.clear();
   await GetStorage.init();
   initialize();
+  await FlutterDownloader.initialize(debug: true);
   runApp(const MyApp());
 }
 
@@ -28,6 +30,7 @@ void main() async {
 void initialize() {
 
   Get.lazyPut(() => AuthenticationController(Get.put(AuthenticationServiceImpl())),);
+
 }
 
 class MyApp extends GetWidget<AuthenticationController> {

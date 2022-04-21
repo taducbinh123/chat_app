@@ -176,8 +176,9 @@ class MessagesScreen extends GetView<MessageScreenController> {
             IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Get.to(()=>Dashboard());
-                navBarController.onItemTapped(0);
+                // Get.to(()=>Dashboard());
+                // navBarController.onItemTapped(0);
+                Get.back();
                 clientSocketController.messenger.selectedRoom = null;
               },
             ),

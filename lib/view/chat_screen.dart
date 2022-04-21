@@ -72,7 +72,7 @@ class ChatScreen extends GetView<ContactScreenController> {
                     // Get.toNamed(messagescreen, arguments: {
                     //   "data": chatController.chatTempList.value[index]
                     // }),
-                    chatController.getMessageByRoomId(clientSocketController.messenger.listRoom.value[index]),
+                    chatController.getMessageByRoomId(clientSocketController.messenger.listRoom.value[index],""),
                   },
                 ),
               ),

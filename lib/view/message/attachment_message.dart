@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hello_world_flutter/common/constant/path.dart';
+import 'package:hello_world_flutter/common/constant/socket.dart';
 import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/model/message.dart';
 import 'package:hello_world_flutter/view/message/preview_image.dart';
@@ -54,21 +55,59 @@ class AttachMessage extends StatelessWidget {
               child: Wrap(
                 children: [
                   Visibility(
-                      visible: !message!.FILE_EXTN!.contains("image"),
-                      child: AutoSizeText(
-                        message!.FILE_ORI_NM.toString(),
-                        style: TextStyle(
-                            height: 1.0,
-                            decoration: TextDecoration.underline,
-                            decorationColor:
-                                message!.USER_UID == box.read("userUid")
-                                    ? Colors.white
-                                    : Colors.black87,
-                            decorationThickness: 3,
-                            color: message!.USER_UID == box.read("userUid")
-                                ? Colors.white
-                                : Colors.black87),
-                      )),
+                    visible: !message!.FILE_EXTN!.contains("image"),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: <Widget>[
+                            Container(
+                              color: Colors.grey,
+                              height: 80,
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.insert_drive_file,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                AutoSizeText(
+                                  message!.FILE_ORI_NM.toString(),
+                                  style: TextStyle(
+                                      height: 1.0,
+                                      color: message!.USER_UID ==
+                                              box.read("userUid")
+                                          ? Colors.white
+                                          : Colors.black87),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        Container(
+                            height: 40,
+                            child: IconButton(
+                                icon: Icon(
+                                  Icons.file_download,
+                                  color:
+                                      message!.USER_UID == box.read("userUid")
+                                          ? Colors.white
+                                          : Color(0xff3f3f3f),
+                                ),
+                                onPressed: () => {
+                                      downloadFile(
+                                          chatApiHost +
+                                              "/api/chat/getFile/" +
+                                              message!.FILE_PATH.toString(),
+                                          message!.FILE_ORI_NM.toString())
+                                    }))
+                      ],
+                    ),
+                  ),
                   Visibility(
                       visible: message!.FILE_EXTN!.contains("image"),
                       child: Hero(

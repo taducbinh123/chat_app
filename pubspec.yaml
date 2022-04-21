@@ -58,6 +58,8 @@ dependencies:
   diffutil_dart: ^3.0.0
   flutter_parsed_text: ^2.2.1
   cached_network_image: ^3.2.0
+  flutter_vector_icons: ^1.0.0
+  flutter_downloader: ^1.2.2
 
 dev_dependencies:
   flutter_test:
