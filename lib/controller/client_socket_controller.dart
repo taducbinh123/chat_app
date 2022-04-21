@@ -174,7 +174,7 @@ class ClientSocketController extends GetxController {
             });
 
 
-    roomSocket.on("exception", (data) => print("event exception"));
+    roomSocket.on("exception", (data) => print(data));
     roomSocket.on("disconnect", (data) => print("Disconnect"));
   }
 }
