@@ -7,8 +7,11 @@ import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/controller/file_controller.dart';
 import 'package:hello_world_flutter/controller/message_screen_controller.dart';
+import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
 import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/model/room.dart';
+import 'package:hello_world_flutter/view/Dashboard.dart';
+import 'package:hello_world_flutter/view/chat_screen.dart';
 
 import 'message/message.dart';
 
@@ -159,6 +162,8 @@ class MessagesScreen extends GetView<MessageScreenController> {
   }
 
   AppBar buildAppBar(screenWidth, screenHeight) {
+
+    final NavBarController navBarController = Get.find();
     RoomChatController roomChatController = Get.put(RoomChatController());
     final ClientSocketController clientSocketController = Get.find();
     return AppBar(
@@ -171,7 +176,8 @@ class MessagesScreen extends GetView<MessageScreenController> {
             IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Get.back();
+                Get.to(()=>Dashboard());
+                navBarController.onItemTapped(0);
                 clientSocketController.messenger.selectedRoom = null;
               },
             ),

@@ -149,7 +149,8 @@ class ClientSocketController extends GetxController {
               if (data != null)
                 {
                   print(data),
-                  messenger.contactList.value.firstWhere((element) => element.USER_UID == data).ONLINE_YN = 'N',
+                  empContact = messenger.contactList.value.firstWhereOrNull((element) => element.USER_UID == data),
+                  if(empContact != null) empContact.ONLINE_YN = 'N',
                 },
               messenger.contactList.refresh(),
               messenger.contactListFlag.value = messenger.contactList.value,

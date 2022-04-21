@@ -73,7 +73,6 @@ class ChatScreen extends GetView<ContactScreenController> {
                     //   "data": chatController.chatTempList.value[index]
                     // }),
                     chatController.getMessageByRoomId(clientSocketController.messenger.listRoom.value[index]),
-                    clientSocketController.messenger.selectedRoom = clientSocketController.messenger.listRoom.value[index],
                   },
                 ),
               ),

@@ -51,7 +51,6 @@ class AddContactScreen extends GetView<ContactScreenController> {
                           onPressed: () {
                             contactController.listAvatarChoose.clear();
                             chatController.createChatroom(contactController.listContactChoose);
-                            Get.back();
                             // Get.to(() => Dashboard());
                           }),
                     ],

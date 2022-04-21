@@ -19,6 +19,7 @@ class MessageProvider {
   var list = [].obs;
 
   getMessageByRoomId(String roomUid, String page) async {
+    list.value.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? access_token = prefs.getString('access_token');
     String temp = "";

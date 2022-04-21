@@ -46,21 +46,26 @@ class ChatScreenController extends GetxController {
     await _socketProvider.connect();
     clientSocketController.messenger.listRoom.value.clear();
     await Future.delayed(const Duration(seconds: 1));
-    clientSocketController.messenger.listRoom.value = _socketProvider.chatsDatas;
+    clientSocketController.messenger.listRoom.value =
+        _socketProvider.chatsDatas;
     clientSocketController.messenger.listRoom.refresh();
-    clientSocketController.messenger.listRoomFlag.value = clientSocketController.messenger.listRoom.value;
+    clientSocketController.messenger.listRoomFlag.value =
+        clientSocketController.messenger.listRoom.value;
     print("abc" + _socketProvider.chatsDatas.value.toString());
-
-   }
+  }
 
   chatNameSearch(String name) async {
-    clientSocketController.messenger.listRoom.value = clientSocketController.messenger.listRoomFlag.value;
+    clientSocketController.messenger.listRoom.value =
+        clientSocketController.messenger.listRoomFlag.value;
     if (name.isEmpty) {
-      clientSocketController.messenger.listRoom.value = clientSocketController.messenger.listRoom.value;
+      clientSocketController.messenger.listRoom.value =
+          clientSocketController.messenger.listRoom.value;
     } else {
-      clientSocketController.messenger.listRoom.value = clientSocketController.messenger.listRoom.value
-          .where((element) =>
-              element.roomDefaultName.toLowerCase().contains(name.toLowerCase()))
+      clientSocketController.messenger.listRoom.value = clientSocketController
+          .messenger.listRoom.value
+          .where((element) => element.roomDefaultName
+              .toLowerCase()
+              .contains(name.toLowerCase()))
           .toList();
     }
   }
@@ -70,11 +75,13 @@ class ChatScreenController extends GetxController {
   }
 
   getMessageByRoomId(var chatRoom) async {
+    clientSocketController.messenger.selectedRoom = chatRoom;
     getLastMessage(chatRoom);
-    var listMessage =
-        await messageProvider.getMessageByRoomId(chatRoom.roomUid, page);
+    await messageProvider.getMessageByRoomId(chatRoom.roomUid, page);
+    clientSocketController.messenger.chatList.value = messageProvider.list.value;
+    var listMessage = clientSocketController.messenger.chatList.value;
     print("roomUid    " + chatRoom.roomUid);
-    Get.toNamed(messagescreen,
+    Get.offAndToNamed(messagescreen,
         arguments: {"room": chatRoom, "data": listMessage});
   }
 
@@ -86,24 +93,31 @@ class ChatScreenController extends GetxController {
     state.value = check;
   }
 
-  bool checkExistRoom(var employee, var userUid) {
-    bool flag = false;
-    clientSocketController.messenger.listRoom.forEach((element) {
-      if (element.memberUidList.length == 2) {
-        if (element.memberUidList.indexWhere((e) => e == userUid) != -1 &&
-            element.memberUidList.indexWhere((e) => e == employee.USER_UID) !=
-                -1) {
-          flag = true;
-        }
-      }
-    });
-    return flag;
+  checkExistRoom(var employee, var userUid) {
+    var result = {"flag": false, "room": ""};
+
+    clientSocketController.messenger.listRoom.forEach((element) => {
+          if (element.memberUidList.length == 2)
+            {
+              if (element.memberUidList.indexWhere((e) => e == userUid) != -1 &&
+                  element.memberUidList
+                          .indexWhere((e) => e == employee.USER_UID) !=
+                      -1)
+                {
+                  result["flag"] = true,
+                  result["room"] = element,
+                }
+            }
+        });
+    return result;
   }
 
   createChatroom(List employees) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? userUid = prefs.getString('userUid');
-    if (employees.length == 1 && checkExistRoom(employees[0], userUid)) {
+    var result = checkExistRoom(employees[0], userUid);
+    if (employees.length == 1 && result["flag"] == true) {
+      await getMessageByRoomId(result["room"]);
       return;
     }
     // print(employees);
@@ -131,7 +145,8 @@ class ChatScreenController extends GetxController {
     }
 
     await userProvider.createChatroom(roomName, memberList);
-    await Future.delayed(const Duration(seconds: 1));
+    // await Future.delayed(const Duration(seconds: 1));
     await initDataRoom();
+    await getMessageByRoomId(clientSocketController.messenger.listRoom.value[0]);
   }
 }
