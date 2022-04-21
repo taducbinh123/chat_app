@@ -60,6 +60,7 @@ dependencies:
   cached_network_image: ^3.2.0
   flutter_vector_icons: ^1.0.0
   flutter_downloader: ^1.2.2
+  android_path_provider: ^0.3.0
 
 dev_dependencies:
   flutter_test:

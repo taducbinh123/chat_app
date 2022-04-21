@@ -23,4 +23,3 @@ const chatApiHost= 'http://10.0.2.2:8800';
 // >>>>>>> 4e0e6d6b1cfefc9da760438d02171a93a322579b
 const imwareApiHost= 'https://backend.atwom.com.vn';
 const authApiUrl = 'https://authen.atwom.com.vn';
-const String downloadsDirPath="";

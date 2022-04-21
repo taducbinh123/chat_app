@@ -30,7 +30,7 @@ class ChatScreenController extends GetxController {
 
   @override
   void onInit() {
-    initDataRoom();
+    // initDataRoom();
     super.onInit();
   }
 
@@ -41,10 +41,11 @@ class ChatScreenController extends GetxController {
   }
 
   ChatScreenController() {
-    // initDataRoom();
+    initDataRoom();
   }
 
   initDataRoom() async {
+    chatTempList.clear();
     await _socketProvider.connect();
     clientSocketController.messenger.listRoom.value.clear();
     await Future.delayed(const Duration(seconds: 1));
