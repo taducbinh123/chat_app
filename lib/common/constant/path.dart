@@ -16,6 +16,6 @@ const loginScreen = '/login';
 const chatApiHost= 'http://10.0.2.2:8800';
 // const imwareApiHost= 'http://10.0.2.2:9090';
 // const authApiUrl = 'http://117.4.244.25:9327';
-
+// const chatApiHost= 'https://chat-backend.atwom.com.vn';
 const imwareApiHost= 'https://backend.atwom.com.vn';
 const authApiUrl = 'https://authen.atwom.com.vn';

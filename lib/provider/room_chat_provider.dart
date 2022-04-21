@@ -22,8 +22,10 @@ class RoomChatProvider {
         headers: {"Authorization": "Bearer " + access_token!});
     // print(response.body);
     List<dynamic> decodeData = new List.empty();
-    if(response.body is List){
+
+    try{
       decodeData = convert.jsonDecode(response.body);
+    }catch(e){
 
     }
 

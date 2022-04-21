@@ -171,7 +171,7 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
                 onPressed: () {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
-                  clientSocketController.getContactList();
+                  roomChatController.contactNameSearch("");
                 },
               ),
               border: InputBorder.none,

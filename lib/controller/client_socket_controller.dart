@@ -63,7 +63,7 @@ class ClientSocketController extends GetxController {
         (data) => {
               rm = Room.fromJson(data as Map<dynamic, dynamic>),
               roomMessage = messenger.listRoom.value
-                  .firstWhere((element) => element.roomUid == rm.roomUid),
+                  .firstWhereOrNull((element) => element.roomUid == rm.roomUid),
               if (roomMessage != null)
                 {
                   index = messenger.listRoom.value.indexOf(roomMessage),
@@ -85,7 +85,7 @@ class ClientSocketController extends GetxController {
                 }
               else
                 {
-                  messenger.listRoom.value.add(rm),
+                  messenger.listRoom.value.insert(0,rm),
                   messenger.listRoom.refresh(),
                   messenger.listRoomFlag.value = messenger.listRoom.value,
                 }
@@ -154,6 +154,25 @@ class ClientSocketController extends GetxController {
               messenger.contactList.refresh(),
               messenger.contactListFlag.value = messenger.contactList.value,
             });
+    roomSocket.on(
+        "removeRoom",
+            (data) => {
+              if (data != null){
+                print(data),
+                if(data["USER_UID"] == messenger.currentUser?.USER_UID){
+                  roomMessage = messenger.listRoom.value
+                      .firstWhere((element) => element.roomUid == data["ROOM_UID"]),
+                  index = messenger.listRoom.value.indexOf(roomMessage),
+                  if (index > 0)
+                    {
+                      messenger.listRoom.value.removeAt(index),
+                      messenger.listRoom.refresh(),
+                      messenger.listRoomFlag.value = messenger.listRoom.value,
+                    },
+                }
+              }
+            });
+
 
     roomSocket.on("exception", (data) => print("event exception"));
     roomSocket.on("disconnect", (data) => print("Disconnect"));

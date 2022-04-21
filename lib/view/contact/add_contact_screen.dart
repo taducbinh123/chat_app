@@ -164,7 +164,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                 onPressed: () {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
-                  clientSocketController.getContactList();
+                  contactController.contactNameSearch("");
                 },
               ),
               border: InputBorder.none,
