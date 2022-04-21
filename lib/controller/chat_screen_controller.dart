@@ -26,6 +26,8 @@ class ChatScreenController extends GetxController {
   TextEditingController searchController = TextEditingController();
   var chatTempList = [].obs;
 
+  var elements;
+
   @override
   void onInit() {
     initDataRoom();
@@ -76,6 +78,7 @@ class ChatScreenController extends GetxController {
 
   getMessageByRoomId(var chatRoom,var action) async {
     clientSocketController.messenger.selectedRoom = chatRoom;
+    changeElements();
     getLastMessage(chatRoom);
     await messageProvider.getMessageByRoomId(chatRoom.roomUid, page);
     clientSocketController.messenger.chatList.value = messageProvider.list.value;
@@ -87,6 +90,20 @@ class ChatScreenController extends GetxController {
     }else{
       Get.toNamed(messagescreen,
           arguments: {"room": chatRoom, "data": listMessage});
+    }
+  }
+
+  changeElements(){
+    if(clientSocketController.messenger.selectedRoom?.roomType == "IN_CHATROOM"){
+       elements = [
+        {'name': 'Add Member', 'group': 'Room Info'},
+        {'name': 'Leave Room', 'group': 'Privacy'},
+        {'name': 'Room Member', 'group': 'Room Info'},
+      ];
+    }else{
+      elements = [
+        {'name': 'Room Member', 'group': 'Room Info'},
+      ];
     }
   }
 
@@ -117,12 +134,17 @@ class ChatScreenController extends GetxController {
     return result;
   }
 
-  createChatroom(List employees) async {
+  createChatroom(List employees,var screen
+      ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? userUid = prefs.getString('userUid');
     var result = checkExistRoom(employees[0], userUid);
     if (employees.length == 1 && result["flag"] == true) {
-      await getMessageByRoomId(result["room"],"exits");
+      if(screen == "contact"){
+        await getMessageByRoomId(result["room"],"");
+      }else{
+        await getMessageByRoomId(result["room"],"exits");
+      }
       return;
     }
     // print(employees);

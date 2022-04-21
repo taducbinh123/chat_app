@@ -22,7 +22,7 @@ void main() async {
   // await prefs.clear();
   await GetStorage.init();
   initialize();
-  await FlutterDownloader.initialize(debug: true);
+  // await FlutterDownloader.initialize(debug: true);
   runApp(const MyApp());
 }
 

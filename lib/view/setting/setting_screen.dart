@@ -15,17 +15,14 @@ import 'package:hello_world_flutter/view/add_room_member/add_room_member_screen.
 import 'package:hello_world_flutter/view/room_member/room_member_screen.dart';
 
 
-List _elements = [
-  {'name': 'Add Member', 'group': 'Room Info'},
-  {'name': 'Leave Room', 'group': 'Privacy'},
-  {'name': 'Room Member', 'group': 'Room Info'},
-];
-
 RoomChatController roomChatController = Get.find();
 ChatScreenController chatScreenController = Get.find();
 final ClientSocketController clientSocketController = Get.find();
 
 class SettingScreen extends StatelessWidget {
+
+
+
   @override
   Widget build(BuildContext context) {
     var _mediaQueryData = MediaQuery.of(context);
@@ -74,7 +71,7 @@ class SettingScreen extends StatelessWidget {
           ),
           Expanded(
             child: GroupedListView<dynamic, String>(
-              elements: _elements,
+              elements: chatScreenController.elements,
               groupBy: (element) => element['group'],
               groupComparator: (value1, value2) => value2.compareTo(value1),
               itemComparator: (item1, item2) =>

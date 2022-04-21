@@ -50,7 +50,7 @@ class AddContactScreen extends GetView<ContactScreenController> {
                           child: Text("Tạo mới"),
                           onPressed: () {
                             contactController.listAvatarChoose.clear();
-                            chatController.createChatroom(contactController.listContactChoose);
+                            chatController.createChatroom(contactController.listContactChoose,"");
                             // Get.to(() => Dashboard());
                           }),
                     ],

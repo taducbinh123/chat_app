@@ -5,6 +5,7 @@ import 'package:hello_world_flutter/common/constant/ulti.dart';
 import 'package:hello_world_flutter/common/widgets/avatar_contact.dart';
 import 'package:hello_world_flutter/common/widgets/floating_action_button.dart';
 import 'package:hello_world_flutter/common/widgets/text_appbar.dart';
+import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
 import 'package:hello_world_flutter/common/widgets/text_field_search.dart';
@@ -15,7 +16,9 @@ class ContactView extends GetView<ContactScreenController> {
   Widget build(BuildContext context) {
     ContactScreenController contactController = Get.find();
     final ClientSocketController clientSocketController = Get.find();
+    ChatScreenController chatController = Get.find();
 
+    List emp;
     return Scaffold(
       body: Column(
         children: [
@@ -53,6 +56,9 @@ class ContactView extends GetView<ContactScreenController> {
                   employee: element,
                   press: () => {
                     print("contact with ${element.USER_NM_ENG}"),
+                    emp = [],
+                    emp.add(element),
+                    chatController.createChatroom(emp,"contact"),
                     // Get.toNamed(messagescreen, arguments: {"data": element}),
                   },
                 ),
