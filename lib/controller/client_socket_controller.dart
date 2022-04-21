@@ -155,7 +155,7 @@ class ClientSocketController extends GetxController {
               messenger.contactListFlag.value = messenger.contactList.value,
             });
 
-    roomSocket.on("exception", (data) => print("event exception"));
+    roomSocket.on("exception", (data) => print(data));
     roomSocket.on("disconnect", (data) => print("Disconnect"));
   }
 }

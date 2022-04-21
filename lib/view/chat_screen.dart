@@ -9,7 +9,6 @@ import 'package:hello_world_flutter/common/widgets/user_circle.dart';
 import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
 import 'package:hello_world_flutter/controller/client_socket_controller.dart';
 import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
-import 'package:hello_world_flutter/controller/room_chat_controller.dart';
 import 'package:hello_world_flutter/view/contact/add_contact_screen.dart';
 
 class ChatScreen extends GetView<ContactScreenController> {

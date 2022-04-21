@@ -20,7 +20,7 @@ class RoomChatProvider {
         Uri.parse(chatApiHost +
             '/api/chat/getMemberList/' +roomUid ),
         headers: {"Authorization": "Bearer " + access_token!});
-    // print(response.body);
+    print(response.body);
     List<dynamic> decodeData = new List.empty();
     if(response.body is List){
       decodeData = convert.jsonDecode(response.body);
