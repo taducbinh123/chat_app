@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/controller/nav_bar_controller.dart';
+import 'package:AMES/common/app_theme.dart';
+import 'package:AMES/common/constant/ulti.dart';
+import 'package:AMES/controller/client_socket_controller.dart';
+import 'package:AMES/controller/nav_bar_controller.dart';
+import 'package:AMES/features/features.dart';
 
 class SuperFaBottomNavigationBar extends StatelessWidget {
   SuperFaBottomNavigationBar({
@@ -10,14 +13,64 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
   }) : super(key: key);
   final NavBarController navBarController = Get.put(NavBarController());
 
+  final ClientSocketController clientSocketController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          backgroundColor: AppTheme.white,
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.message,
+                Icons.home,
               ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon:
+                  // Container(
+                  // height: 18,
+                  // width: 18,
+                  // child:
+                  Stack(children: [
+                Icon(
+                  Icons.message,
+                ),
+                if (clientSocketController
+                        .messenger.totalRoomUnReadMessage.value >
+                    0)
+                  Positioned(
+                    top: -1,
+                    right: -2,
+                    child: Container(
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                        color: kErrorColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppTheme.white, width: 2),
+                      ),
+                      // child: Center(
+                      //   child: Opacity(
+                      //     opacity: 0.9,
+                      //     child: Text(
+                      //       clientSocketController
+                      //           .messenger.totalRoomUnReadMessage
+                      //           .toString(),
+                      //       style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           color: Colors.white),
+                      //       maxLines: 1,
+                      //       overflow: TextOverflow.ellipsis,
+                      //     ),
+                      //   ),
+                      // ),
+                    ),
+                  )
+              ]),
+              // ),
               label: 'Chats',
             ),
             BottomNavigationBarItem(
@@ -32,16 +85,10 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
               ),
               label: 'Contacts',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-              ),
-              label: 'Home',
-            ),
           ],
           currentIndex: navBarController.selectedIndex,
-          selectedItemColor: kPrimaryColor,
-          unselectedItemColor: kPrimaryColor,
+          selectedItemColor: AppTheme.nearlyBlack,
+          unselectedItemColor: AppTheme.dark_grey.withOpacity(0.6),
           onTap: (index) => navBarController.onItemTapped(index),
           /* currentIndex: Get.find<ProfileController>().selectedIndex,
         selectedItemColor: Colors.amber[800],

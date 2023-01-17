@@ -1,4 +1,4 @@
-import 'package:hello_world_flutter/model/message.dart';
+import 'package:AMES/model/message.dart';
 
 class Room {
   String roomUid;
@@ -11,10 +11,15 @@ class Room {
   String keyRoom;
   String? roomImg;
   String? notifyType;
-  int lastMsgUid;
-  MessageModel messageModel;
-  List memberUidList;
+  int? lastMsgUid;
+  int? lastReadMsgUid;
+  MessageModel? messageModel;
+  List? memberUidList;
   bool? isOnline;
+  int unReadMsgCount;
+  String? contactRoomName;
+  String? timeLastMessageDisplay;
+  String? userUidContact;
 
   Room({
     required this.roomUid,
@@ -27,10 +32,15 @@ class Room {
     required this.keyRoom,
     this.roomImg,
     this.notifyType,
-    required this.lastMsgUid,
-    required this.messageModel,
-    required this.memberUidList,
+    this.lastMsgUid,
+    this.lastReadMsgUid,
+    this.messageModel,
+    this.memberUidList,
     this.isOnline,
+    required this.unReadMsgCount,
+    this.contactRoomName,
+    this.timeLastMessageDisplay,
+    this.userUidContact
   });
 
   Room.fromJson(Map<dynamic, dynamic> json)
@@ -46,8 +56,13 @@ class Room {
         notifyType = json['NOTIFY_TYPE'],
         lastMsgUid = json['LAST_MSG_UID'],
         memberUidList = json['MEMBER_UID_LIST'] as List,
-        messageModel = MessageModel.fromJson(json['LAST_MSG']),
-        isOnline = json['isOnline'];
+        messageModel = json['LAST_MSG'] != null
+            ? MessageModel.fromJson(json['LAST_MSG'])
+            : MessageModel(),
+        isOnline = json['isOnline'],
+        unReadMsgCount = json['UNREAD_MSG_COUNT'],
+        lastReadMsgUid = json["LAST_READ_MSG_ID"],
+        contactRoomName = json['CONTACT_ROOM_NM'];
 
   Map<dynamic, dynamic> toJson() {
     return {
@@ -62,113 +77,17 @@ class Room {
       'ROOM_IMG': roomImg,
       'NOTIFY_TYPE': notifyType,
       'LAST_MSG_UID': lastMsgUid,
-      'LAST_MSG':messageModel,
-      'MEMBER_UID_LIST':memberUidList,
-      'isOnline':isOnline
+      'LAST_MSG': messageModel,
+      'MEMBER_UID_LIST': memberUidList,
+      'isOnline': isOnline,
+      'UNREAD_MSG_COUNT': unReadMsgCount,
+      'LAST_READ_MSG_ID': lastReadMsgUid,
+      'CONTACT_ROOM_NM': contactRoomName
     };
   }
 
   @override
   String toString() {
-    return 'Room{roomUid: $roomUid, regDate: $regDate, modiDate: $modiDate, regUserUid: $regUserUid, modiUserUid: $modiUserUid, roomDefaultName: $roomDefaultName, roomType: $roomType, keyRoom: $keyRoom, roomImg: $roomImg, notifyType: $notifyType, lastMsgUid: $lastMsgUid, messageModel: $messageModel, memberUidList: $memberUidList, isOnline: $isOnline}';
+    return 'Room{roomUid: $roomUid, regDate: $regDate, modiDate: $modiDate, regUserUid: $regUserUid, modiUserUid: $modiUserUid, roomDefaultName: $roomDefaultName, roomType: $roomType, keyRoom: $keyRoom, roomImg: $roomImg, notifyType: $notifyType, lastMsgUid: $lastMsgUid, lastReadMsgUid: $lastReadMsgUid, messageModel: $messageModel, memberUidList: $memberUidList, isOnline: $isOnline, unReadMsgCount: $unReadMsgCount, contactRoomName: $contactRoomName, timeLastMessageDisplay: $timeLastMessageDisplay, userUidContact: $userUidContact}';
   }
 }
-
-// var roomsData = [
-//   Room(
-//       listChats: [chatsData[0],chatsData[1]],
-//       roomUid: "1",
-//       regDate: DateTime.now(),
-//       modiDate: DateTime.now(),
-//       regUserUid: chatsData[0].id,
-//       modiUserUid: chatsData[0].id,
-//       roomDefaultName: chatsData[0].name,
-//       roomType: "roomType",
-//       keyRoom: "keyRoom",
-//       roomImg: "roomImg",
-//       notifyType: "notifyType"),
-//   Room(
-//       listChats: [chatsData[1]],
-//       roomUid: "2",
-//       regDate: DateTime.now(),
-//       modiDate: DateTime.now(),
-//       regUserUid: chatsData[1].id,
-//       modiUserUid: chatsData[1].id,
-//       roomDefaultName: chatsData[1].name,
-//       roomType: "roomType",
-//       keyRoom: "keyRoom",
-//       roomImg: "roomImg",
-//       notifyType: "notifyType"),
-//   Room(
-//       listChats: [chatsData[2]],
-//       roomUid: "3",
-//       regDate: DateTime.now(),
-//       modiDate: DateTime.now(),
-//       regUserUid: chatsData[2].id,
-//       modiUserUid: chatsData[2].id,
-//       roomDefaultName: chatsData[2].name,
-//       roomType: "roomType",
-//       keyRoom: "keyRoom",
-//       roomImg: "roomImg",
-//       notifyType: "notifyType"),
-//   Room(
-//       listChats: [chatsData[3]],
-//       roomUid: "4",
-//       regDate: DateTime.now(),
-//       modiDate: DateTime.now(),
-//       regUserUid: chatsData[3].id,
-//       modiUserUid: chatsData[3].id,
-//       roomDefaultName: chatsData[3].name,
-//       roomType: "roomType",
-//       keyRoom: "keyRoom",
-//       roomImg: "roomImg",
-//       notifyType: "notifyType"),
-//   Room(
-//       listChats: [chatsData[4]],
-//       roomUid: "5",
-//       regDate: DateTime.now(),
-//       modiDate: DateTime.now(),
-//       regUserUid: chatsData[4].id,
-//       modiUserUid: chatsData[4].id,
-//       roomDefaultName: chatsData[4].name,
-//       roomType: "roomType",
-//       keyRoom: "keyRoom",
-//       roomImg: "roomImg",
-//       notifyType: "notifyType"),
-//   Room(
-//       listChats: [chatsData[5]],
-//       roomUid: "6",
-//       regDate: DateTime.now(),
-//       modiDate: DateTime.now(),
-//       regUserUid: chatsData[5].id,
-//       modiUserUid: chatsData[5].id,
-//       roomDefaultName: chatsData[5].name,
-//       roomType: "roomType",
-//       keyRoom: "keyRoom",
-//       roomImg: "roomImg",
-//       notifyType: "notifyType"),
-//   Room(
-//       listChats: [chatsData[6]],
-//       roomUid: "7",
-//       regDate: DateTime.now(),
-//       modiDate: DateTime.now(),
-//       regUserUid: chatsData[6].id,
-//       modiUserUid: chatsData[6].id,
-//       roomDefaultName: chatsData[6].name,
-//       roomType: "roomType",
-//       keyRoom: "keyRoom",
-//       roomImg: "roomImg",
-//       notifyType: "notifyType"),
-//   Room(
-//       listChats: [chatsData[7]],
-//       roomUid: "8",
-//       regDate: DateTime.now(),
-//       modiDate: DateTime.now(),
-//       regUserUid: chatsData[7].id,
-//       modiUserUid: chatsData[7].id,
-//       roomDefaultName: chatsData[7].name,
-//       roomType: "roomType",
-//       keyRoom: "keyRoom",
-//       roomImg: "roomImg",
-//       notifyType: "notifyType")
-// ];

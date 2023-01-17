@@ -1,15 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
-import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/common/widgets/avatar_contact_add.dart';
-import 'package:hello_world_flutter/controller/chat_screen_controller.dart';
-import 'package:hello_world_flutter/controller/client_socket_controller.dart';
-import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
-import 'package:hello_world_flutter/controller/room_chat_controller.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:AMES/common/app_theme.dart';
+import 'package:AMES/common/constant/ulti.dart';
+import 'package:AMES/common/widgets/avatar_contact_add.dart';
+import 'package:AMES/controller/client_socket_controller.dart';
+import 'package:AMES/controller/contact_screen_controller.dart';
+import 'package:AMES/controller/room_chat_controller.dart';
 
 final ClientSocketController clientSocketController = Get.find();
 
@@ -19,7 +16,6 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
     RoomChatController roomChatController = Get.find();
     final ClientSocketController clientSocketController = Get.find();
 
-    // ChatScreenController chatController = Get.find();
     var _mediaQueryData = MediaQuery.of(context);
     double screenWidth = _mediaQueryData.size.width;
     double screenHeight = _mediaQueryData.size.height;
@@ -48,7 +44,16 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
                         ),
                       ),
                       ElevatedButton(
-                          child: Text("Add"),
+                          child: Icon(
+                            Icons.check,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: AppTheme.nearlyBlack,
+                            shape: new RoundedRectangleBorder(
+                              borderRadius:
+                              new BorderRadius.circular(5.0),
+                            ),
+                          ),
                           onPressed: () {
                             roomChatController.listAvatarChoose.clear();
                             roomChatController.inviteMember(
@@ -56,7 +61,6 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
                                     .messenger.selectedRoom?.roomUid,
                                 clientSocketController
                                     .messenger.selectedRoom?.roomDefaultName);
-                            // chatController.createChatroom(contactController.listContactChoose);
                             Get.back();
                           }),
                     ],
@@ -92,7 +96,7 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
                   employee: element,
                   screen: "add",
                   press: () => {
-                    print("contact with ${element.USER_NM_ENG}"),
+                    // print("contact with ${element.USER_NM_ENG}"),
                     if (!roomChatController.changeState(
                         element, screenWidth, screenHeight))
                       {
@@ -133,17 +137,17 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
   searchAppBar(BuildContext context) {
     TextEditingController searchController = TextEditingController();
     RoomChatController roomChatController = Get.find();
-    return NewGradientAppBar(
-      gradient: LinearGradient(
-        colors: [
-          gradientColorStart,
-          gradientColorEnd,
-        ],
-      ),
+    return AppBar(
+      // gradient: LinearGradient(
+      //   colors: [
+      //     gradientColorStart,
+      //     gradientColorEnd,
+      //   ],
+      // ),
+      backgroundColor: AppTheme.white,
       leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: AppTheme.nearlyBlack),
           onPressed: () => {
-                // roomChatController.contactList.value = roomChatController.initData,
                 clientSocketController.getContactList(),
                 roomChatController.listContactChoose.value = [],
                 roomChatController.resetState(),
@@ -162,12 +166,12 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
             autofocus: true,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: AppTheme.nearlyBlack,
               fontSize: 35,
             ),
             decoration: InputDecoration(
               suffixIcon: IconButton(
-                icon: Icon(Icons.close, color: Colors.white),
+                icon: Icon(Icons.close, color: AppTheme.nearlyBlack),
                 onPressed: () {
                   WidgetsBinding.instance!
                       .addPostFrameCallback((_) => searchController.clear());
@@ -179,7 +183,7 @@ class AddRoomMemberScreen extends GetView<ContactScreenController> {
               hintStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 35,
-                color: Color(0x88ffffff),
+                color: AppTheme.dark_grey.withOpacity(0.4),
               ),
             ),
           ),

@@ -1,15 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
-import 'package:hello_world_flutter/controller/client_socket_controller.dart';
-import 'package:hello_world_flutter/model/employee.dart';
-import 'package:hello_world_flutter/provider/contact_view_provider.dart';
-import 'package:hello_world_flutter/provider/socket_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:AMES/common/widgets/multi_select_circle.dart';
+import 'package:AMES/controller/client_socket_controller.dart';
+import 'package:AMES/model/employee.dart';
+import 'package:AMES/provider/contact_view_provider.dart';
+import 'package:AMES/provider/socket_provider.dart';
 
 class ContactScreenController extends GetxController {
-
   final ContactViewProvider contactViewProvider = ContactViewProvider();
   final SocketProvider socketProvider = SocketProvider();
   final ClientSocketController clientSocketController = Get.find();
@@ -17,11 +14,10 @@ class ContactScreenController extends GetxController {
   TextEditingController searchController = TextEditingController();
 
   List<SelectCircle> listAvatarChoose = [];
-  // List<Employee> initData = [];
-  // var contactList = [].obs;
 
   var state = [].obs;
-  // var contactTempList = chatsData.obs;
+  var reLoadContact = false.obs;
+
   ContactScreenController() {
     // resetState();
     // initDataEmployee();
@@ -30,45 +26,41 @@ class ContactScreenController extends GetxController {
   @override
   void onInit() {
     resetState();
-    // initDataEmployee();
+    // print("oke");
+    clientSocketController.getContactList();
     super.onInit();
   }
 
-  // initDataEmployee() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //
-  //   final String? userUid = prefs.getString('userUid');
-  //   print(userUid);
-  //   initData = await contactViewProvider.getEmployee(userUid);
-  //   resetOnline(initData);
-  //   await socketProvider.getOnlineMember(initData);
-  //
-  //   // loại bỏ user ra khỏi danh sách
-  //
-  //   initData = initData.where((element) => element.USER_UID != userUid).toList();
-  //   contactList.value = initData;
-  //   resetState();
-  //   // print(contactList.value);
-  // }
-
   var listContactChoose = [].obs;
-  // var listNameChoose = "".obs;
+
+  Future<void> pullRefresh() async {
+    clientSocketController.messenger.contactList.value.clear();
+    reLoadContact.value = true;
+    await Future.delayed(Duration(seconds: 1));
+    clientSocketController.loadContactList();
+    reLoadContact.value = false;
+    clientSocketController.messenger.contactList.refresh();
+    // why use freshWords var? https://stackoverflow.com/a/52992836/2301224
+  }
 
   changeState(Employee e, double screenWidth, double screenHeight) {
     // change state
     bool result = true;
     var stateChange;
-    if(e.USER_UID == clientSocketController.messenger.currentUser?.USER_UID) return false;
+    if (e.USER_UID ==
+        clientSocketController.messenger.currentUser.value.USER_UID)
+      return false;
     for (State element in state) {
-      if (element.employee.USER_UID == e.USER_UID && e.USER_UID != clientSocketController.messenger.currentUser?.USER_UID) {
+      if (element.employee.USER_UID == e.USER_UID &&
+          e.USER_UID !=
+              clientSocketController.messenger.currentUser.value.USER_UID) {
         element.state.value = !element.state.value;
         stateChange = element;
         break;
       }
     }
-    // format string name
-    // listNameChoose.value = "";
-    if (stateChange!= null &&  stateChange.state.value) {
+
+    if (stateChange != null && stateChange.state.value) {
       listContactChoose.add(e);
       listAvatarChoose.add(new SelectCircle(
           chat: e,
@@ -84,16 +76,18 @@ class ContactScreenController extends GetxController {
   }
 
   contactNameSearch(String name) async {
-    // await clientSocketController.getContactList();
-    clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactListFlag.value;
+    clientSocketController.messenger.contactList.value =
+        clientSocketController.messenger.contactListFlag.value;
     if (name.isEmpty) {
-      clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value;
+      clientSocketController.messenger.contactList.value =
+          clientSocketController.messenger.contactList.value;
     } else {
-      clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value
-          .where((element) =>
-              element.USER_NM_KOR.toLowerCase().contains(name.toLowerCase()))
-          .toList();
-      // print(contactList.value.toString());
+      clientSocketController.messenger.contactList.value =
+          clientSocketController.messenger.contactList.value
+              .where((element) => element.USER_NM_KOR
+                  .toLowerCase()
+                  .contains(name.toLowerCase()))
+              .toList();
     }
   }
 
@@ -104,9 +98,22 @@ class ContactScreenController extends GetxController {
     });
   }
 
-  resetOnline(var data){
-    for(var e in data){
+  resetOnline(var data) {
+    for (var e in data) {
       e.ONLINE_YN = "N";
+    }
+  }
+
+  Future<String> getImgUser(var userUid) async {
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    var user = clientSocketController.messenger.contactList.value.firstWhereOrNull((element) => element.USER_UID == userUid);
+    // print('https://backend.atwom.com.vn/public/resource/imageView/' + user.USER_IMG + '.jpg');
+    if(user != null){
+      return user.USER_IMG;
+    }else{
+      print('Error: Failed to load album');
+      // throw Exception('Failed to load album');
+      return '';
     }
   }
 }

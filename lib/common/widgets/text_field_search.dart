@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:AMES/common/app_theme.dart';
 class TextFieldSearch extends StatelessWidget {
   final TextEditingController textEditingController;
   final ValueChanged<String> onChanged;
@@ -31,23 +32,23 @@ class TextFieldSearch extends StatelessWidget {
                 EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
                 prefixIcon: isPrefixIconVisible
                     ? IconButton(
-                    icon: Icon(Icons.search, size: 20, color: Colors.blue),
+                    icon: Icon(Icons.search, size: 20, color: AppTheme.dark_grey.withOpacity(0.6)),
                     onPressed: callBackPrefix)
                     : null,
                 enabledBorder: OutlineInputBorder(
                     borderRadius:
                     const BorderRadius.all(const Radius.circular(10.0)),
-                    borderSide: BorderSide(color: Colors.black)),
+                    borderSide: BorderSide(color:  AppTheme.dark_grey.withOpacity(0.6))),
                 focusedBorder: OutlineInputBorder(
                     borderRadius:
                     const BorderRadius.all(const Radius.circular(10.0)),
-                    borderSide: BorderSide(color: Colors.blue)),
+                    borderSide: BorderSide(color: AppTheme.dark_grey.withOpacity(0.8))),
                 filled: true,
                 hintStyle: TextStyle(
                     fontSize: 15,
-                    color: Colors.black54,
+                    color: AppTheme.dark_grey.withOpacity(0.6),
                     textBaseline: TextBaseline.alphabetic),
                 hintText: hintText,
-                fillColor: Colors.grey.withOpacity(0.1))));
+                fillColor: AppTheme.dark_grey.withOpacity(0.1))));
   }
 }

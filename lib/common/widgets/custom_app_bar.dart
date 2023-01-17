@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world_flutter/common/constant/ulti.dart';
+import 'package:AMES/common/app_theme.dart';
+import 'package:AMES/common/constant/ulti.dart';
 
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -22,17 +23,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
     return Container(
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: blackColor,
-        border: Border(
-          bottom: BorderSide(
-            color: lightBlueColor,
-            width: 1.4,
-            style: BorderStyle.solid,
-          ),
-        ),
+        color: AppTheme.white,
+        // border: Border(
+        //   bottom: BorderSide(
+        //     color: lightBlueColor,
+        //     width: 1.4,
+        //     style: BorderStyle.solid,
+        //   ),
+        // ),
       ),
       child: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: AppTheme.white,
         elevation: 0,
         leading: leading,
         actions: actions,

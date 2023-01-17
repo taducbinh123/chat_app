@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:hello_world_flutter/common/constant/path.dart';
-import 'package:hello_world_flutter/model/employee.dart';
+import 'package:AMES/common/constant/path.dart';
+import 'package:AMES/model/employee.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 

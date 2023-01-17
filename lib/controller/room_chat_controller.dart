@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:hello_world_flutter/common/widgets/multi_select_circle.dart';
-import 'package:hello_world_flutter/controller/client_socket_controller.dart';
-import 'package:hello_world_flutter/model/employee.dart';
-import 'package:hello_world_flutter/provider/contact_view_provider.dart';
-import 'package:hello_world_flutter/provider/room_chat_provider.dart';
-import 'package:hello_world_flutter/provider/socket_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:AMES/common/widgets/multi_select_circle.dart';
+import 'package:AMES/controller/client_socket_controller.dart';
+import 'package:AMES/model/employee.dart';
+import 'package:AMES/provider/contact_view_provider.dart';
+import 'package:AMES/provider/room_chat_provider.dart';
+import 'package:AMES/provider/socket_provider.dart';
 
 class RoomChatController extends GetxController {
   final RoomChatProvider roomChatProvider = RoomChatProvider();
@@ -18,10 +15,10 @@ class RoomChatController extends GetxController {
 
   TextEditingController searchController = TextEditingController();
   List<SelectCircle> listAvatarChoose = [];
-  // List<Employee> initData = [];
-  // var contactList = <Employee>[].obs;
   var state = [].obs;
   var employees = [].obs;
+  var listFile = [].obs;
+
 
   @override
   void onInit() {
@@ -32,9 +29,10 @@ class RoomChatController extends GetxController {
 
   getListMemberRoom(String roomUid) async {
     var list = await roomChatProvider.getMemberList(roomUid);
-    // resetOnline(list);
-    await socketProvider.getOnlineMember(list);
+    // await socketProvider.getOnlineMember(list);
     employees.value = list;
+    // print("========================"+list.length.toString());
+
   }
 
   leaveRoom(var roomUid) async {
@@ -46,31 +44,12 @@ class RoomChatController extends GetxController {
     await getListMemberRoom(roomUid);
   }
 
-  // initDataEmployee() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //
-  //   final String? userUid = prefs.getString('userUid');
-  //   print(userUid);
-  //   initData = await contactViewProvider.getEmployee(userUid);
-  //   // loại bỏ những member có trong phòng ra khỏi list contact để thao tác
-  //   for (var element in employees) {
-  //     for (Employee e in initData) {
-  //       if (element.USER_UID == e.USER_UID) {
-  //         initData.remove(e);
-  //         break;
-  //       }
-  //     }
-  //   }
-  //   resetOnline(initData);
-  //   await socketProvider.getOnlineMember(initData);
-  //   contactList.value = initData;
-  //   resetState();
-  //   // print(contactList.value);
-  // }
+  changeRoomName(var roomUid, var roomName, var roomType) async {
+    await roomChatProvider.changeRoomName(roomUid, roomName, roomType);
+  }
+
 
   var listContactChoose = [].obs;
-  // var listNameChoose = "".obs;
-
   changeState(Employee e, double screenWidth, double screenHeight) {
     // change state
     bool result = true;
@@ -92,8 +71,7 @@ class RoomChatController extends GetxController {
         }
       }
     }
-    // format string name
-    // listNameChoose.value = "";
+
     if (stateChange!=null && stateChange.state.value) {
       listContactChoose.add(e);
       listAvatarChoose.add(new SelectCircle(
@@ -113,7 +91,6 @@ class RoomChatController extends GetxController {
   }
 
   contactNameSearch(String name) async {
-    // await clientSocketController.getContactList();
     clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactListFlag.value;
     if (name.isEmpty) {
       clientSocketController.messenger.contactList.value = clientSocketController.messenger.contactList.value;
@@ -122,7 +99,6 @@ class RoomChatController extends GetxController {
           .where((element) =>
           element.USER_NM_KOR.toLowerCase().contains(name.toLowerCase()))
           .toList();
-      // print(contactList.value.toString());
     }
   }
 
@@ -133,11 +109,13 @@ class RoomChatController extends GetxController {
     });
   }
 
-  // resetOnline(var data){
-  //   for(var e in data){
-  //     e.ONLINE_YN = "N";
-  //   }
-  // }
+  getAttachmentInRoom(var type) async {
+    listFile.value.clear();
+    listFile.value = await roomChatProvider.getAttachmentInRoom(clientSocketController.messenger.selectedRoom?.roomUid ?? "", type);
+    listFile.refresh();
+  }
+
+
 }
 
 class State {

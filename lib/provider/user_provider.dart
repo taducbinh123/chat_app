@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:hello_world_flutter/common/constant/path.dart';
-import 'package:hello_world_flutter/common/constant/socket.dart';
-import 'package:hello_world_flutter/model/employee.dart';
+import 'package:AMES/common/constant/path.dart';
+import 'package:AMES/model/employee.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:AMES/features/authentication/authentication_service.dart';
 
 class UserProvider {
 
@@ -15,7 +14,7 @@ class UserProvider {
   }
 
 
-  getUserInfo(String? userUid) async {
+  getUserInfo() async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('access_token');
@@ -29,27 +28,19 @@ class UserProvider {
     final Map<String, dynamic> data = jsonDecode(utf8convert(response.body));
     if(response.statusCode == 200) return Employee.fromJson(data);
     else {
+      print("Failed to load userInfo");
       print(response.body);
       throw Exception("Failed to load userInfo");
     }
   }
 
-  createChatroom(var roomName, var memberList)async {
+  createChatroom(var roomName, var memberList, var roomType)async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      String? access_token = prefs.getString('access_token');
-      print(access_token);
 
       roomSocket.io.options['extraHeaders'] = {
         "Content-Type": "application/json"
       };
-      // roomSocket.connect();
-      // roomSocket.on("server_send_message", (data) => "abc");
-      // roomSocket.onConnect((_) {
-        print(prefs.getString('access_token'));
-        print("room socket " + roomSocket.connected.toString());
-        roomSocket.emit("createChatroom", {"roomName":roomName,"memberList":memberList,"type": 'IN_CHATROOM'});
-    // });
+        roomSocket.emit("createChatroom", {"roomName":roomName,"memberList":memberList,"type": roomType});
       await Future.delayed(const Duration(seconds: 1));
   }
 

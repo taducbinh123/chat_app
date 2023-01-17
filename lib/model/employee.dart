@@ -54,7 +54,8 @@ class Employee {
   }
 
   factory Employee.fromJson(Map<String, dynamic> json) =>
-    Employee(USER_CHECK: json['USER_CHECK'],
+    Employee(
+        USER_CHECK: json['USER_CHECK'],
         USER_NM_KOR: json['USER_NM_KOR'] ?? json['NAME_KR'],
         USE_CHECK : json['USE_CHECK'] ?? json['USE_YN'] ?? "",
         USER_EMAIL : json['USER_EMAIL'],
@@ -74,8 +75,6 @@ class Employee {
         ADDED_FRIEND : json['ADDED_FRIEND'],
         IS_FRIEND : json['IS_FRIEND'],
         ROOM_UID_LIST : json['ROOM_UID_LIST']
-        // NAME_KR : json['NAME_KR'],
-        // NAME_EN : json['NAME_EN']
         );
 
   // USER_CHECK = json['USER_CHECK'];

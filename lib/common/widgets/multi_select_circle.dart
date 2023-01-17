@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hello_world_flutter/common/constant/ulti.dart';
-import 'package:hello_world_flutter/controller/contact_screen_controller.dart';
-import 'package:hello_world_flutter/controller/room_chat_controller.dart';
+import 'package:AMES/common/constant/ulti.dart';
+import 'package:AMES/controller/contact_screen_controller.dart';
+import 'package:AMES/controller/room_chat_controller.dart';
+import 'package:AMES/model/employee.dart';
 
 class SelectCircle extends StatelessWidget {
   SelectCircle(
@@ -16,7 +18,7 @@ class SelectCircle extends StatelessWidget {
   var height;
   var width;
   var text;
-  var chat;
+  Employee chat;
   var screen;
   @override
   Widget build(BuildContext context) {
@@ -44,23 +46,44 @@ class SelectCircle extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(0.0, 0.0, 5.0, 0.0),
           height: height,
           width: width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: separatorColor,
-          ),
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(50),
+          //   color: separatorColor,
+          // ),
           child: Stack(
             children: <Widget>[
               Align(
                 alignment: Alignment.center,
-                child: Text(
-                  textName[0],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: lightBlueColor,
-                    fontSize: width * 0.2,
-                  ),
-                ),
+                child: FutureBuilder(
+                    future: contactController.getImgUser(chat.USER_UID),
+                    builder: (BuildContext context, AsyncSnapshot<String> text) {
+                      return new CachedNetworkImage(
+                        imageUrl:
+                        'https://backend.atwom.com.vn/public/resource/imageView/' +
+                            text.data.toString() +
+                            '.jpg',
+                        imageBuilder: (context, imageProvider) => CircleAvatar(
+                          backgroundImage: imageProvider,
+                          radius: 50,
+                        ),
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Image(
+                            image: AssetImage("assets/images/user_avatar_c.png")),
+                      );
+                    }),
               ),
+              // Align(
+              //   alignment: Alignment.center,
+              //   child: Text(
+              //     textName[0],
+              //     style: TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //       color: lightBlueColor,
+              //       fontSize: width * 0.2,
+              //     ),
+              //   ),
+              // ),
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
@@ -69,12 +92,12 @@ class SelectCircle extends StatelessWidget {
                     width: width * 0.5,
                     child: Icon(
                       Icons.cancel,
-                      color: Colors.white,
+                      color: Colors.black,
                       size: width * 0.35,
                     ),
                   ),
                   onTap: () {
-                    print("tapped");
+                    //print("tapped");
                     if(screen == 'add'){
                       roomChatController.changeState(chat, 0, 0);
                     }else{

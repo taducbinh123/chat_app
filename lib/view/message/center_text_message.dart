@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_world_flutter/model/message.dart';
+import 'package:AMES/model/message.dart';
 import 'package:intl/intl.dart';
 
 class CenterTextMessage extends StatelessWidget {

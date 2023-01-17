@@ -1,20 +1,25 @@
 import 'dart:io';
 
+import 'package:AMES/common/constant/ulti.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:hello_world_flutter/common/constant/path.dart';
+import 'package:AMES/common/constant/path.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-import 'package:hello_world_flutter/model/user.dart';
+import 'package:AMES/model/user.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-import '../../common/constant/ulti.dart';
+
+late IO.Socket roomSocket;
 
 abstract class AuthenticationService extends GetxService {
   Future<User?> getCurrentUser();
-  Future<User> signInWithUsernameAndPassword(String email, String password);
+  Future<User> signInWithUsernameAndPassword(String email, String password, bool convertPassword);
   Future<void> signOut();
+  Future<bool> autoLogin(String username, String fcm_token);
 }
 
 class AuthenticationServiceImpl extends AuthenticationService {
@@ -33,9 +38,11 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
   @override
   Future<User> signInWithUsernameAndPassword(
-      String username, String password) async {
+      String username, String password, bool convertPassword) async {
     await Future.delayed(Duration(seconds: 1));
-    password = md5.convert(utf8.encode(password)).toString();
+    if(convertPassword){
+      password = md5.convert(utf8.encode(password)).toString();
+    }
 
     var map = new Map<String, dynamic>();
     map['username'] = username;
@@ -49,21 +56,20 @@ class AuthenticationServiceImpl extends AuthenticationService {
         },
         body: map);
 
-    print(response.statusCode);
-    print(response.body);
+    // print(response.statusCode);
+    // print(response.body);
     if (response.statusCode == 200) {
       print("đăng nhập thành công");
       var info = jsonDecode(utf8convert(response.body));
 
       var t = DateTime.now().add(Duration(seconds: info['expires_in'] * 1000));
 
-      print(t);
+      print(info);
 
-      await saveInforUser(info['access_token'], info['userUid'], info['username'], info['expires_in']);
-    } else if (response.statusCode == 400) {
+
+      await saveInforUser(info['access_token'], info['expires_in'],password);
+    } else{
       throw AuthenticationException(message: 'Wrong username or password');
-    } else {
-      throw AuthenticationException(message: 'Error');
     }
 
     return User(name: username, email: "");
@@ -72,31 +78,36 @@ class AuthenticationServiceImpl extends AuthenticationService {
   @override
   Future<void> signOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? accessToken = prefs.getString('access_token');
-    print(accessToken);
-    // if (accessToken != null) {
-    //   // saveLogoutInfo();
-    //   final response = await http.post(
-    //       Uri.parse(
-    //           authApiUrl + '/api/logout/logout.do?access_token=' + accessToken),
-    //       headers: {
-    //         'Authorization': 'Bearer ' + accessToken,
-    //         'Content-type': 'application/json',
-    //       });
-    //
-    //   if (response.statusCode == 200) {
-    //   } else {
-    //     print(response.body);
-    //     // throw Exception('Error');
-    //
-    //   }
-    // }
+    String? accessToken = prefs.getString('access_token');
+    await saveLogoutInfo();
+    // print(accessToken);
+    roomSocket.emit("changeUserState",
+        {"userUid": prefs.getString("userUid"), "IS_ONLINE": "false"});
 
-    await prefs.clear();
+    // await prefs.clear();
+
+    await prefs.remove("access_token");
+    await prefs.remove("rememberValue");
+    // accessToken = prefs.getString('access_token');
+    // prefs.remove("accessToken");
+    // print(accessToken);
     await box.erase();
+    // await Future.delayed(Duration(seconds: 3));
+    roomSocket.disconnect();
   }
 
-  saveInforUser(String token, String userUid, String username, var expires_in) async {
+  saveInforUser(
+      String token, var expires_in, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.clear();
+    await prefs.remove("access_token");
+    await prefs.setString("access_token", token);
+    if(password != null && password !=''){
+      await prefs.remove("password");
+      await prefs.setString("password", password);
+    }
+    // print(prefs.getString("userUid").toString());
+
     final response = await http.post(
         Uri.parse(imwareApiHost + '/api/userInfo/saveLoginInfo'),
         headers: {
@@ -105,28 +116,24 @@ class AuthenticationServiceImpl extends AuthenticationService {
         });
 
     if (response.statusCode == 200) {
-
+      print(response.body);
     } else {
       print(response.body);
       // throw Exception('Error');
     }
     DateTime now = DateTime.now();
-    print(now);
-    now = now.add(new Duration(days:0, hours : 0,minutes:0, seconds:0, milliseconds : expires_in*1000));
-    print(now);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    // print(now);
+    now = now.add(new Duration(
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: expires_in * 1000));
+    // print(now);
 
+    await prefs.setString("expires_in", now.toString());
     final box = GetStorage();
     box.write("access_token", token);
-    box.write("userUid", userUid);
-    await prefs.setString("access_token", token);
-    await prefs.setString("userUid", userUid);
-    await prefs.setString("username", username);
-    await prefs.setString("expires_in", now.toString());
-    print(prefs.getString("userUid").toString());
-
-
   }
 
   saveLogoutInfo() async {
@@ -134,7 +141,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
     final String? accessToken = prefs.getString('access_token');
 
     if (accessToken != null) {
-      final response = await http.post(
+      final response = await http.put(
           Uri.parse(imwareApiHost + '/api/userInfo/saveLogoutInfo'),
           headers: {
             'Authorization': 'Bearer ' + accessToken,
@@ -142,6 +149,7 @@ class AuthenticationServiceImpl extends AuthenticationService {
           });
 
       if (response.statusCode == 200) {
+        print(response.body);
       } else {
         print(response.body);
       }
@@ -154,8 +162,31 @@ class AuthenticationServiceImpl extends AuthenticationService {
 
       if (response.statusCode == 200) {
       } else {
-        print(response.body);
+        // print(response.body);
       }
+    }
+  }
+
+  @override
+  Future<bool> autoLogin(String username, String fcm_token) async {
+    final response = await http.post(
+        Uri.parse(authApiUrl + '/oauth/autoLogin?username='+ username +'&fcm_token='+ fcm_token),
+        headers: {
+          'Content-type': 'application/json',
+        });
+    if (response.statusCode == 200) {
+      print("autoLogin success");
+      var info = jsonDecode(utf8convert(response.body));
+
+      var t = DateTime.now().add(Duration(seconds: info['expires_in'] * 1000));
+
+      // print(t);
+
+
+      await saveInforUser(info['access_token'], info['expires_in'],'');
+      return true;
+    } else {
+      return false;
     }
   }
 }
@@ -165,3 +196,4 @@ class AuthenticationException implements Exception {
 
   AuthenticationException({this.message = 'Unknown error occurred. '});
 }
+
