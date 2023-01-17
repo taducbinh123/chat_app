@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "462870207180",
+    "project_id": "chatapp-e44d9",
+    "storage_bucket": "chatapp-e44d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462870207180:android:6420256f426cda24778069",
+        "android_client_info": {
+          "package_name": "com.atwom.ames"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462870207180-jhqcuj3qqpd4cj632na9r3cjvdm9epho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5uBj3wrifSizTBF-zzMAj-emEfhma1h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462870207180-jhqcuj3qqpd4cj632na9r3cjvdm9epho.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "462870207180-b5vtmkq09ffmvbufpu45vsdcf7astl22.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.atwom.chatapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462870207180:android:7536e27d5784494b778069",
+        "android_client_info": {
+          "package_name": "com.atwom.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462870207180-jhqcuj3qqpd4cj632na9r3cjvdm9epho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5uBj3wrifSizTBF-zzMAj-emEfhma1h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462870207180-jhqcuj3qqpd4cj632na9r3cjvdm9epho.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "462870207180-b5vtmkq09ffmvbufpu45vsdcf7astl22.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.atwom.chatapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
